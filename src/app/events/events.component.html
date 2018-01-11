@@ -1,0 +1,24 @@
+
+<h2> Events</h2>
+
+<div class="container">
+
+    <app-event-card *ngFor="let event of events" 
+                    [event]="event" 
+                    (deleted)="onDelete($event)">
+    </app-event-card>
+
+</div>
+
+<div>
+    <label>event name:
+      <input #eventName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(eventName.value); eventName.value=''">
+      add
+    </button>
+  </div>
+<!-- One way data binding from parent to child -->
+
+

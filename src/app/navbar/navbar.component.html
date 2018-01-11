@@ -1,0 +1,39 @@
+<!-- TODO: figure out if the <nav> should go inside of a <header> element. -->
+  <mat-toolbar color="primary" class="docs-navbar-header">
+      <a mat-button class="docs-button" routerLink="/" aria-label="Angular Material">
+        <span>Observatório da Bicicleta</span>
+      </a>
+      <a mat-button class="docs-navbar-hide-small docs-button" routerLink="/dashboard">
+        <span>Dashboard</span>
+      </a>
+      <a mat-button class="docs-navbar-hide-small docs-button" routerLink="/events">
+        <span>Events</span>
+      </a>
+      <div class="flex-spacer"></div>
+
+
+  <div *ngIf="!authService.isLoggedIn()"> 
+    <a mat-button class="docs-navbar-hide-small docs-button" routerLink="/signup">
+      <span>Sign up</span>
+    </a>
+
+      <button type="button" class="btn btn-block" (click)="signInWithGoogle()">
+        <i class="fa fa-google" aria-hidden="true"></i>
+           Login with Google
+     </button>
+  </div>
+  <div *ngIf="authService.isLoggedIn()">
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="" (click)="authService.logout()">Logout</a></li>
+    </ul>
+  </div>
+  </mat-toolbar>
+
+ <mat-toolbar color="primary" class="docs-navbar docs-navbar-show-small">
+    <a mat-button class="docs-button" routerLink="/dashboard">
+      <span>Dashboard</span>
+    </a>
+    <a mat-button class="docs-button" routerLink="/events">
+      <span>Events</span>
+    </a>
+  </mat-toolbar>

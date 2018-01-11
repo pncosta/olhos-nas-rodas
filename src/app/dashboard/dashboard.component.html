@@ -1,0 +1,9 @@
+<h3>Last Events</h3>
+<div class="grid grid-pad">
+    <a *ngFor="let event of events" class="col-1-4"
+    routerLink="/events/{{event.id}}">
+    <div class="module event">
+      <h4>{{event.name}}</h4>
+    </div>
+  </a>
+</div>

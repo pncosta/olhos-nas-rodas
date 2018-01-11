@@ -1,0 +1,22 @@
+<a routerLink="/events/{{event.id}}">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{event.name}}</mat-card-title>
+      <mat-card-subtitle>
+        <span class="date">{{event.date}}</span>
+        <span class="location">{{event.location}}</span>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://dummyimage.com/300x150/ea0"><img>
+    <mat-card-content>
+      <div class="description">{{event.description}}</div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button>LIKE</button>
+        <button mat-button (click)="delete(event)">DELETE</button>
+      </mat-card-actions>
+    <mat-card-footer>
+    </mat-card-footer>
+  </mat-card>
+</a>
