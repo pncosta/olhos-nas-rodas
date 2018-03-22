@@ -3,6 +3,8 @@ import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/fo
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthService } from '../core/auth.service';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { Router } from "@angular/router";
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -20,7 +22,8 @@ export class SignupDialog implements OnInit {
 
   signupForm: FormGroup;
 
-  constructor(public fb: FormBuilder, public auth: AuthService) { }
+  constructor(public fb: FormBuilder, public auth: AuthService, private router: Router,
+    public dialogRef: MatDialogRef<SignupDialog>) { }
 
   ngOnInit() {
 
@@ -51,6 +54,15 @@ export class SignupDialog implements OnInit {
   signup() {
     return this.auth.signup(this.email.value, this.password.value)
   }
+
+  signupWithGoogle() {
+    this.auth.signInWithGoogle()
+        .then((res) => {
+            this.router.navigate(['dashboard'])
+            this.dialogRef.close();
+        })
+        .catch((err) => console.log(err));
+}
 
 
   // Using getters will make your code look pretty

@@ -37,7 +37,7 @@ export class LoginDialog {
         });
     }
 
-    signInWithGoogle() {
+    loginWithGoogle() {
         this.auth.signInWithGoogle()
             .then((res) => {
                 this.router.navigate(['dashboard'])
