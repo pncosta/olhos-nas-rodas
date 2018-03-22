@@ -3,21 +3,22 @@
       New Account
     </mat-card-title>
     <mat-card-content class="container">
-        <form class="example-form">
+
+            <form [formGroup]="signupForm"  (ngSubmit)="signup()">
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Email" [formControl]="emailFormControl"
-                       [errorStateMatcher]="matcher">
+                <input matInput placeholder="Email" 
+                       formControlName="email">
                 <mat-hint>Errors appear instantly!</mat-hint>
-                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+              <!--  <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                   Please enter a valid email address
                 </mat-error>
                 <mat-error *ngIf="emailFormControl.hasError('required')">
                   Email is <strong>required</strong>
-                </mat-error>
+                </mat-error>-->
               </mat-form-field>
 
     <mat-form-field>
-        <input matInput placeholder="Enter your password" [type]="'password'">
+        <input matInput placeholder="Enter your password" [type]="'password'" formControlName="password">
    
 
     </mat-form-field>
@@ -26,6 +27,10 @@
         <input matInput placeholder="Confirm your password" [type]="'password'">
    
     </mat-form-field>
+
+    <button type="submit" >Submit</button>  
+
+
     </form>
   </mat-card-content>
 </mat-card>

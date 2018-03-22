@@ -4,7 +4,7 @@ import { Event } from './events/event';
 import { EVENTS } from './mock-events';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { MessageService } from './message.service';
+import { MessageService } from './core/message.service';
 import { catchError, map, tap } from 'rxjs/operators';
 
 const httpOptions = {

@@ -1,0 +1,16 @@
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Email" formControlName="email">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Enter your password" [type]="'password'" formControlName="password">
+  </mat-form-field>
+  <button mat-button type="submit">Submit</button>
+</form>
+
+
+<button mat-button type="button" class="btn btn-block" (click)="signInWithGoogle()">
+          <img src="../../assets/auth_btn_google_small.svg" />
+          Login with Google
+</button>
