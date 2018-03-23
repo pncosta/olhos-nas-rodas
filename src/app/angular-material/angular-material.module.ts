@@ -5,12 +5,16 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatCheckboxModule, 
         MatInputModule, MatToolbarModule, MatSidenavModule} from '@angular/material';
+import {MatDividerModule} from '@angular/material/divider';
+
 
 @NgModule({
   imports: [CommonModule, MatButtonModule, MatCheckboxModule,
-     MatInputModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule],
+     MatInputModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule,
+     MatDividerModule],
+
   exports: [MatButtonModule, MatCheckboxModule, MatInputModule, 
-    MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule],
+    MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule, MatDividerModule],
   declarations: []
 })
 export class AngularMaterialModule { }
