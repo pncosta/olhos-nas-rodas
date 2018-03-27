@@ -35,6 +35,7 @@ import { EventCardComponent } from './event-card/event-card.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LoginDialog } from './navbar/login-dialog.component';
 import { SignupDialog } from './navbar/signup-dialog.component';
+import { GoogleLoginButtonComponent } from './navbar/google-login-button/google-login-button.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { SignupDialog } from './navbar/signup-dialog.component';
     UserProfileComponent,
     SignupDialog,
     LoginDialog,
+    GoogleLoginButtonComponent,
   ],
   entryComponents: [
     LoginDialog,

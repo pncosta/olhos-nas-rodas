@@ -41,10 +41,16 @@ export class LoginDialog {
     loginWithGoogle() {
         this.auth.signInWithGoogle()
             .then((res) => {
-                this.router.navigate(['dashboard'])
-                this.dialogRef.close();
+               this.afterLoggedIn(res);
             })
             .catch((err) => console.log(err));
+    }
+
+    private afterLoggedIn(e) {
+        console.log(e);
+        console.log("affter login");
+        this.dialogRef.close();
+        this.router.navigate(['dashboard'])
     }
 
     // TODO: login up stuff -  move to login component
@@ -52,7 +58,7 @@ export class LoginDialog {
         return this.auth.login(this.email.value, this.password.value)
             .then(
             function () {
-                this.dialogRef.close();
+                this.afterLoggedIn();
             }.bind(this))
     }
     // Using getters will make your code look pretty

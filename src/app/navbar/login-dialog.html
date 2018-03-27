@@ -19,18 +19,7 @@
   <div fxLayout="row" fxLayout.xs="column"
    fxLayoutAlign="space-between center" fxLayoutAlign.xs="" >
 
-      <button mat-button class="google btn btn-block" (click)="loginWithGoogle()">
-          <div fxLayout="row" fxLayoutAlign="space-between center" >
-            <img src="../../assets/auth_btn_google_small.svg" />
-            <div class="text">Sign in with Google</div>
-          </div>
-       </button>
-   <!--<button mat-button class="facebook" (click)="loginWithGoogle()">
-      <div fxLayout="row" fxLayoutAlign="space-between center" >
-        <img src="../../assets/auth_btn_google_small.svg" />
-        <div class="text">Sign in with Facebook</div>
-      </div>
-   </button>-->
+   <google-login-button (onLoggedIn)="afterLoggedIn($event)"></google-login-button>
   
   </div>
 </div>
