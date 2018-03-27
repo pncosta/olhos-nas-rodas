@@ -1,40 +1,35 @@
-<mat-card>
-    <mat-card-title>
-      New Account
-    </mat-card-title>
-    <mat-card-content class="container">
+<h2 mat-dialog-title>
+  Signup
+</h2>
+<div mat-dialog-content>
+  <form [formGroup]="signupForm" (ngSubmit)="signup()">
+   
+    <div fxLayout="column">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" formControlName="email">
+        <!-- <mat-error *ngIf="signupForm.hasError('email') && !signupForm.hasError('required')">
+              Please enter a valid email address
+            </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>-->
+      </mat-form-field>
 
-            <form [formGroup]="signupForm"  (ngSubmit)="signup()">
-            <mat-form-field class="example-full-width">
-                <input matInput placeholder="Email" 
-                       formControlName="email">
-                <mat-hint>Errors appear instantly!</mat-hint>
-              <!--  <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                  Please enter a valid email address
-                </mat-error>
-                <mat-error *ngIf="emailFormControl.hasError('required')">
-                  Email is <strong>required</strong>
-                </mat-error>-->
-              </mat-form-field>
-
-    <mat-form-field>
+      <mat-form-field>
         <input matInput placeholder="Enter your password" [type]="'password'" formControlName="password">
-   
+      </mat-form-field>
 
-    </mat-form-field>
-
-    <mat-form-field>
+      <mat-form-field>
         <input matInput placeholder="Confirm your password" [type]="'password'">
-   
-    </mat-form-field>
+      </mat-form-field>
 
-    <button type="submit" >Submit</button>  
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
 
-    <button mat-button type="button" class="btn btn-block" (click)="signupWithGoogle()">
-        <img src="../../assets/auth_btn_google_small.svg" />
-        Signup with Google
-</button>
+  <hr />
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
+    <google-login-button (onLoggedIn)="afterSignedUp($event)"></google-login-button>
+  </div>
 
-    </form>
-  </mat-card-content>
-</mat-card>
+</div>

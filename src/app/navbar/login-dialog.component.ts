@@ -43,12 +43,10 @@ export class LoginDialog {
             .then((res) => {
                this.afterLoggedIn(res);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.log(err) //TODO: Handle Error );
     }
 
     private afterLoggedIn(e) {
-        console.log(e);
-        console.log("affter login");
         this.dialogRef.close();
         this.router.navigate(['dashboard'])
     }

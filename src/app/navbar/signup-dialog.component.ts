@@ -27,22 +27,22 @@ export class SignupDialog implements OnInit {
 
   ngOnInit() {
 
-   // First Step
+    // First Step
     this.signupForm = this.fb.group({
       'email': ['', [
         Validators.required,
         Validators.email
-        ]
+      ]
       ],
       'password': ['', [
-     //   Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-       // Validators.minLength(6),
-       // Validators.maxLength(25),
+        //   Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+        // Validators.minLength(6),
+        // Validators.maxLength(25),
         Validators.required
-        ]
+      ]
       ],
       'region': ['', [
-        ]
+      ]
       ],
     });
 
@@ -55,26 +55,21 @@ export class SignupDialog implements OnInit {
     return this.auth.signup(this.email.value, this.password.value)
   }
 
-  signupWithGoogle() {
-    this.auth.signInWithGoogle()
-        .then((res) => {
-            this.router.navigate(['dashboard'])
-            this.dialogRef.close();
-        })
-        .catch((err) => console.log(err));
-}
-
+  private afterSignedUp(e) {
+    this.dialogRef.close();
+    this.router.navigate(['dashboard'])
+  }
 
   // Using getters will make your code look pretty
   get email() { return this.signupForm.get('email') }
   get password() { return this.signupForm.get('password') }
 
 
- /* emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-
-  matcher = new MyErrorStateMatcher();*/
+  /* emailFormControl = new FormControl('', [
+     Validators.required,
+     Validators.email,
+   ]);
+ 
+   matcher = new MyErrorStateMatcher();*/
 
 }
