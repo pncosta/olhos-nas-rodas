@@ -23,7 +23,6 @@ export class UserProfileComponent {
   get favoriteColor() { return this.profileForm.get('favoriteColor') }
     // Step 2
     setFavoriteColor(user) {
-      console.log(user);
       return this.auth.updateUser( { favoriteColor:  this.favoriteColor.value })
     }
 

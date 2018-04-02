@@ -3,32 +3,51 @@
 </h2>
 <div mat-dialog-content>
   <form [formGroup]="signupForm" (ngSubmit)="signup()">
-   
-    <div fxLayout="column">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Email" formControlName="email">
-        <!-- <mat-error *ngIf="signupForm.hasError('email') && !signupForm.hasError('required')">
-              Please enter a valid email address
-            </mat-error>
-          <mat-error *ngIf="emailFormControl.hasError('required')">
-              Email is <strong>required</strong>
-            </mat-error>-->
+
+    <div class="container">
+      <mat-form-field>
+        <input matInput placeholder="Username" formControlName="username">
+        <mat-error *ngIf="signupForm.controls.username.errors?.required">
+          Username is required
+        </mat-error>
+        <mat-error *ngIf="signupForm.controls.username.errors?.minlength">
+          Username must have at least 3 characters
+        </mat-error>
       </mat-form-field>
 
+      <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="email.required">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="email.invalid">
+          Email format not valid
+        </mat-error>
+        <mat-hint *ngIf="error === 'auth/email-already-in-use'" class="error-hint">
+            Email already registered. Try another.
+        </mat-hint>
+      </mat-form-field>
+     
       <mat-form-field>
         <input matInput placeholder="Enter your password" [type]="'password'" formControlName="password">
+        <mat-error *ngIf="password.errors?.pattern || password.errors?.minlength">
+            Passwords must have at least 8 characters, one number and one letter
+          </mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Confirm your password" [type]="'password'">
+        <input matInput placeholder="Confirm your password" [type]="'password'" formControlName="confirmPassword">
+        <mat-error *ngIf="signupForm.controls.confirmPassword.errors?.MatchPassword && signupForm.controls.confirmPassword.dirty">
+          Passwords do not match
+        </mat-error>
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </div>
   </form>
-
   <hr />
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
+    <button mat-button color="primary">Login instead</button>
     <google-login-button (onLoggedIn)="afterSignedUp($event)"></google-login-button>
   </div>
 

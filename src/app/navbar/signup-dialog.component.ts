@@ -5,6 +5,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthService } from '../core/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from "@angular/router";
+import { PasswordValidation } from './password-validation';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -21,38 +22,38 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class SignupDialog implements OnInit {
 
   signupForm: FormGroup;
+  error: String;
 
-  constructor(public fb: FormBuilder, public auth: AuthService, private router: Router,
+  constructor(public fb: FormBuilder,
+    public auth: AuthService,
+    private router: Router,
     public dialogRef: MatDialogRef<SignupDialog>) { }
 
   ngOnInit() {
 
-    // First Step
+    const usernameControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
+    const emailControl = new FormControl('', [Validators.required, Validators.email]);
+    const passwordControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')]);
+    const confirmPasswordControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')]);
+
     this.signupForm = this.fb.group({
-      'email': ['', [
-        Validators.required,
-        Validators.email
-      ]
-      ],
-      'password': ['', [
-        //   Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-        // Validators.minLength(6),
-        // Validators.maxLength(25),
-        Validators.required
-      ]
-      ],
-      'region': ['', [
-      ]
-      ],
-    });
-
-
-
-
+      'username': usernameControl,
+      'email': emailControl,
+      'password': passwordControl,
+      'confirmPassword': confirmPasswordControl,
+    }, {
+        validator: PasswordValidation.MatchPassword
+      });
   }
-  // Step 1
+
+
   signup() {
-    return this.auth.signup(this.email.value, this.password.value)
+    console.log(this.signupForm);
+    if (this.signupForm.valid) {
+      this.auth.signup(this.email.value, this.password.value)
+        .then((res) => { this.afterSignedUp(res); })
+        .catch((err) => { this.handleError(err) } );
+    }
   }
 
   private afterSignedUp(e) {
@@ -60,16 +61,13 @@ export class SignupDialog implements OnInit {
     this.router.navigate(['dashboard'])
   }
 
+  private handleError(err) {
+    this.error = err.code;;
+  }
+
   // Using getters will make your code look pretty
   get email() { return this.signupForm.get('email') }
   get password() { return this.signupForm.get('password') }
-
-
-  /* emailFormControl = new FormControl('', [
-     Validators.required,
-     Validators.email,
-   ]);
- 
-   matcher = new MyErrorStateMatcher();*/
+  get confirmPassword() { return this.signupForm.get('confirmPassword') }
 
 }

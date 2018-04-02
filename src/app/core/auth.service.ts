@@ -39,13 +39,10 @@ export class AuthService {
   }
   
   signup(email: string, password: string) {
-    this._firebaseAuth
-      .auth
+    return this._firebaseAuth.auth
       .createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        return this.setUserDoc(user) // create initial user document
-      })
-      .catch(error => this.handleError(error) );  
+      .then(user => { this.setUserDoc(user) })
+
   }
 
   login(email: string, password: string) {
@@ -54,18 +51,10 @@ export class AuthService {
       this._firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
-      .then(value => {
-        console.log('Nice, it worked!');
-        resolve(value);
-      })
-      .catch(err => {
-        console.log('Something went wrong:',err.message);
-        reject(err);
-      });   
+      .then(value => { resolve(value);})
+      .catch(err => { reject(err); });   
      });
-    
-      return promise;
- 
+    return promise;
     }
 
   isLoggedIn() {
