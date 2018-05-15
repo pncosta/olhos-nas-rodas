@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../core/auth.service';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { PasswordValidation } from '../navbar/password-validation';
 
 @Component({
   selector: 'user-profile',
@@ -10,20 +11,37 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 export class UserProfileComponent {
 
   profileForm: FormGroup;
+  passwordForm: FormGroup;
   constructor(public fb: FormBuilder, public auth: AuthService) { }
 
   ngOnInit() {
-       // Second Step
-       this.profileForm = this.fb.group({
-        'favoriteColor': ['', [ Validators.required ] ]
+
+    const passwordControl = PasswordValidation.getPasswordControl();
+    const confirmPasswordControl = PasswordValidation.getPasswordControl();
+
+    this.passwordForm = this.fb.group({
+      'password': passwordControl,
+      'confirmPassword': confirmPasswordControl,
+    }, {
+        validator: PasswordValidation.MatchPassword
       });
-      
+      this.profileForm = this.fb.group({
+        'avatar' : new FormControl('', [])
+      });
     }
 
-  get favoriteColor() { return this.profileForm.get('favoriteColor') }
     // Step 2
-    setFavoriteColor(user) {
-      return this.auth.updateUser( { favoriteColor:  this.favoriteColor.value })
+    updateProfile() {
+      return this.auth.updateUser( { photoURL:  this.avatar.value })
     }
+
+        // Step 2
+    updatePassword() {
+      return this.auth.updatePassword(  this.password.value );
+    }
+
+    get avatar() { return this.profileForm.get('avatar') }
+    get password() { return this.passwordForm.get('password') }
+    get confirmPassword() { return this.passwordForm.get('confirmPassword') }
 
 }

@@ -1,37 +1,63 @@
 <div *ngIf="auth.user | async; then authenticated else guest">
-    <!-- template will replace this div -->
+  <!-- template will replace this div -->
 </div>
 
 
 <!-- User NOT logged in -->
 <ng-template #guest>
-<h3>Howdy, GUEST</h3>
-<p>Login to get started...</p>
-
-<button (click)="auth.googleLogin()">
-    <i class="fa fa-google"></i> Connect Google
-</button>
-
+  <h3>Hello</h3>
+  <p>Please Login or signup to get started...</p>
 </ng-template>
 
 
 <!-- User logged in -->
 <ng-template #authenticated>
-<div *ngIf="auth.user | async as user">
-    <h3>Howdy, {{ user.displayName }}</h3>
-    <img  [src]="user.photoURL">
-    <p>UID: {{ user.uid }}</p>
-    <p>Favorite Color: {{ user?.favoriteColor }} </p>
-    <button (click)="auth.signOut()">Logout</button>
-</div>
-        
-     
-<form [formGroup]="profileForm" (ngSubmit)="setFavoriteColor(user)">
-        <h3>Set your favorite color</h3>
-        <label for="favoriteColor">favoriteColor</label>
-        <input type="test" formControlName="favoriteColor">
-        <button type="submit">Submit</button>        
-      </form>
-    
 
+  <div *ngIf="auth.user | async as user" class="vertical-center-container">
+    <mat-card>
+      <div class="vertical-center-container">
+        <img class="avatar" [src]="user.photoURL">
+        <h3>{{ user.displayName }}</h3>
+        <p>Email: {{ user.email }}</p>
+
+        <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="vertical-center-container">
+                <div class="vertical-center-container">
+      
+                  <h3>Profile</h3>
+      
+                  <mat-form-field>
+                    <input matInput placeholder="Avatar URL" [type]="'url'" formControlName="avatar">
+                  </mat-form-field>
+                  <button mat-raised-button color="primary" type="submit">Update Profile</button>
+                </div>
+              </form>
+
+        <hr />
+
+        <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="vertical-center-container">
+          <div class="vertical-center-container">
+
+            <h3>Update Password</h3>
+
+            <mat-form-field>
+              <input matInput placeholder="Enter new password" [type]="'password'" formControlName="password">
+              <mat-error *ngIf="password.errors?.pattern || password.errors?.minlength">
+                    Passwords must have at least 8 characters, one number and one letter
+                  </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Confirm new password" [type]="'password'" formControlName="confirmPassword">
+              <mat-error *ngIf="passwordForm.controls.confirmPassword.errors?.MatchPassword && passwordForm.controls.confirmPassword.dirty">
+                    Passwords do not match
+                  </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit">Update Password</button>
+          </div>
+        </form>
+
+      </div>
+    </mat-card>
+  </div>
 </ng-template>

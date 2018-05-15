@@ -22,8 +22,13 @@
     </button>
   </div>
   <div *ngIf="auth.user | async as user">
-      <a mat-button href="/profile"> {{ user.displayName }} </a>
       <a mat-button href="" (click)="auth.logout()">Logout</a>
+      <a mat-button href="/profile"> 
+        
+        {{ user.displayName }} <img class="avatar" [src]="user.photoURL" />
+      </a>
+      
+      
   </div>
 </mat-toolbar>
 

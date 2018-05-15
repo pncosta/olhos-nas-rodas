@@ -7,6 +7,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Router } from "@angular/router";
 import { PasswordValidation } from './password-validation';
 
+
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -31,10 +32,10 @@ export class SignupDialog implements OnInit {
 
   ngOnInit() {
 
-    const usernameControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
-    const emailControl = new FormControl('', [Validators.required, Validators.email]);
-    const passwordControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')]);
-    const confirmPasswordControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')]);
+    const usernameControl = PasswordValidation.getUsernameControl();;
+    const emailControl = PasswordValidation.getEmailControl();
+    const passwordControl = PasswordValidation.getPasswordControl();
+    const confirmPasswordControl = PasswordValidation.getPasswordControl();
 
     this.signupForm = this.fb.group({
       'username': usernameControl,
@@ -51,8 +52,14 @@ export class SignupDialog implements OnInit {
     console.log(this.signupForm);
     if (this.signupForm.valid) {
       this.auth.signup(this.email.value, this.password.value)
-        .then((res) => { this.afterSignedUp(res); })
-        .catch((err) => { this.handleError(err) } );
+        .then((res) => { 
+          console.log(this.username.value );
+
+          this.auth.updateUser({ displayName:  this.username.value })
+          this.afterSignedUp(res);
+         })
+        .catch((err) => {  console.log("sign up catch");
+        this.handleError(err) } );
     }
   }
 
@@ -69,5 +76,6 @@ export class SignupDialog implements OnInit {
   get email() { return this.signupForm.get('email') }
   get password() { return this.signupForm.get('password') }
   get confirmPassword() { return this.signupForm.get('confirmPassword') }
+  get username() { return this.signupForm.get('username') }
 
 }

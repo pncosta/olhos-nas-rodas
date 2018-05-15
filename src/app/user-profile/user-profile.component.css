@@ -1,0 +1,15 @@
+.avatar {
+  border-radius: 50%;
+  height: 192px;
+  width: 192px;
+}
+
+.vertical-center-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+mat-form-field {
+  padding-top: 16px;
+}

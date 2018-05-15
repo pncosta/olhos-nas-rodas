@@ -1,4 +1,5 @@
 import { AbstractControl } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 export class PasswordValidation {
 
     static MatchPassword(AC: AbstractControl) {
@@ -10,4 +11,18 @@ export class PasswordValidation {
             return null
         }
     }
+
+    static getPasswordControl() {
+        return new FormControl('', [Validators.required, Validators.minLength(8), 
+            Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')]);
+    }
+
+    static getUsernameControl() {
+        return new FormControl('', [Validators.required, Validators.minLength(3)]);
+    }
+
+    static getEmailControl() {
+        return new FormControl('', [Validators.required, Validators.email]);
+    }
+   
 }

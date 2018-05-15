@@ -41,7 +41,7 @@ export class AuthService {
   signup(email: string, password: string) {
     return this._firebaseAuth.auth
       .createUserWithEmailAndPassword(email, password)
-      .then(user => { this.setUserDoc(user) })
+      .then(user => { return this.setUserDoc(user)})
 
   }
 
@@ -71,6 +71,27 @@ export class AuthService {
     return this.oAuthLogin(provider);
   }
 
+   // Update properties on the user document
+   updateUser( data: any) { 
+    console.log(data);
+    return this._firebaseStore.doc(`users/${this.userDetails.uid}`).update(data)
+  }
+
+  updatePassword (password: string) {
+    var user = this._firebaseAuth.auth.currentUser;
+    user.updatePassword(password)
+      .then(function() {
+        console.log ("Success updating user pass! ");
+      }).catch(function(error) {
+        // TODO: handle error
+        console.log ("Error updating user pass");
+      });
+  }
+
+  logInWithPopup() {
+    //this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
   private oAuthLogin(provider) {
     return this._firebaseAuth.auth.signInWithPopup(provider)
       .then((credential) => {
@@ -78,16 +99,8 @@ export class AuthService {
       })
   }
 
-   // Update properties on the user document
-   updateUser( data: any) { 
-
-     console.log(data);
-
-    return this._firebaseStore.doc(`users/${this.userDetails.uid}`).update(data)
-  }
-
+   // Sets user data to firestore after succesful login
   private setUserDoc(user) {
-    // Sets user data to firestore on login
 
     const userRef: AngularFirestoreDocument<any> = this._firebaseStore.doc(`users/${user.uid}`);
 
@@ -101,11 +114,6 @@ export class AuthService {
     return userRef.set(data, { merge: true })
 
   }
-
-  logInWithPopup() {
-    //this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  }
-
     // If error, console log and notify user
     private handleError(error) {
       console.error(error)

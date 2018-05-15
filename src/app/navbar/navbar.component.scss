@@ -19,6 +19,13 @@
   display: none;
 }
 
+.avatar {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  padding-left: 8px;
+}
+
 /**
   * Rules for when the device is detected to be a small screen.
   * Moves content two rows instead of one.

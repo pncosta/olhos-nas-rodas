@@ -43,7 +43,7 @@ export class LoginDialog {
             .then((res) => {
                this.afterLoggedIn(res);
             })
-            .catch((err) => console.log(err) //TODO: Handle Error );
+            .catch((err) => console.log(err)) ; //TODO: Handle Error 
     }
 
     private afterLoggedIn(e) {
