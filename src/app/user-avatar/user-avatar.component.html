@@ -1,0 +1,17 @@
+<div *ngIf="user.photoURL">
+  <img class="avatar" [src]="user.photoURL" class="avatar"
+[style.height.px]="height"
+[style.width.px]="width">
+</div>
+
+<div *ngIf="!user.photoURL">
+  <div  id="container" 
+    [style.height.px]="height"
+    [style.width.px]="width"
+    [style.background-color]="backgroundcolour"
+    [style.color]="color">
+    <span id="character"  [style.font-size.px]="fontSize">
+      {{ initials }}
+    </span>
+  </div>
+</div>

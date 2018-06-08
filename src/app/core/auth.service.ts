@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Router } from "@angular/router";
 // https://itnext.io/part-2-complete-step-by-step-firebase-authentication-in-angular-2-25d284102632
 
-interface User {
+export interface User {
   uid: string;
   email: string;
   photoURL?: string;

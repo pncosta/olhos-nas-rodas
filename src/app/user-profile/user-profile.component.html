@@ -16,7 +16,8 @@
   <div *ngIf="auth.user | async as user" class="vertical-center-container">
     <mat-card>
       <div class="vertical-center-container">
-        <img class="avatar" [src]="user.photoURL">
+        <app-user-avatar width="192" height="192" [user]="user"></app-user-avatar>
+     
         <h3>{{ user.displayName }}</h3>
         <p>Email: {{ user.email }}</p>
 

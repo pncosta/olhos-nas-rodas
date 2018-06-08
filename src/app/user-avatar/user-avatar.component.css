@@ -1,0 +1,32 @@
+.avatar {
+    border-radius: 50%;
+}
+
+.initials {
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 4px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color:white;
+
+}
+
+#container {
+  position: relative;
+  border-radius: 50%;
+  
+}
+
+#character {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+}

@@ -24,8 +24,10 @@
   <div *ngIf="auth.user | async as user">
       <a mat-button href="" (click)="auth.logout()">Logout</a>
       <a mat-button href="/profile"> 
-        
-        {{ user.displayName }} <img class="avatar" [src]="user.photoURL" />
+        <div class="user">
+        <span class="username">{{ user.displayName }}</span>
+        <app-user-avatar [user]="user"></app-user-avatar>
+        </div>
       </a>
       
       

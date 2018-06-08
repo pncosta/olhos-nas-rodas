@@ -1,3 +1,13 @@
+.user {
+  display: flex;
+  flex-direction: row; 
+  align-items: center;
+}
+
+.username {
+  padding-right: 8px;
+}
+
 .docs-navbar-header {
   display: flex;
   flex-wrap: wrap;
