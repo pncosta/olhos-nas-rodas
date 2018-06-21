@@ -1,0 +1,10 @@
+.full-width {
+    width: 100%;
+}
+
+.container {
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    
+}

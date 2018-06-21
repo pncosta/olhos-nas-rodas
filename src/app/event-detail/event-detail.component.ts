@@ -3,7 +3,7 @@ import { Event } from '../events/event';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { EventService }  from '../event.service';
+import { EventService } from '../events/event.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -26,7 +26,7 @@ export class EventDetailComponent implements OnInit {
     this.eventService.getEvent(id)
       .subscribe(event => this.event = event);
   }
-  
+
   save(): void {
     this.eventService.updateEvent(this.event)
       .subscribe(() => this.goBack());

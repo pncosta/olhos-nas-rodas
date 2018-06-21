@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { AuthService } from '../core/auth.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { PasswordValidation } from './password-validation';
 
 
@@ -16,11 +16,11 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 @Component({
-  selector: 'signup-dialog',
+  selector: 'app-signup-dialog',
   templateUrl: './signup-dialog.html',
   styleUrls: ['./signup-dialog.component.scss']
 })
-export class SignupDialog implements OnInit {
+export class SignupDialogComponent implements OnInit {
 
   signupForm: FormGroup;
   error: String;
@@ -28,11 +28,11 @@ export class SignupDialog implements OnInit {
   constructor(public fb: FormBuilder,
     public auth: AuthService,
     private router: Router,
-    public dialogRef: MatDialogRef<SignupDialog>) { }
+    public dialogRef: MatDialogRef<SignupDialogComponent>) { }
 
   ngOnInit() {
 
-    const usernameControl = PasswordValidation.getUsernameControl();;
+    const usernameControl = PasswordValidation.getUsernameControl();
     const emailControl = PasswordValidation.getEmailControl();
     const passwordControl = PasswordValidation.getPasswordControl();
     const confirmPasswordControl = PasswordValidation.getPasswordControl();
@@ -49,33 +49,32 @@ export class SignupDialog implements OnInit {
 
 
   signup() {
-    console.log(this.signupForm);
     if (this.signupForm.valid) {
       this.auth.signup(this.email.value, this.password.value)
-        .then((res) => { 
+        .then((res) => {
           console.log(this.username.value );
 
-          this.auth.updateUser({ displayName:  this.username.value })
+          this.auth.updateUser({ displayName:  this.username.value });
           this.afterSignedUp(res);
          })
-        .catch((err) => {  console.log("sign up catch");
-        this.handleError(err) } );
+        .catch((err) => {  console.log('sign up catch');
+        this.handleError(err); } );
     }
   }
 
   private afterSignedUp(e) {
     this.dialogRef.close();
-    this.router.navigate(['dashboard'])
+    this.router.navigate(['dashboard']);
   }
 
   private handleError(err) {
-    this.error = err.code;;
+    this.error = err.code;
   }
 
   // Using getters will make your code look pretty
-  get email() { return this.signupForm.get('email') }
-  get password() { return this.signupForm.get('password') }
-  get confirmPassword() { return this.signupForm.get('confirmPassword') }
-  get username() { return this.signupForm.get('username') }
+  get email() { return this.signupForm.get('email'); }
+  get password() { return this.signupForm.get('password'); }
+  get confirmPassword() { return this.signupForm.get('confirmPassword'); }
+  get username() { return this.signupForm.get('username'); }
 
 }

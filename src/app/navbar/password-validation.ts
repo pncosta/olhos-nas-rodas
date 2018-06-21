@@ -3,17 +3,17 @@ import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/fo
 export class PasswordValidation {
 
     static MatchPassword(AC: AbstractControl) {
-        let password = AC.get('password').value; // to get value in input tag
-        let confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
-        if (password != confirmPassword) {
-            AC.get('confirmPassword').setErrors({ MatchPassword: true })
+        const password = AC.get('password').value; // to get value in input tag
+        const confirmPassword = AC.get('confirmPassword').value; // to get value in input tag
+        if (password !== confirmPassword) {
+            AC.get('confirmPassword').setErrors({ MatchPassword: true });
         } else {
-            return null
+            return null;
         }
     }
 
     static getPasswordControl() {
-        return new FormControl('', [Validators.required, Validators.minLength(8), 
+        return new FormControl('', [Validators.required, Validators.minLength(8),
             Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')]);
     }
 
@@ -24,5 +24,4 @@ export class PasswordValidation {
     static getEmailControl() {
         return new FormControl('', [Validators.required, Validators.email]);
     }
-   
 }

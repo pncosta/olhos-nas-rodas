@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Event } from './events/event';
-import { EVENTS } from './mock-events';
+import { Event } from './event';
+import { EVENTS } from '../mock-events';
 import { Observable ,  of } from 'rxjs';
-import { MessageService } from './core/message.service';
+import { MessageService } from '../core/message.service';
 import { catchError, map, tap } from 'rxjs/operators';
 
 const httpOptions = {
@@ -13,7 +13,7 @@ const httpOptions = {
 @Injectable()
 export class EventService {
   private eventsURL = 'api/events';  // URL to web api
-  constructor(  
+  constructor(
     private http: HttpClient,
     private messageService: MessageService) { }
 
@@ -44,7 +44,7 @@ export class EventService {
   /** POST: add a new hero to the server */
   addEvent (event: Event): Observable<Event> {
     return this.http.post<Event>(this.eventsURL, event, httpOptions).pipe(
-      tap((event: Event) => this.log(`added hero w/ id=${event.id}`)),
+      tap((e: Event) => this.log(`added hero w/ id=${e.id}`)),
       catchError(this.handleError<Event>('addHero'))
     );
   }
@@ -59,7 +59,7 @@ export class EventService {
       catchError(this.handleError<Event>('deleteEvent'))
   );
 }
-   
+
   /** Log a EventService message with the MessageService */
   private log(message: string) {
   this.messageService.add('HeroService: ' + message);
@@ -73,13 +73,12 @@ export class EventService {
    */
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-  
+
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
-  
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

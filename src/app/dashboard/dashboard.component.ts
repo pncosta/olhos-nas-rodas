@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../events/event';
-import { EventService } from '../event.service';
+import { EventService } from '../events/event.service';
 
 @Component({
   selector: 'app-dashboard',

@@ -1,0 +1,15 @@
+<div *ngIf="auth.user | async; then authenticated else guest">
+  <!-- template will replace this div -->
+</div>
+
+<ng-template #guest>
+ <app-not-logged-in></app-not-logged-in>
+</ng-template>
+
+
+<!-- User logged in -->
+<ng-template #authenticated>
+  <div class="container">
+    <app-new-event-form></app-new-event-form>
+  </div>
+</ng-template>

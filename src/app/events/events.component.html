@@ -1,5 +1,8 @@
 
-<h2> Events</h2>
+<h2>Events</h2>
+<a routerLink="/events/new">
+  <button mat-raised-button>Adicionar </button>
+</a>
 
 <div class="container">
 
@@ -11,14 +14,15 @@
 </div>
 
 <div>
-    <label>event name:
-      <input #eventName />
+    <label>event title:
+      <input #eventTitle />
     </label>
     <!-- (click) passes input value to add() and then clears the input -->
-    <button (click)="add(eventName.value); eventName.value=''">
+    <button (click)="add(eventTitle.value); eventTitle.value=''">
       add
     </button>
   </div>
 <!-- One way data binding from parent to child -->
 
 
+ 

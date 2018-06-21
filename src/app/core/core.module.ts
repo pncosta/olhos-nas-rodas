@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { MessageService } from './message.service';
 import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -10,6 +11,6 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
     AngularFireAuthModule,
     AngularFirestoreModule
   ],
-  providers: [ AuthService , MessageService]
+  providers: [ AuthService , MessageService, AuthGuard]
 })
 export class CoreModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from './event';
-import { EventService } from '../event.service';
+import { EventService } from './event.service';
 
 @Component({
   selector: 'app-events',
@@ -20,10 +20,10 @@ export class EventsComponent implements OnInit {
     .subscribe(events => this.events = events);
   }
 
-  add(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.eventService.addEvent({ name } as Event)
+  add(title: string): void {
+    title = title.trim();
+    if (!title) { return; }
+    this.eventService.addEvent({ title } as Event)
       .subscribe(event => {
         this.events.push(event);
       });

@@ -1,10 +1,10 @@
 details
 <div *ngIf="event">
-  <h2>{{ event.name | uppercase }} Details</h2>
+  <h2>{{ event.title | uppercase }} Details</h2>
   <div><span>id: </span>{{event.id}}</div>
   <div>
-    <label>name:
-      <input [(ngModel)]="event.name" placeholder="name">
+    <label>title:
+      <input [(ngModel)]="event.title" placeholder="title">
     </label>
   </div>
 </div>

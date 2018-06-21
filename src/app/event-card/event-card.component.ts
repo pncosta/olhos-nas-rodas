@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Event } from '../events/event';
-import { EventService } from '../event.service';
+import { EventService } from '../events/event.service';
 
 @Component({
   selector: 'app-event-card',
@@ -18,6 +18,5 @@ export class EventCardComponent implements OnInit {
   delete(event: Event): void {
     this.eventService.deleteEvent(event).subscribe();
     this.deleted.emit(event);
-  } 
-
+  }
 }

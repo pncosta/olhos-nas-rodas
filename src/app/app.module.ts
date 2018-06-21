@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -13,13 +12,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
-
 /* MyApp Modules and Services */
 import { environment } from '../environments/environment';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
-import { EventService } from './event.service';
+import { EventService } from './events/event.service';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 
@@ -34,9 +32,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { EventCardComponent } from './event-card/event-card.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LoginDialog } from './navbar/login-dialog.component';
-import { SignupDialog } from './navbar/signup-dialog.component';
+import { SignupDialogComponent } from './navbar/signup-dialog.component';
 import { GoogleLoginButtonComponent } from './navbar/google-login-button/google-login-button.component';
 import { UserAvatarComponent } from './user-avatar/user-avatar.component';
+import { NewEventComponent } from './events/new-event/new-event.component';
+import { NotLoggedInComponent } from './not-logged-in/not-logged-in.component';
+import { NewEventFormComponent } from './events/new-event-form/new-event-form.component';
 
 @NgModule({
   declarations: [
@@ -49,14 +50,17 @@ import { UserAvatarComponent } from './user-avatar/user-avatar.component';
     SidebarComponent,
     EventCardComponent,
     UserProfileComponent,
-    SignupDialog,
+    SignupDialogComponent,
     LoginDialog,
     GoogleLoginButtonComponent,
     UserAvatarComponent,
+    NewEventComponent,
+    NotLoggedInComponent,
+    NewEventFormComponent,
   ],
   entryComponents: [
     LoginDialog,
-    SignupDialog
+    SignupDialogComponent
   ],
   imports: [
     BrowserModule,

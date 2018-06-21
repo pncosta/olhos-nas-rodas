@@ -3,7 +3,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 // https://itnext.io/part-2-complete-step-by-step-firebase-authentication-in-angular-2-25d284102632
 
 export interface User {
@@ -28,31 +28,31 @@ export class AuthService {
     this.user = this._firebaseAuth.authState
       .switchMap(user => {
         if (user) {
-          return this._firebaseStore.doc<User>(`users/${user.uid}`).valueChanges()
+          return this._firebaseStore.doc<User>(`users/${user.uid}`).valueChanges();
         }
-        return Observable.of(null)
+        return Observable.of(null);
       });
 
     this.user.subscribe(
       (user) => { this.userDetails = user ? user : null; }
-    ); 
+    );
   }
-  
+
   signup(email: string, password: string) {
     return this._firebaseAuth.auth
       .createUserWithEmailAndPassword(email, password)
-      .then(user => { return this.setUserDoc(user)})
+      .then(user => this.setUserDoc(user));
 
   }
 
   login(email: string, password: string) {
 
-    let promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       this._firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
-      .then(value => { resolve(value);})
-      .catch(err => { reject(err); });   
+      .then(value => { resolve(value); })
+      .catch(err => { reject(err); });
      });
     return promise;
     }
@@ -67,36 +67,36 @@ export class AuthService {
   }
 
   signInWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider()
+    const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
 
    // Update properties on the user document
-   updateUser( data: any) { 
+   updateUser( data: any) {
     console.log(data);
-    return this._firebaseStore.doc(`users/${this.userDetails.uid}`).update(data)
+    return this._firebaseStore.doc(`users/${this.userDetails.uid}`).update(data);
   }
 
   updatePassword (password: string) {
-    var user = this._firebaseAuth.auth.currentUser;
+    const user = this._firebaseAuth.auth.currentUser;
     user.updatePassword(password)
-      .then(function() {
-        console.log ("Success updating user pass! ");
+      .then(function(r) {
+        console.log ('Success updating user pass! ');
       }).catch(function(error) {
         // TODO: handle error
-        console.log ("Error updating user pass");
+        console.log (error);
       });
   }
 
   logInWithPopup() {
-    //this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    // this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
   private oAuthLogin(provider) {
     return this._firebaseAuth.auth.signInWithPopup(provider)
       .then((credential) => {
-        this.setUserDoc(credential.user)
-      })
+        this.setUserDoc(credential.user);
+      });
   }
 
    // Sets user data to firestore after succesful login
@@ -109,14 +109,14 @@ export class AuthService {
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL
-    }
+    };
 
-    return userRef.set(data, { merge: true })
+    return userRef.set(data, { merge: true });
 
   }
     // If error, console log and notify user
     private handleError(error) {
-      console.error(error)
+      console.error(error);
     }
 
 
