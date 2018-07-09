@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { } from '@types/googlemaps';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import { Bicycle } from '../../bicycle';
@@ -11,15 +12,23 @@ import { Bicycle } from '../../bicycle';
   styleUrls: ['./new-event-form.component.css']
 })
 export class NewEventFormComponent implements OnInit {
-
+  @ViewChild('gmap') gmapElement: any;
+  map: google.maps.Map;
   newEventForm: FormGroup;
   dateValue = new FormControl(new Date());
+  
 
   constructor( public fb: FormBuilder, private eventService: EventService ) {
     this.createForm();
    }
 
   ngOnInit() {
+    var mapProp = {
+      center: new google.maps.LatLng(18.5793, 73.8143),
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
   }
 
   submit() {

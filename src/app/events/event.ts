@@ -1,4 +1,4 @@
-import { Bicycle } from './../event';
+import { Bicycle } from './../bicycle';
 export class Event {
     id?: string;
     title?: string;
