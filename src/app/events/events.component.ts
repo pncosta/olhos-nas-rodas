@@ -23,10 +23,10 @@ export class EventsComponent implements OnInit {
   add(title: string): void {
     title = title.trim();
     if (!title) { return; }
-    this.eventService.addEvent({ title } as Event)
-      .subscribe(event => {
+    this.eventService.addEvent({ title } as Event);
+    /*  .subscribe(event => {
         this.events.push(event);
-      });
+      });*/
   }
 
   onDelete(event: Event): void {

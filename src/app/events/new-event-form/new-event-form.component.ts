@@ -1,10 +1,9 @@
-
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
-
-import { EventService } from '../event.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Event } from '../event';
+import { EventService } from '../event.service';
+import { Bicycle } from '../../bicycle';
+
 
 @Component({
   selector: 'app-new-event-form',
@@ -14,6 +13,7 @@ import { Event } from '../event';
 export class NewEventFormComponent implements OnInit {
 
   newEventForm: FormGroup;
+  dateValue = new FormControl(new Date());
 
   constructor( public fb: FormBuilder, private eventService: EventService ) {
     this.createForm();
@@ -26,17 +26,26 @@ export class NewEventFormComponent implements OnInit {
     console.log('submitting');
     const event: Event = this.getEventFromForm();
 
-    this.eventService.addEvent(event)
-    .subscribe(e => {
+    this.eventService.addEvent(event);
+    /*.subscribe(e => {
       console.log(e);
-    });
-    console.log('submited');
-    // this.eventService.addEvent( event );
+    });*/
+    // TODO: handle error//success ?
+    // TODO: go back to event list.
   }
 
   getEventFromForm(): Event {
-    return ({ title: 'teste',
-             description: 'description'} as Event);
+    return ({ title:  this.title.value,
+              description:  this.description.value,
+              location:  this.location.value,
+              date: new Date(this.date.value),
+              bicycle: ({
+                color: this.bikeColor.value,
+                serialNo: this.bikeSerialNo.value,
+                title: this.bikeBrand.value,
+                description: this.bikeDescription.value
+              } as Bicycle),
+            } as Event);
   }
 
   createForm() {
@@ -45,7 +54,25 @@ export class NewEventFormComponent implements OnInit {
       description: '',
       location: '',
       date: '',
+      hour: '',
+      lockerType: '',
+      bikeBrand: '',
+      bikeSerialNo: '',
+      bikeColor: '',
+      bikeDescription: '',
     });
   }
+
+    // Form fields getters
+    get title() { return this.newEventForm.get('title'); }
+    get description() { return this.newEventForm.get('description'); }
+    get location() { return this.newEventForm.get('location'); }
+    get date() { return this.newEventForm.get('date'); }
+    get hour() { return this.newEventForm.get('hour'); }
+    get lockerType() { return this.newEventForm.get('lockerType'); }
+    get bikeBrand() { return this.newEventForm.get('bikeBrand'); }
+    get bikeSerialNo() { return this.newEventForm.get('bikeSerialNo'); }
+    get bikeColor() { return this.newEventForm.get('bikeColor'); }
+    get bikeDescription() { return this.newEventForm.get('bikeDescription'); }
 
 }

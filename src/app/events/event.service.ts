@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Event } from './event';
-import { EVENTS } from '../mock-events';
-import { Observable ,  of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { MessageService } from '../core/message.service';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Event } from './event';
+
+import { AngularFirestore } from 'angularfire2/firestore';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,38 +16,50 @@ export class EventService {
   private eventsURL = 'api/events';  // URL to web api
   constructor(
     private http: HttpClient,
+    private db: AngularFirestore,
     private messageService: MessageService) { }
 
+
+ 
+
   getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(this.eventsURL)
-    .pipe(
-      catchError(this.handleError('getHeroes', []))
-    );
+    return this.db.collection<Event>('/events').snapshotChanges().map(events => {
+      return events.map(a => {
+        return {id: a.payload.doc.id, ...a.payload.doc.data()} as Event;
+      });
+    });
   }
 
   /** GET event by id. Will 404 if id not found */
-  getEvent(id: number): Observable<Event> {
-    const url = `${this.eventsURL}/${id}`;
-    return this.http.get<Event>(url).pipe(
-      tap(_ => this.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<Event>(`getEvent id=${id}`))
-    );
+  getEvent(id: string): Observable<Event> {
+
+    const itemDoc = this.db.doc<Event>('events/' + id);
+    return itemDoc.snapshotChanges().map(e => {
+        return {id: e.payload.id, ... e.payload.data()} as Event;
+    });
   }
 
   /** PUT: update the hero on the server */
-  updateEvent (event: Event): Observable<any> {
-    return this.http.put(this.eventsURL, event, httpOptions).pipe(
-      tap(_ => this.log(`updated hero id=${event.id}`)),
-      catchError(this.handleError<any>('updatEevent'))
-    );
+
+
+  updateEvent (event: Event) {
+    const itemDoc = this.db.doc<Event>('events/' + event.id);
+     itemDoc.update(event)
+     .then(e => console.dir (e))
+     .catch(err => console.dir(err));
   }
 
   /** POST: add a new hero to the server */
-  addEvent (event: Event): Observable<Event> {
-    return this.http.post<Event>(this.eventsURL, event, httpOptions).pipe(
+  addEvent (event: Event) {
+
+    const events = this.db.collection<Event>('events');
+    return events.add(event);
+
+   /* return this.http.post<Event>(this.eventsURL, event, httpOptions).pipe(
       tap((e: Event) => this.log(`added hero w/ id=${e.id}`)),
       catchError(this.handleError<Event>('addHero'))
-    );
+    );*/
+
   }
 
   /** DELETE: delete the hero from the server */

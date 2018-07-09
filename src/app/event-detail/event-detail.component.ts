@@ -22,14 +22,14 @@ export class EventDetailComponent implements OnInit {
   }
 
   getEvent(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.eventService.getEvent(id)
+    this.eventService.getEvent(this.route.snapshot.paramMap.get('id'))
       .subscribe(event => this.event = event);
   }
 
   save(): void {
-    this.eventService.updateEvent(this.event)
-      .subscribe(() => this.goBack());
+    this.eventService.updateEvent(this.event);
+  // TODO handle sucess, error    .subscribe(() =>
+   this.goBack();
   }
 
   goBack(): void {

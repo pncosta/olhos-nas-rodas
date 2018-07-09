@@ -1,7 +1,9 @@
+import { Bicycle } from './../event';
 export class Event {
-    id?: number;
+    id?: string;
     title?: string;
     description?: string;
-    date?: string;
+    date?: Date;
     location?: string;
+    bicycle?: Bicycle;
   }

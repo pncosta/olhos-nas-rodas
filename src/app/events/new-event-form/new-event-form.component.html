@@ -1,11 +1,15 @@
-<mat-card>
+
+<h2 class="mat-h2">New Event</h2>
+<div class="wrapper">
+<mat-card class="half-width" class="card">
     <mat-card-header>
      
-        <mat-card-title>Add new event</mat-card-title>
-        <mat-card-subtitle>Robbery</mat-card-subtitle>
+        <mat-card-title></mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
       </mat-card-header>
 
     <mat-card-content>
+      <h2 class="mat-h2">Event Details</h2>
       <form [formGroup]="newEventForm">
         <div class="container">
             <mat-form-field class="full-width">
@@ -16,14 +20,50 @@
               <textarea matInput placeholder="Leave a comment" formControlName="description"></textarea>
           </mat-form-field>
 
-          <mat-form-field class="example-form-field">
+          <mat-form-field class="full-width">
               <input matInput  placeholder="Local" formControlName="location"/>
           </mat-form-field>
 
-          <mat-form-field class="example-form-field">
-              <input matInput type="date" placeholder="date" formControlName="date"/>
+          <div class="full-width">
+          <mat-form-field class="half-width">
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" [value]="dateValue.value" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
+          <mat-form-field class="half-width">
+            <input matInput  placeholder="hour" formControlName="hour"/>
+        </mat-form-field>
+    </div>
+
+          <h2 class="mat-h2">Bicycle Details</h2>
+
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Bike brand/Model" formControlName="bikeBrand">
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Bike Color" formControlName="bikeColor">
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Bike Serial Number" formControlName="bikeSerialNo">
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Type of locker used" formControlName="biklockerTypeeSerialNo">
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="bikeDescription" formControlName="bikeDescription"></textarea>
+        </mat-form-field>
+         
+      
+        
+
+          
+
+     
         </div>
       </form>
     </mat-card-content>
@@ -33,4 +73,7 @@
       </mat-card-actions>
 </mat-card>
 
+</div>
+
 {{ newEventForm.value | json }}
+
