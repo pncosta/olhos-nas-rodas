@@ -12,11 +12,11 @@ import { MatDialog, MatDialogRef } from '@angular/material';
     styleUrls: ['login-dialog.component.scss']
 })
 
-export class LoginDialog {
+export class LoginDialog implements OnInit{
 
     constructor(public fb: FormBuilder, public auth: AuthService, private router: Router,
         public dialogRef: MatDialogRef<LoginDialog>) { }
-    private loginForm: FormGroup;
+    loginForm: FormGroup;
 
     ngOnInit() {
         this.loginForm = this.fb.group({
@@ -46,9 +46,9 @@ export class LoginDialog {
             .catch((err) => console.log(err)) ; //TODO: Handle Error 
     }
 
-    private afterLoggedIn(e) {
+    afterLoggedIn(e) {
         this.dialogRef.close();
-        this.router.navigate(['dashboard'])
+        this.router.navigate(['dashboard']);
     }
 
     // TODO: login up stuff -  move to login component
@@ -60,7 +60,7 @@ export class LoginDialog {
             }.bind(this))
     }
     // Using getters will make your code look pretty
-    get email() { return this.loginForm.get('email') }
-    get password() { return this.loginForm.get('password') }
+    get email() { return this.loginForm.get('email'); }
+    get password() { return this.loginForm.get('password'); }
 
 }

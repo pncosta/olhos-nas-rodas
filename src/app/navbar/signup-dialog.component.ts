@@ -62,7 +62,7 @@ export class SignupDialogComponent implements OnInit {
     }
   }
 
-  private afterSignedUp(e) {
+  public afterSignedUp(e) {
     this.dialogRef.close();
     this.router.navigate(['dashboard']);
   }

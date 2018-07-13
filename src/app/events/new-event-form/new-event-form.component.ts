@@ -1,9 +1,14 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import 'rxjs/add/operator/debounceTime';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import * as firebase from 'firebase/app';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { } from '@types/googlemaps';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import { Bicycle } from '../../bicycle';
+import { MyMapComponent } from '../../my-map/my-map.component';
+import { GeoLocationService } from '../../geo-location.service';
+
 
 
 @Component({
@@ -11,36 +16,39 @@ import { Bicycle } from '../../bicycle';
   templateUrl: './new-event-form.component.html',
   styleUrls: ['./new-event-form.component.css']
 })
-export class NewEventFormComponent implements OnInit {
-  @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;
+export class NewEventFormComponent implements OnInit, AfterViewInit {
+  @ViewChild('map') map: MyMapComponent;
   newEventForm: FormGroup;
   dateValue = new FormControl(new Date());
-  
+  marker: google.maps.Marker;
 
-  constructor( public fb: FormBuilder, private eventService: EventService ) {
+  constructor( public fb: FormBuilder, private eventService: EventService, private geo: GeoLocationService ) {
     this.createForm();
    }
 
   ngOnInit() {
-    var mapProp = {
-      center: new google.maps.LatLng(18.5793, 73.8143),
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    // Listen to changes on the "address" field to update the google map
+    this.location.valueChanges
+    .filter(txt => txt.length >= 3)
+    .debounceTime(500)
+    .subscribe(address => this.mapGoToLocation(address));
+  }
+
+  ngAfterViewInit() {
+    // init map
+    const center = {lat: 38.72529650480368, lng: -9.14989477783206};
+    this.map.setCenter(center.lat, center.lng);
+    this.map.setZoom(13);
+    this.marker = new google.maps.Marker({position: center, map: this.map.map});
+    this.marker.setDraggable(true);
+
+
   }
 
   submit() {
-    console.log('submitting');
+    // creates the Object event and submits to the Event Service
     const event: Event = this.getEventFromForm();
-
     this.eventService.addEvent(event);
-    /*.subscribe(e => {
-      console.log(e);
-    });*/
-    // TODO: handle error//success ?
-    // TODO: go back to event list.
   }
 
   getEventFromForm(): Event {
@@ -48,6 +56,8 @@ export class NewEventFormComponent implements OnInit {
               description:  this.description.value,
               location:  this.location.value,
               date: new Date(this.date.value),
+              coordinates : new firebase.firestore.GeoPoint(this.marker.getPosition().lat(),
+                                                            this.marker.getPosition().lng()),
               bicycle: ({
                 color: this.bikeColor.value,
                 serialNo: this.bikeSerialNo.value,
@@ -57,6 +67,17 @@ export class NewEventFormComponent implements OnInit {
             } as Event);
   }
 
+  // Centers the map and marker on a given address
+  mapGoToLocation(address: string) {
+    this.geo.getCoordinates(address)
+    .subscribe(coords => {
+      this.map.setCoordinates(coords);
+      this.marker.setPosition(coords);
+    },
+      err => console.log(err)); // TODO: handle error
+  }
+
+  // Creates the form
   createForm() {
     this.newEventForm = this.fb.group({
       title: '',
@@ -71,6 +92,7 @@ export class NewEventFormComponent implements OnInit {
       bikeDescription: '',
     });
   }
+
 
     // Form fields getters
     get title() { return this.newEventForm.get('title'); }

@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { firestore } from 'firebase/firestore';
 import { Injectable } from '@angular/core';
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageService } from '../core/message.service';
 import { Event } from './event';
-
-import { AngularFirestore } from 'angularfire2/firestore';
+import * as firebase from 'firebase/app';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -51,7 +52,6 @@ export class EventService {
 
   /** POST: add a new hero to the server */
   addEvent (event: Event) {
-
     const events = this.db.collection<Event>('events');
     return events.add(event);
 

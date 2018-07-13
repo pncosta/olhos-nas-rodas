@@ -16,8 +16,10 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
+/* import { InMemoryDataService } from './in-memory-data.service'; */
 import { EventService } from './events/event.service';
+import { UploadFileService } from './fileUpload/upload-file.service';
+import { GeoLocationService  } from './geo-location.service';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 
@@ -38,6 +40,10 @@ import { UserAvatarComponent } from './user-avatar/user-avatar.component';
 import { NewEventComponent } from './events/new-event/new-event.component';
 import { NotLoggedInComponent } from './not-logged-in/not-logged-in.component';
 import { NewEventFormComponent } from './events/new-event-form/new-event-form.component';
+import { MyMapComponent } from './my-map/my-map.component';
+import { FormUploadComponent } from './fileUpload/form-upload/form-upload.component';
+import { DetailsUploadComponent } from './fileUpload/details-upload/details-upload.component';
+import { ListUploadComponent } from './fileUpload/list-upload/list-upload.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +63,10 @@ import { NewEventFormComponent } from './events/new-event-form/new-event-form.co
     NewEventComponent,
     NotLoggedInComponent,
     NewEventFormComponent,
+    MyMapComponent,
+    FormUploadComponent,
+    DetailsUploadComponent,
+    ListUploadComponent
   ],
   entryComponents: [
     LoginDialog,
@@ -79,11 +89,11 @@ import { NewEventFormComponent } from './events/new-event-form/new-event-form.co
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //  InMemoryDataService, { dataEncapsulation: false }
+    // )
   ],
-  providers: [EventService],
+  providers: [EventService, GeoLocationService, UploadFileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

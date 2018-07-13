@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../events/event';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 
+import { Location } from '@angular/common';
 import { EventService } from '../events/event.service';
 
 @Component({

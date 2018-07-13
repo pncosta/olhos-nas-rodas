@@ -1,6 +1,10 @@
 .full-width {
     width: 100%;
 }
+
+.map-container {
+    width: 100%;
+}
 .card {
     max-width: 768px;
     min-width: 50%;
