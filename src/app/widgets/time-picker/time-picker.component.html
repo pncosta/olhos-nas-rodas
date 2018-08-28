@@ -1,0 +1,7 @@
+<mat-form-field class="container">
+  <mat-select placeholder="Hour" [(value)]="hour">
+    <mat-option *ngFor="let hour of hours" [value]="hour.value">
+      {{hour.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

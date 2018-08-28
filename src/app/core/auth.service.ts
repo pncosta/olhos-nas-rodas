@@ -61,6 +61,10 @@ export class AuthService {
     return this.userDetails != null;
   }
 
+  get uid() {
+    return this.userDetails.uid;
+  }
+
   logout() {
     this._firebaseAuth.auth.signOut()
     .then((res) => this.router.navigate(['/']));
@@ -72,8 +76,7 @@ export class AuthService {
   }
 
    // Update properties on the user document
-   updateUser( data: any) {
-    console.log(data);
+   updateUser(data: any) {
     return this._firebaseStore.doc(`users/${this.userDetails.uid}`).update(data);
   }
 

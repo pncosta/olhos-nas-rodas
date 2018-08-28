@@ -1,0 +1,7 @@
+<mat-form-field class="container">
+  <mat-select placeholder="Bicycle Color" [(value)]="color">
+    <mat-option *ngFor="let color of colors" [value]="color.value">
+      {{color.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

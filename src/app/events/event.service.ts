@@ -20,9 +20,6 @@ export class EventService {
     private db: AngularFirestore,
     private messageService: MessageService) { }
 
-
- 
-
   getEvents(): Observable<Event[]> {
     return this.db.collection<Event>('/events').snapshotChanges().map(events => {
       return events.map(a => {
@@ -40,8 +37,6 @@ export class EventService {
     });
   }
 
-  /** PUT: update the hero on the server */
-
 
   updateEvent (event: Event) {
     const itemDoc = this.db.doc<Event>('events/' + event.id);
@@ -50,16 +45,9 @@ export class EventService {
      .catch(err => console.dir(err));
   }
 
-  /** POST: add a new hero to the server */
-  addEvent (event: Event) {
+  addEvent (event: Event): Promise<firebase.firestore.DocumentReference> {
     const events = this.db.collection<Event>('events');
     return events.add(event);
-
-   /* return this.http.post<Event>(this.eventsURL, event, httpOptions).pipe(
-      tap((e: Event) => this.log(`added hero w/ id=${e.id}`)),
-      catchError(this.handleError<Event>('addHero'))
-    );*/
-
   }
 
   /** DELETE: delete the hero from the server */

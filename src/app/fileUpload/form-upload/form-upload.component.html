@@ -1,14 +1,47 @@
-<div *ngIf="currentFileUpload" class="progress">
-	<div class="progress-bar progress-bar-info progress-bar-striped"
-		role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
-		aria-valuemin="0" aria-valuemax="100"
-		[ngStyle]="{width:progress.percentage+'%'}">
-		{{progress.percentage}}%</div>
+<div class="dropzone" 
+     dropZone
+     (hovered)="toggleHover($event)"
+     (dropped)="startUpload($event)"
+     [class.hovering]="isHovering">
+
+
+
+     <h3>Drop an image here</h3>
+
+     <div class="file">
+          <button mat-raised-button type="button" onclick="document.getElementById('fileToUpload').click()">
+            <label for="fileToUpload"></label> Or click to choose a file...  
+          </button>
+          <input id="fileToUpload"  class="file-input" type="file" 
+          style="display:none;" (change)="startUpload($event.target.files)" accept=".png,.jpg">
+          
+      </div>
 </div>
 
-<label class="btn btn-default"> <input type="file"
-	(change)="selectFile($event)">
-</label>
 
-<button class="btn btn-success" [disabled]="!selectedFiles"
-	(click)="upload()">Upload</button>
+<div class="preview-list">
+
+   <div *ngFor="let image of _images">
+     <div class="thumbnail-container">
+      <div *ngIf ="image.downloadURL ; then thumbnail else loading"></div>
+  
+        <ng-template #thumbnail> 
+          <img class="thumbnail" src="{{image.downloadURL}} ">
+        </ng-template>
+      
+        <ng-template #loading> 
+          <mat-progress-spinner class="spinner" 
+          [diameter]="spinnersize" mode="indeterminate"></mat-progress-spinner>      
+        </ng-template>
+
+        <div class="mat-small">
+            {{ (image.name.length > 12) ? (image.name | slice:0:12)+'..':(image.name) }}
+            {{ image.size | fileSize }}
+        </div>
+        
+        <button mat-button (click)="remove(image)">
+          <mat-icon>delete</mat-icon> DELETE
+        </button>
+      </div>
+   </div>
+</div>

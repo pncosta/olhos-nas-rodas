@@ -1,0 +1,47 @@
+.dropzone { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+    height: 150px;
+    border: 2px dashed black;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+
+    &.hovering {
+        border: 2px solid lightgray;
+        color: lightgray !important;
+    }
+}
+
+.thumbnail-container {
+    width: 160px;
+    padding: 12px;
+    margin: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+    transition: all .2s ease-in-out;
+}
+
+.thumbnail {
+    max-height: 105px;
+    max-width: 140px;
+    padding-bottom: 8px;
+}
+
+.preview-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.spinner {
+    padding-bottom: 8px;
+}
+
+img {
+    object-fit: contain;
+}

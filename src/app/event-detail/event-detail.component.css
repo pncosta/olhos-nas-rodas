@@ -1,0 +1,9 @@
+.card {
+    max-width: 90%;
+}
+
+.card-image {
+    background-size: cover;
+    max-height: 400px;
+    object-fit: contain;
+}

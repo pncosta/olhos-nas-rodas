@@ -8,15 +8,22 @@ import { MatCheckboxModule,
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule } from '@angular/material/';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
   imports: [CommonModule, MatButtonModule, MatCheckboxModule,
      MatInputModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule,
-     MatDividerModule, MatDatepickerModule, MatNativeDateModule],
+     MatDividerModule, MatDatepickerModule, MatNativeDateModule, MatStepperModule, MatSelectModule,
+     MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
 
   exports: [MatButtonModule, MatCheckboxModule, MatInputModule,
-    MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule, MatDividerModule, MatDatepickerModule],
+    MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule, MatDividerModule, MatDatepickerModule, 
+    MatStepperModule, MatSelectModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
   declarations: []
 })
 export class AngularMaterialModule { }

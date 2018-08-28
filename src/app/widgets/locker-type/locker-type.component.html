@@ -1,0 +1,7 @@
+<mat-form-field class="container">
+  <mat-select placeholder="Type of lock used" [(value)]="locker">
+    <mat-option *ngFor="let locker of lockers" [value]="locker.value">
+      {{locker.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

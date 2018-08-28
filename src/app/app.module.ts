@@ -11,6 +11,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+
 
 /* MyApp Modules and Services */
 import { environment } from '../environments/environment';
@@ -44,6 +46,11 @@ import { MyMapComponent } from './my-map/my-map.component';
 import { FormUploadComponent } from './fileUpload/form-upload/form-upload.component';
 import { DetailsUploadComponent } from './fileUpload/details-upload/details-upload.component';
 import { ListUploadComponent } from './fileUpload/list-upload/list-upload.component';
+import { LockerTypeComponent } from './widgets/locker-type/locker-type.component';
+import { DropZoneDirective } from './widgets/drop-zone.directive';
+import { FileSizePipe } from './pipes/file-size.pipe';
+import { ColorPickerComponent } from './widgets/color-picker/color-picker.component';
+import { TimePickerComponent } from './widgets/time-picker/time-picker.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +73,12 @@ import { ListUploadComponent } from './fileUpload/list-upload/list-upload.compon
     MyMapComponent,
     FormUploadComponent,
     DetailsUploadComponent,
-    ListUploadComponent
+    ListUploadComponent,
+    LockerTypeComponent,
+    DropZoneDirective,
+    FileSizePipe,
+    ColorPickerComponent,
+    TimePickerComponent
   ],
   entryComponents: [
     LoginDialog,
@@ -85,6 +97,7 @@ import { ListUploadComponent } from './fileUpload/list-upload/list-upload.compon
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
     CoreModule,
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

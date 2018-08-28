@@ -1,7 +1,8 @@
 export class Bicycle {
     id?: string;
-    title?: string;
+    brand?: string;
     description?: string;
     color?: string;
     serialNo?: string;
+    images?: string[];
   }
