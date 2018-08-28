@@ -44,6 +44,7 @@ import { MyMapComponent } from './my-map/my-map.component';
 import { FormUploadComponent } from './fileUpload/form-upload/form-upload.component';
 import { DetailsUploadComponent } from './fileUpload/details-upload/details-upload.component';
 import { ListUploadComponent } from './fileUpload/list-upload/list-upload.component';
+import { LockerTypeComponent } from './widgets/locker-type/locker-type.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ListUploadComponent } from './fileUpload/list-upload/list-upload.compon
     MyMapComponent,
     FormUploadComponent,
     DetailsUploadComponent,
-    ListUploadComponent
+    ListUploadComponent,
+    LockerTypeComponent
   ],
   entryComponents: [
     LoginDialog,

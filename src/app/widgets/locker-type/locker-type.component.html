@@ -1,0 +1,11 @@
+<mat-form-field>
+  <mat-select placeholder="Type of lock used" [(ngModel)]="selectedValue">
+    <mat-option *ngFor="let locker of lockers" [value]="locker.value">
+      {{locker.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+1- {{selectedValue}}
+2- {{locker}}
+3- {{value}}

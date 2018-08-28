@@ -2,14 +2,12 @@ import { Location } from '@angular/common';
 import 'rxjs/add/operator/debounceTime';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import * as firebase from 'firebase/app';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import { Bicycle } from '../../bicycle';
 import { MyMapComponent } from '../../my-map/my-map.component';
 import { GeoLocationService } from '../../geo-location.service';
-
-
 
 @Component({
   selector: 'app-new-event-form',
@@ -18,9 +16,11 @@ import { GeoLocationService } from '../../geo-location.service';
 })
 export class NewEventFormComponent implements OnInit, AfterViewInit {
   @ViewChild('map') map: MyMapComponent;
+  some ;
   newEventForm: FormGroup;
   dateValue = new FormControl(new Date());
   marker: google.maps.Marker;
+
 
   constructor( public fb: FormBuilder, private eventService: EventService, private geo: GeoLocationService ) {
     this.createForm();
@@ -41,8 +41,9 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
     this.map.setZoom(13);
     this.marker = new google.maps.Marker({position: center, map: this.map.map});
     this.marker.setDraggable(true);
-
-
+    this.marker.addListener('dragend', r => this.handleMarkerDrag(r));
+    //init date with today
+    this.date.setValue(new Date()); 
   }
 
   submit() {
@@ -51,11 +52,18 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
     this.eventService.addEvent(event);
   }
 
+   handleMarkerDrag(marker) {
+    this.geo.getAddressFromCoordinates(marker.latLng).subscribe(addresses => {
+      this.location.setValue(addresses[0].formatted_address.split(',')[0], {emitEvent: false});
+    });
+  }
+
   getEventFromForm(): Event {
     return ({ title:  this.title.value,
               description:  this.description.value,
               location:  this.location.value,
               date: new Date(this.date.value),
+              hour: this.hour,
               coordinates : new firebase.firestore.GeoPoint(this.marker.getPosition().lat(),
                                                             this.marker.getPosition().lng()),
               bicycle: ({
@@ -71,7 +79,7 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
   mapGoToLocation(address: string) {
     this.geo.getCoordinates(address)
     .subscribe(coords => {
-      this.map.setCoordinates(coords);
+      // this.map.setCoordinates(coords);
       this.marker.setPosition(coords);
     },
       err => console.log(err)); // TODO: handle error

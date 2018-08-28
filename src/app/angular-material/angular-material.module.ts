@@ -8,15 +8,18 @@ import { MatCheckboxModule,
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule } from '@angular/material/';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
   imports: [CommonModule, MatButtonModule, MatCheckboxModule,
      MatInputModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule,
-     MatDividerModule, MatDatepickerModule, MatNativeDateModule],
+     MatDividerModule, MatDatepickerModule, MatNativeDateModule, MatStepperModule, MatSelectModule],
 
   exports: [MatButtonModule, MatCheckboxModule, MatInputModule,
-    MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule, MatDividerModule, MatDatepickerModule],
+    MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule, MatDividerModule, MatDatepickerModule, 
+    MatStepperModule, MatSelectModule],
   declarations: []
 })
 export class AngularMaterialModule { }

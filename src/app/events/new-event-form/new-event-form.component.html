@@ -1,91 +1,107 @@
-
-<h2 class="mat-h2">New Event</h2>
+<h2 class="mat-h2"> New Event</h2>
 <div class="wrapper">
-<mat-card class="half-width" class="card">
+  <!--<mat-card class="half-width" class="card">
     <mat-card-header>
-     
-        <mat-card-title></mat-card-title>
-        <mat-card-subtitle></mat-card-subtitle>
-      </mat-card-header>
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
 
-    <mat-card-content>
-      <h2 class="mat-h2">Event Details</h2>
+    <mat-card-content>--> 
+
       <form [formGroup]="newEventForm">
-        <div class="container">
+
+        <mat-vertical-stepper linear>
+          <!-- Step 1 Event Details -->
+          <mat-step>
+            <ng-template matStepLabel>Event Details</ng-template>
+
             <mat-form-field class="full-width">
-            <input matInput placeholder="Event title" formControlName="title">
-          </mat-form-field>
+              <input matInput placeholder="Event title" formControlName="title">
+            </mat-form-field>
 
-          <mat-form-field class="full-width">
-              <textarea matInput placeholder="Leave a comment" formControlName="description"></textarea>
-          </mat-form-field>
+            <div class="full-width">
+              <mat-form-field class="half-width">
+                 <input matInput [matDatepicker]="picker" placeholder="Choose a date" [value]="dateValue.value" formControlName="date">
+               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
 
-          <mat-form-field class="full-width">
-              <input matInput  placeholder="Local" formControlName="location"/>
-          </mat-form-field>
+              <mat-form-field class="half-width">
+                <input type="time" matInput placeholder="hour" formControlName="hour" />
+              </mat-form-field>
 
-          <div class="full-width">
-          <mat-form-field class="half-width">
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date" [value]="dateValue.value" formControlName="date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+              <mat-form-field class="full-width">
+                <input matInput placeholder="Local" formControlName="location" />
+                <mat-hint>Type the address or Drag and Drop the marker on the map</mat-hint>
+              </mat-form-field>
+  
+              <div class="map-container">
+                <app-my-map #map></app-my-map>
+              </div>
 
-          <mat-form-field class="half-width">
-            <input matInput  placeholder="hour" formControlName="hour"/>
-        </mat-form-field>
-        <div class="map-container">
-          <app-my-map #map></app-my-map>
-          </div>
+              <mat-form-field class="full-width">
+                <textarea matInput placeholder="Additional Details" formControlName="description"></textarea>
+              </mat-form-field>
+  
+             
+            </div>
 
-      
-    </div>
+            <div>
+              <button mat-button matStepperNext type="button">Next</button>
+            </div>
+          </mat-step>
+          <!-- Step 2 Bicycle-->
+          <mat-step>
+            <ng-template matStepLabel>Bicycle Details</ng-template>
 
-          <h2 class="mat-h2">Bicycle Details</h2>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Bike brand/Model" formControlName="bikeBrand">
+            </mat-form-field>
 
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Bike brand/Model" formControlName="bikeBrand">
-          </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Bike Color" formControlName="bikeColor">
+            </mat-form-field>
 
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Bike Color" formControlName="bikeColor">
-          </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Bike Serial Number" formControlName="bikeSerialNo">
+            </mat-form-field>
 
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Bike Serial Number" formControlName="bikeSerialNo">
-          </mat-form-field>
+            <app-locker-type [(locker)]="some" (lockerChange)="onVoted($event)"></app-locker-type>
+            
+            some:  {{some}}
 
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Type of locker used" formControlName="lockerType">
-          </mat-form-field>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Type of locker used" formControlName="lockerType">
+            </mat-form-field>
 
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="bikeDescription" formControlName="bikeDescription"></textarea>
-        </mat-form-field>
-         
-      
-        
+            <mat-form-field class="full-width">
+              <textarea matInput placeholder="bikeDescription" formControlName="bikeDescription"></textarea>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious type="button">Back</button>
+              <button mat-button matStepperNext type="button">Next</button>
+             
+            </div>
 
-          
+          </mat-step>
 
-     
-        </div>
+          <mat-step>
+              <ng-template matStepLabel>Upload Photos</ng-template>
+              <app-form-upload></app-form-upload>
+              
+              <br/>
+              
+              <app-list-upload></app-list-upload>
+              <button mat-button type="button" (click)="submit()">SUBMIT</button>
+          </mat-step>
+        </mat-vertical-stepper>
+
       </form>
-    </mat-card-content>
-
+   <!-- </mat-card-content>
     <mat-card-actions>
-        <button mat-button type="button" (click)="submit()">SUBMIT</button>
-      </mat-card-actions>
-</mat-card>
+
+    </mat-card-actions>
+  </mat-card>-->
 
 </div>
-
-<app-form-upload></app-form-upload>
-	
-	<br/>
-	<br/>
-	
-	<app-list-upload></app-list-upload>
-
-
 
