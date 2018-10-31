@@ -1,55 +1,102 @@
-details
 <div *ngIf="event">
-  <h2>{{ event.title | uppercase }} Details</h2>
-  <div><span>id: </span>{{event.id}}</div>
-  <div>
-    <label>title:
-      <input [(ngModel)]="event.title" placeholder="title">
-    </label>
+
+  <header class="header">
+    <div>
+      <h1 class="mat-h1"> {{event.bicycle.brand}}</h1>
+    </div>
+    <div>
+      <h2 class="mat-h2"> {{event.date | date:'fullDate' }} | {{event.location}} </h2>
+    </div>
+  </header>
+
+
+  <div class="main">
+    <div class="details">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Bicycle Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="details-labels"> 
+            <span class="mat-body-strong">Bicycle Brand</span>
+            <span class="mat-body">{{event.bicycle.brand}}}</span>
+          </div> 
+          <div class="details-labels"> 
+            <span class="mat-body-strong">Serial Number</span>
+            <span class="mat-body">{{event.bicycle.serialNo}}</span>
+          </div> 
+          <div class="details-labels"> 
+            <span class="mat-body-strong">Color</span>
+            <span class="mat-body">{{event.bicycle.color}}</span>
+          </div> 
+          <div class="details-labels"> 
+            <span class="mat-body-strong">Description</span>
+            <span class="mat-body">{{event.bicycle.description}}</span>
+          </div> 
+
+
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card>
+          <mat-card-header>
+              <mat-card-title>Theft Details</mat-card-title>
+            </mat-card-header>
+        <mat-card-content>
+            <div class="details-labels"> 
+                <span class="mat-body-strong">Date of ocurence</span>
+                <span class="mat-body">{{event.date | date:'fullDate' }}</span>
+              </div> 
+
+            <div class="details-labels"> 
+                <span class="mat-body-strong">Locker used</span>
+                <span class="mat-body">{{event.lockerType}}</span>
+              </div> 
+              <div class="details-labels"> 
+                <span class="mat-body-strong">Location</span>
+                <span class="mat-body">{{event.location}}</span>
+              </div> 
+              <div class="details-labels"> 
+                <span class="mat-body-strong">Description</span>
+                <span class="mat-body">{{event.description}}</span>
+              </div> 
+              
+        </mat-card-content>
+      </mat-card>      
+    </div>
+    
+    <div class="images">
+        <mat-card class="image-card">
+            <img mat-card-image src="{{photoUrl}}" alt="Photo of the bicycle">
+            <div *ngIf="author | async as user">
+            <mat-card-header>
+           
+                <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
+                <mat-card-title> {{user.displayName}} </mat-card-title>
+              <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+          
+            </mat-card-header>
+          </div>
+            <mat-card-content>
+           
+            </mat-card-content>
+            <mat-card-actions>
+                <button  mat-raised-button color="primary">
+                    <mat-icon>message</mat-icon> SEND MESSAGE
+                </button>
+            </mat-card-actions>
+          </mat-card>
+    </div>
   </div>
 
 
-<button (click)="save()">save</button>
+  <div class="map-container">
+    <app-my-map #map></app-my-map>
+  </div>
 
-<button (click)="goBack()">go back</button>
+  <div class="comments">
+    <!-- TODO -->
 
-
-{{ event | json}}
-
-
-
-<mat-card class="card">
-    <mat-card-header >
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{event.bicycle.brand}}</mat-card-title>
-      <mat-card-subtitle>{{event.date | date:'fullDate' }}</mat-card-subtitle>
-    </mat-card-header>
-    <img class="card-image" mat-card-image src="{{photoUrl}}" alt="Photo of the bicycle">
-    <mat-card-content>
-      <p>
-
-        <br /> <b>Description:</b> <br />
-        {{event.bicycle.description}}
-                          
-        <br /><b>Serial Number:</b> <br />
-        {{event.bicycle.serialNo}}
-
-        <br /> <b>Color:</b> <br />
-        {{event.bicycle.color}}
-
-        <br /> <b>Locker used:</b> <br />
-        {{event.lockerType}}
-
-        
-        <br /> <b>Location::</b><br />
-        {{event.location}}
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-  </mat-card>
-
-
+  </div>
+  
 </div>

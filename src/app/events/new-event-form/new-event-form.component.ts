@@ -91,6 +91,8 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
       author: this.auth.uid,
       lockerType: this.locker,
       hour: this.hour,
+      views: 0,
+      comments: [],
       coordinates: new firebase.firestore.GeoPoint(this.marker.getPosition().lat(),
         this.marker.getPosition().lng()),
       bicycle: ({
@@ -101,7 +103,6 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
         images: this.images ? this.images.map(img => img.path) : [],
       } as Bicycle),
     } as Event;
-    console.log({ event });
     return event;
   }
 

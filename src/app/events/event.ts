@@ -12,4 +12,6 @@ export class Event {
     coordinates?: firebase.firestore.GeoPoint;
     author?: string;
     lockerType: string;
+    views: number;
+    comments: Comment[];
   }

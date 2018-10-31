@@ -13,17 +13,19 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 
 @NgModule({
   imports: [CommonModule, MatButtonModule, MatCheckboxModule,
      MatInputModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule,
      MatDividerModule, MatDatepickerModule, MatNativeDateModule, MatStepperModule, MatSelectModule,
-     MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
+     MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule],
 
   exports: [MatButtonModule, MatCheckboxModule, MatInputModule,
     MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule, MatDividerModule, MatDatepickerModule, 
-    MatStepperModule, MatSelectModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
+    MatStepperModule, MatSelectModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule],
   declarations: []
 })
 export class AngularMaterialModule { }

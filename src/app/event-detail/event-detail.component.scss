@@ -1,0 +1,108 @@
+
+.header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding:30px 0;
+    overflow: hidden;
+    background-color: #3f51b5;
+}
+
+.header {
+    h1 {
+        font-size: 36px;
+        font-weight: 300;
+        color: white;
+      }
+      
+      h2 {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 28px;
+        margin: 15px 0 25px 0;
+        color: white;
+      }
+}
+
+.header div {
+    flex: 1;
+}
+
+
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.main div {
+    flex: 1;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    
+}
+  
+.details mat-card {
+    flex: 1
+}
+
+.images mat-card {
+    flex: 1;
+}
+
+.map-container {
+    height: 256px;
+    width: 100%;
+}
+
+  mat-card {
+     margin-bottom: 8px;
+  }
+
+  img {
+      object-fit: cover; 
+      margin-bottom: 8px;  
+  }
+
+  .details-labels {
+    display: flex; 
+    flex-direction: column;
+}
+
+  
+  @media screen and (min-width: 576px) {
+    .header {
+        padding:60px;
+        flex-direction: row;
+    }
+
+    .header {
+        h1 {
+            font-size: 56px;
+            font-weight: 300;
+            line-height: 56px;
+            margin: 15px 5px;
+
+          }
+          
+          h2 {
+            font-size: 18px;
+          }
+    }
+
+    .main {
+        flex-direction: row;
+    }
+
+    mat-card {
+        margin: 8px;
+    }
+  }
+
+

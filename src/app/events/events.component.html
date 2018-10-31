@@ -1,8 +1,12 @@
+<header class="header">
+    <div>
+      <h1 class="mat-h1"> Last Reports</h1>
+    </div>
+    <div>
+        <h2 class="mat-h2"></h2>
+      </div>
 
-<h2>Events</h2>
-<a routerLink="/events/new">
-  <button mat-raised-button>Adicionar </button>
-</a>
+  </header>
 
 <div class="container">
     <app-event-card *ngFor="let event of events" 
@@ -12,6 +16,6 @@
 
 </div>
 
-
-
- 
+<a routerLink="/events/new">
+  <button mat-raised-button color="primary"><mat-icon>add</mat-icon> ADD</button>
+</a>

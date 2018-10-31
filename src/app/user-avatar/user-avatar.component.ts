@@ -8,8 +8,8 @@ import { User } from '../core/auth.service'
 })
 export class UserAvatarComponent implements OnInit {
   @Input() user: User;
-  @Input() height: number = 28;
-  @Input() width: number = 28;
+  @Input() height: number = 40;
+  @Input() width: number = 40;
   @Input() fontSize: number = 10;
 
   colors = ['#1abc9c', '#16a085', '#f1c40f', '#f39c12', '#2196F3', '#3F51B5', '#673AB7', '#E91E63',

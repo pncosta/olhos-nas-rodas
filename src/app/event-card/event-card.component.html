@@ -1,22 +1,29 @@
 <a routerLink="/events/{{event.id}}">
   <mat-card>
-    <mat-card-header>
+      <div *ngIf="author | async as user">
+          <mat-card-header>
+   <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>{{event.bicycle.brand}}</mat-card-title>
       <mat-card-subtitle>
-        <span class="date">{{event.date}}</span>
-        <span class="location">{{event.location}}</span>
+        <span>  {{user.displayName}} </span>
+        <span class="date">  {{event.date | date:'shortDate' }} | {{event.location}} </span>
+
       </mat-card-subtitle>
     </mat-card-header>
- 
-   <!-- <img mat-card-image src="https://dummyimage.com/300x150/ea0"><img>-->
+  </div>
+
     <mat-card-content>
-      <div class="description">{{event.description}}</div>
+
+      <div class="card-content"> 
+        <div> <img class="card-image" src="https://firebasestorage.googleapis.com/v0/b/bike-stats-1d0a3.appspot.com/o/images%2F4czto2lmktn?alt=media&token=9624f0a4-a255-4969-a5ff-b24d0a80fdf8"><img></div>
+
+
+      <div class="description">{{event.bicycle.description}}</div>
+
+    </div>
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button (click)="delete(event)">DELETE</button>
-      </mat-card-actions>
+    
     <mat-card-footer>
     </mat-card-footer>
   </mat-card>
