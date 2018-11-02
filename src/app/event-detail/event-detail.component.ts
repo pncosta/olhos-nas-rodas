@@ -15,7 +15,7 @@ import { MyMapComponent } from '../my-map/my-map.component';
   styleUrls: ['./event-detail.component.scss']
 })
 export class EventDetailComponent implements OnInit, AfterViewInit {
-  @Input() event: Event;
+  event: Event;
 
 
   @ViewChildren('map') 
@@ -23,18 +23,22 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
   private map: MyMapComponent;
   private author: Observable<User>;
   private photoUrl: Observable<string | null>;
+  private photos: Array<string>;
 
   constructor(private route: ActivatedRoute,
     private eventService: EventService,
     private location: Location, 
     private users: UserService,
-    private storage: AngularFireStorage) { }
+    private storage: AngularFireStorage) {
+      this.photos = [];
+     }
 
   ngOnInit() {
   }
   
   ngAfterViewInit() {
     this.getEvent();
+    this.eventService.incrementViewCounter(this.route.snapshot.paramMap.get('id'));
     this.maps.changes.subscribe((comps: QueryList <MyMapComponent>) => {
         this.map = comps.first
         this.initMap()
@@ -43,12 +47,11 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
   }
 
   getEvent(): void {
-    this.eventService.getEvent(this.route.snapshot.paramMap.get('id'))
+    const f = this.eventService.getEvent(this.route.snapshot.paramMap.get('id'))
       .subscribe(event => {
         this.event = event; 
         this.getPhotosUrls();
         this.getAuthor();
-
        });
   }
   
@@ -60,7 +63,10 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
     this.event.bicycle.images.forEach( r => {
       const ref = this.storage.ref(r);
       
-      ref.getDownloadURL().subscribe(val =>  this.photoUrl = val)
+      ref.getDownloadURL().subscribe(val =>  {
+        if (this.photos.indexOf(val) < 0)
+          this.photos.push(val)
+        })
     });
   }
 

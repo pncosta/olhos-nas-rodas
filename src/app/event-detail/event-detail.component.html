@@ -17,75 +17,77 @@
           <mat-card-title>Bicycle Details</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <div class="details-labels"> 
+          <div class="details-labels">
             <span class="mat-body-strong">Bicycle Brand</span>
             <span class="mat-body">{{event.bicycle.brand}}}</span>
-          </div> 
-          <div class="details-labels"> 
+          </div>
+          <div class="details-labels">
             <span class="mat-body-strong">Serial Number</span>
             <span class="mat-body">{{event.bicycle.serialNo}}</span>
-          </div> 
-          <div class="details-labels"> 
+          </div>
+          <div class="details-labels">
             <span class="mat-body-strong">Color</span>
             <span class="mat-body">{{event.bicycle.color}}</span>
-          </div> 
-          <div class="details-labels"> 
+          </div>
+          <div class="details-labels">
             <span class="mat-body-strong">Description</span>
             <span class="mat-body">{{event.bicycle.description}}</span>
-          </div> 
+          </div>
 
 
         </mat-card-content>
       </mat-card>
-      
-      <mat-card>
-          <mat-card-header>
-              <mat-card-title>Theft Details</mat-card-title>
-            </mat-card-header>
-        <mat-card-content>
-            <div class="details-labels"> 
-                <span class="mat-body-strong">Date of ocurence</span>
-                <span class="mat-body">{{event.date | date:'fullDate' }}</span>
-              </div> 
 
-            <div class="details-labels"> 
-                <span class="mat-body-strong">Locker used</span>
-                <span class="mat-body">{{event.lockerType}}</span>
-              </div> 
-              <div class="details-labels"> 
-                <span class="mat-body-strong">Location</span>
-                <span class="mat-body">{{event.location}}</span>
-              </div> 
-              <div class="details-labels"> 
-                <span class="mat-body-strong">Description</span>
-                <span class="mat-body">{{event.description}}</span>
-              </div> 
-              
-        </mat-card-content>
-      </mat-card>      
-    </div>
-    
-    <div class="images">
-        <mat-card class="image-card">
-            <img mat-card-image src="{{photoUrl}}" alt="Photo of the bicycle">
-            <div *ngIf="author | async as user">
-            <mat-card-header>
-           
-                <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
-                <mat-card-title> {{user.displayName}} </mat-card-title>
-              <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-          
-            </mat-card-header>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Theft Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="details-labels">
+            <span class="mat-body-strong">Date of ocurence</span>
+            <span class="mat-body">{{event.date | date:'fullDate' }}</span>
           </div>
-            <mat-card-content>
-           
-            </mat-card-content>
-            <mat-card-actions>
-                <button  mat-raised-button color="primary">
+
+          <div class="details-labels">
+            <span class="mat-body-strong">Locker used</span>
+            <span class="mat-body">{{event.lockerType}}</span>
+          </div>
+          <div class="details-labels">
+            <span class="mat-body-strong">Location</span>
+            <span class="mat-body">{{event.location}}</span>
+          </div>
+          <div class="details-labels">
+            <span class="mat-body-strong">Description</span>
+            <span class="mat-body">{{event.description}}</span>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="images">
+      <mat-card class="image-card">
+        <div mat-card-image>
+        <app-carousel mat-card-image [items]="photos"></app-carousel>
+        </div>
+        <div *ngIf="author | async as user">
+          <mat-card-header>
+
+            <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
+            <mat-card-title> {{user.displayName}} </mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+
+          </mat-card-header>
+        </div>
+        <mat-card-content>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary">
                     <mat-icon>message</mat-icon> SEND MESSAGE
                 </button>
-            </mat-card-actions>
-          </mat-card>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </div>
 
@@ -98,5 +100,5 @@
     <!-- TODO -->
 
   </div>
-  
+
 </div>

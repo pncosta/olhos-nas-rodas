@@ -3,13 +3,16 @@ mat-card {
 }
 
 
-
 mat-card:hover {
     box-shadow: 3px 3px 16px -2px rgba(0, 0, 0, .5);
 }   
 
 .card-image {
     width: 100%;
+}
+
+hr {
+    margin:0;
 }
 
 .card-content {
@@ -22,12 +25,36 @@ mat-card:hover {
     padding: 8px;
 }
 
+.comments-count {
+    padding-left: 4px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    padding-left: 8px;
+}
+
+.date-and-location {
+    display: flex;
+    flex-direction: row;
+}
+
+.statistics {
+    display: flex;
+    flex-direction: row;
+}
+
+mat-card-footer{
+    padding: 0 16px;
+}
+
 a {
     color: inherit;
     text-decoration: none;
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 720px) {
     .header {
         padding:60px;
         flex-direction: row;
@@ -52,6 +79,6 @@ a {
     }
 
     .card-image {
-        width: 384px;
+        width: 256px;
     }
   }

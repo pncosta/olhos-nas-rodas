@@ -23,7 +23,7 @@ export class EventService {
   getEvents(): Observable<Event[]> {
     return this.db.collection<Event>('/events').snapshotChanges().map(events => {
       return events.map(a => {
-        return {id: a.payload.doc.id, ...a.payload.doc.data()} as Event;
+        return { id: a.payload.doc.id, ...a.payload.doc.data() } as Event;
       });
     });
   }
@@ -33,37 +33,45 @@ export class EventService {
 
     const itemDoc = this.db.doc<Event>('events/' + id);
     return itemDoc.snapshotChanges().map(e => {
-        return {id: e.payload.id, ... e.payload.data()} as Event;
+      return { id: e.payload.id, ...e.payload.data() } as Event;
+    });
+  }
+
+  incrementViewCounter(id: string) {
+    const s = this.getEvent(id).subscribe(e => {
+      e.views++;
+      this.updateEvent(e);
+      s.unsubscribe();
     });
   }
 
 
-  updateEvent (event: Event) {
+  updateEvent(event: Event) {
     const itemDoc = this.db.doc<Event>('events/' + event.id);
-     itemDoc.update(event)
-     .then(e => console.dir (e))
-     .catch(err => console.dir(err));
+    itemDoc.update(event)
+      .then(e => console.dir(e))
+      .catch(err => console.dir(err));
   }
 
-  addEvent (event: Event): Promise<firebase.firestore.DocumentReference> {
+  addEvent(event: Event): Promise<firebase.firestore.DocumentReference> {
     const events = this.db.collection<Event>('events');
     return events.add(event);
   }
 
   /** DELETE: delete the hero from the server */
-  deleteEvent (event: Event | number): Observable<Event> {
+  deleteEvent(event: Event | number): Observable<Event> {
     const id = typeof event === 'number' ? event : event.id;
     const url = `${this.eventsURL}/${id}`;
 
     return this.http.delete<Event>(url, httpOptions).pipe(
       tap(_ => this.log(`deleted event id=${id}`)),
       catchError(this.handleError<Event>('deleteEvent'))
-  );
-}
+    );
+  }
 
   /** Log a EventService message with the MessageService */
   private log(message: string) {
-  this.messageService.add('HeroService: ' + message);
+    this.messageService.add('HeroService: ' + message);
   }
 
   /**
@@ -72,7 +80,7 @@ export class EventService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead

@@ -20,7 +20,7 @@ app-navbar {
     z-index: 2;
   }
 
-  .container {
+  .page {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -32,7 +32,7 @@ app-navbar {
 
 
 @media (max-width: 720px) {
-  .container {
+  .page {
     top: 112px;
   }
 

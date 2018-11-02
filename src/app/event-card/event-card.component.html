@@ -1,30 +1,44 @@
 <a routerLink="/events/{{event.id}}">
   <mat-card>
-      <div *ngIf="author | async as user">
-          <mat-card-header>
-   <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{event.bicycle.brand}}</mat-card-title>
-      <mat-card-subtitle>
-        <span>  {{user.displayName}} </span>
-        <span class="date">  {{event.date | date:'shortDate' }} | {{event.location}} </span>
-
-      </mat-card-subtitle>
-    </mat-card-header>
-  </div>
+    <div *ngIf="author | async as user">
+      <mat-card-header>
+        <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{event.bicycle.brand}}</mat-card-title>
+        <mat-card-subtitle>
+          <span>  {{user.displayName}} </span>
+        </mat-card-subtitle>
+      </mat-card-header>
+    </div>
 
     <mat-card-content>
 
-      <div class="card-content"> 
+      <div class="card-content">
         <div> <img class="card-image" src="https://firebasestorage.googleapis.com/v0/b/bike-stats-1d0a3.appspot.com/o/images%2F4czto2lmktn?alt=media&token=9624f0a4-a255-4969-a5ff-b24d0a80fdf8"><img></div>
+        <div class="text">
+          <div class="date-and-location">
+            <div class="date"><mat-icon>date_range</mat-icon>{{event.date | date:'shortDate' }}</div>
+            <div class="location"> <mat-icon>location_on</mat-icon>{{event.location}}</div>
+          </div>
+          <div class="description">{{ event.bicycle.description | truncate:[140, '...'] }}</div>
+          <div class="description">{{ event.description | truncate:[140, '...'] }}</div>
+
+        </div>
+      </div>
 
 
-      <div class="description">{{event.bicycle.description}}</div>
-
-    </div>
     </mat-card-content>
-    
     <mat-card-footer>
+      <hr>
+      <div class="statistics">
+
+        <caption class="mat-small">
+          <mat-icon>visibility</mat-icon> {{event.views}} views </caption>
+        <caption class="mat-small comments-count">
+          <mat-icon>message</mat-icon> {{event.comments.length}} comments </caption>
+      </div>
     </mat-card-footer>
+
+
   </mat-card>
 </a>

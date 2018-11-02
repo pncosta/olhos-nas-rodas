@@ -12,7 +12,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
-
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { WavesModule, ButtonsModule } from 'angular-bootstrap-md'
 
 /* MyApp Modules and Services */
 import { environment } from '../environments/environment';
@@ -51,6 +52,9 @@ import { DropZoneDirective } from './widgets/drop-zone.directive';
 import { FileSizePipe } from './pipes/file-size.pipe';
 import { ColorPickerComponent } from './widgets/color-picker/color-picker.component';
 import { TimePickerComponent } from './widgets/time-picker/time-picker.component';
+import { CarouselComponent } from './widgets/carousel/carousel.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
+import { EventEditComponent } from './events/event-edit/event-edit.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +82,10 @@ import { TimePickerComponent } from './widgets/time-picker/time-picker.component
     DropZoneDirective,
     FileSizePipe,
     ColorPickerComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    CarouselComponent,
+    TruncatePipe,
+    EventEditComponent
   ],
   entryComponents: [
     LoginDialog,
@@ -99,6 +106,8 @@ import { TimePickerComponent } from './widgets/time-picker/time-picker.component
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     CoreModule,
+    WavesModule, ButtonsModule,
+    MDBBootstrapModule.forRoot()
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
