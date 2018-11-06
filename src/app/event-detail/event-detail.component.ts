@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AngularFireStorage } from 'angularfire2/storage'
 import { Location } from '@angular/common';
 import { UserService } from '../core/user.service';
+import { AuthService } from '../core/auth.service';
 import { EventService } from '../events/event.service';
 import { User } from '../core/auth.service';
 import { MyMapComponent } from '../my-map/my-map.component';
@@ -24,13 +25,16 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
   private author: Observable<User>;
   private photoUrl: Observable<string | null>;
   private photos: Array<string>;
+  private canEdit;
 
   constructor(private route: ActivatedRoute,
+    private auth: AuthService,
     private eventService: EventService,
     private location: Location, 
     private users: UserService,
     private storage: AngularFireStorage) {
       this.photos = [];
+      this.canEdit=false;
      }
 
   ngOnInit() {
@@ -50,24 +54,15 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
     const f = this.eventService.getEvent(this.route.snapshot.paramMap.get('id'))
       .subscribe(event => {
         this.event = event; 
-        this.getPhotosUrls();
+        this.canEdit = this.auth && this.event.author === this.auth.uid;
+        this.photos = this.event.bicycle.images.map(img => img.downloadURL);
+        console.log(this.event);
         this.getAuthor();
        });
   }
   
   getAuthor(){
     this.author = this.users.getUser(this.event.author);
-  }
-
-  getPhotosUrls(): void {
-    this.event.bicycle.images.forEach( r => {
-      const ref = this.storage.ref(r);
-      
-      ref.getDownloadURL().subscribe(val =>  {
-        if (this.photos.indexOf(val) < 0)
-          this.photos.push(val)
-        })
-    });
   }
 
   initMap() {

@@ -1,6 +1,13 @@
 <div *ngIf="event">
 
   <header class="header">
+      <div class="edit">
+          <a routerLink="/events/edit/{{event.id}}" >
+            <button *ngIf="canEdit" mat-raised-button>
+              <mat-icon>edit</mat-icon> EDITAR
+            </button> 
+          </a>
+        </div>
     <div>
       <h1 class="mat-h1"> {{event.bicycle.brand}}</h1>
     </div>

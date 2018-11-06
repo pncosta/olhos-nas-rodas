@@ -18,11 +18,10 @@
       </div>
 </div>
 
-
 <div class="preview-list">
 
-   <div *ngFor="let image of _images">
-     <div class="thumbnail-container">
+
+     <div *ngFor="let image of images" class="thumbnail-container">
       <div *ngIf ="image.downloadURL ; then thumbnail else loading"></div>
   
         <ng-template #thumbnail> 
@@ -43,5 +42,5 @@
           <mat-icon>delete</mat-icon> DELETE
         </button>
       </div>
-   </div>
+
 </div>

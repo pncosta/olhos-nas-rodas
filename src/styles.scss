@@ -1,0 +1,57 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";/* You can add global styles to this file, and also import other style files */
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding:30px 0;
+    overflow: hidden;
+    background-color: #3f51b5;
+}
+
+.header {
+    h1 {
+        font-size: 36px;
+        font-weight: 300;
+        color: white;
+      }
+      
+      h2 {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 28px;
+        margin: 15px 0 25px 0;
+        color: white;
+      }
+}
+
+
+@media screen and (min-width: 720px) {
+    .header {
+        padding:60px;
+        flex-direction: row;
+    }
+
+    .header {
+        h1 {
+            font-size: 56px;
+            font-weight: 300;
+            line-height: 56px;
+            margin: 15px 5px;
+
+          }
+          
+          h2 {
+            font-size: 18px;
+          }
+    }
+
+} 

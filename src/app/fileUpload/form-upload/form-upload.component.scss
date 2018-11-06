@@ -30,16 +30,21 @@
     max-height: 105px;
     max-width: 140px;
     padding-bottom: 8px;
+    flex:1;
 }
 
 .preview-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: stretch;
 }
+
+
 
 .spinner {
     padding-bottom: 8px;
+    flex:1;
 }
 
 img {

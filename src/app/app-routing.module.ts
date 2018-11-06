@@ -15,8 +15,8 @@ const routes: Routes = [
   { path: 'events', component: EventsComponent },
   { path: 'profile', component: UserProfileComponent },
   { path: 'events/new', component: NewEventComponent, canActivate: [AuthGuard] },
-  { path: 'events/edit/:id', component: EventEditComponent, canActivate: [AuthGuard]}, 
-  { path: 'events/:id', component: EventDetailComponent, canActivate: [AuthGuard]},
+  { path: 'events/edit/:id', component: NewEventComponent, canActivate: [AuthGuard]}, 
+  { path: 'events/:id', component: EventDetailComponent},
 ];
 
 @NgModule({

@@ -46,11 +46,10 @@ export class EventService {
   }
 
 
-  updateEvent(event: Event) {
+  updateEvent(event: Event): Promise<any>{
     const itemDoc = this.db.doc<Event>('events/' + event.id);
-    itemDoc.update(event)
-      .then(e => console.dir(e))
-      .catch(err => console.dir(err));
+    
+    return itemDoc.update(event);
   }
 
   addEvent(event: Event): Promise<firebase.firestore.DocumentReference> {

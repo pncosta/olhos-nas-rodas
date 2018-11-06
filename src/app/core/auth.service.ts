@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   get uid() {
-    return this.userDetails.uid;
+    return this.userDetails ? this.userDetails.uid : null ;
   }
 
   logout() {

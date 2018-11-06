@@ -1,15 +1,31 @@
-<h2 class="mat-h2"> New Event</h2>
-<div class="wrapper">
-  <!--<mat-card class="half-width" class="card">
-    <mat-card-header>
-      <mat-card-title></mat-card-title>
-      <mat-card-subtitle></mat-card-subtitle>
-    </mat-card-header>
 
-    <mat-card-content>-->
+<header class="header">
+    <div *ngIf="!eventId">
+      <h1 class="mat-h1"> Report theft {{isAuthorized}}</h1>
+    </div>
+    <div *ngIf="eventId">
+      <h1 class="mat-h1"> Edit theft details  {{isAuthorized}}</h1>
+    </div>
+  </header>
+
+
+<div *ngIf="isAuthorized; then authorized else guest">
+    <!-- template will replace this div -->
+</div>
+    
+  <!-- User NOT logged in -->
+<ng-template #guest>
+  <app-not-logged-in></app-not-logged-in>
+</ng-template>
+
+
+<ng-template #authorized>
+
+
+<div class="wrapper">
 
   <form [formGroup]="newEventForm">
-
+    
     <mat-vertical-stepper linear>
       <!-- Step 1 Event Details -->
       <mat-step>
@@ -74,7 +90,7 @@
           <textarea matInput placeholder="Description of the bike with the most detail possible" formControlName="bikeDescription"></textarea>
         </mat-form-field>
 
-        <app-form-upload [(images)]="images"></app-form-upload>
+        <app-form-upload [(images)]="images" ></app-form-upload>
 
         <div>
           <button mat-button type="button" (click)="submit()">SUBMIT</button>
@@ -84,4 +100,6 @@
     </mat-vertical-stepper>
 
   </form>
+
 </div>
+</ng-template>

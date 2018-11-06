@@ -1,17 +1,19 @@
 import { Location } from '@angular/common';
-import {Router} from "@angular/router";
-import {MatSnackBar} from '@angular/material';
+import { Router } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+import { AngularFireStorage } from 'angularfire2/storage'
 import 'rxjs/add/operator/debounceTime';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Input, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import { AuthService } from '../../core/auth.service';
-import { Bicycle } from '../../bicycle';
+import { Bicycle, Image } from '../../bicycle';
 import { MyMapComponent } from '../../my-map/my-map.component';
 import { GeoLocationService } from '../../geo-location.service';
-import { Image } from '../../fileUpload/form-upload/form-upload.component';
+import { UploadImage } from '../../fileUpload/form-upload/form-upload.component';
 
 @Component({
   selector: 'app-new-event-form',
@@ -20,40 +22,108 @@ import { Image } from '../../fileUpload/form-upload/form-upload.component';
 })
 
 export class NewEventFormComponent implements OnInit, AfterViewInit {
+  //TODO: REFACTOR and simplify  
+  @ViewChildren('map') 
+  public maps : QueryList<MyMapComponent>
+  private map: MyMapComponent;
 
-  @ViewChild('map') map: MyMapComponent;
-  images: Image[];
-  locker: string;
-  color: string;
-  hour: number;
-  marker: google.maps.Marker;
-  newEventForm: FormGroup;
-  dateValue = new FormControl(new Date());
+  private isAuthorized: boolean;
+  private _defaultLat: number = 38.72529650480368;
+  private _defaultLng: number = -9.14989477783206;
+  
+  private newEventForm: FormGroup;
+  private eventPosition = {lat: this._defaultLat, lng: this._defaultLng };
+  private event: Event;
+  private locker: string;
+  private color: string;
+  private images: UploadImage[];
+  private hour: number;
+  private marker: google.maps.Marker;
+  private eventId: string;
+  private isEditing: boolean;
+  private dateValue = new FormControl(new Date());
 
   constructor(public fb: FormBuilder,
-    private eventService: EventService,
+    private eventService: EventService, 
     private geo: GeoLocationService,
-    public auth: AuthService,
+    private storage: AngularFireStorage,
+    public auth: AuthService, 
     private router: Router, 
-    public snackBar: MatSnackBar) {
-    this.createForm();
+    public snackBar: MatSnackBar, 
+    private route: ActivatedRoute,
+    private changeDetector: ChangeDetectorRef) {
+      this.eventId = this.route.snapshot.paramMap.get('id');
+      this.isEditing = this.eventId != null;
+      this.isAuthorized = false;
+      this.createForm();
+      this.images = new Array();
   }
 
   ngOnInit() {
-    // Listen to changes on the "address" field to update the google map
+     // Listen to changes on the "address" field to update the google map
     this.location.valueChanges
       .filter(txt => txt.length >= 3)
       .debounceTime(500)
       .subscribe(address => this.mapGoToLocation(address));
-  }
+}
 
   ngAfterViewInit() {
-    this.initMap(); // init map
+    this.maps.changes.subscribe((comps: QueryList <MyMapComponent>) => {
+      console.log ('map changed visibility');
+      if (comps.first) {
+      this.map = comps.first; // Listens when map is ready and inits it
+      this.initMap(this.eventPosition.lat, this.eventPosition.lng);
+    }
+    });
+
+    this.isAuthorized = this.eventId ? false : true; // if doing a new event, user is authorized
+    this.changeDetector.detectChanges();
+    if (this.isEditing){
+      this.initFilledForm(this.eventId);
+    }
+    else {
+
+     this.initEmptyForm(); 
+    } 
+  
+  }
+
+  initFilledForm(eventId: string) { // Inits form with data from the event with the given ID
+    this.eventService.getEvent(eventId).subscribe(e => {
+      this.event = e;
+      this.isAuthorized = (e.author === this.auth.uid); // authorizes the user if is the author
+      this.changeDetector.detectChanges();
+      console.log ( this.isAuthorized );
+      this.eventPosition.lat = this.event.coordinates.latitude;
+      this.eventPosition.lng = this.event.coordinates.longitude;
+      this.description.setValue(this.event.description);
+      this.date.setValue(this.event.date); 
+      this.hour = this.event.hour;
+      this.bikeBrand.setValue(this.event.bicycle.brand);
+      this.bikeDescription.setValue(this.event.bicycle.description);
+      this.bikeSerialNo.setValue(this.event.bicycle.serialNo);
+      this.color = this.event.bicycle.color;
+      this.locker = this.event.lockerType;
+
+      this.images =  this.event.bicycle.images ? this.event.bicycle.images.map(img => (
+        { id: img.id,
+          path: img.path,
+          name: img.name,
+          size: img.size,
+          downloadURL: img.downloadURL
+        } as UploadImage)) : [];
+        this.location.setValue(this.event.location);
+  });
+  }
+
+
+  initEmptyForm() {
     this.date.setValue(new Date()); //init date with today
   }
 
-  initMap() {
-    const center = { lat: 38.72529650480368, lng: -9.14989477783206 };
+  // Inits the map on the given coordinates, adds a central marker
+  initMap(lat, lng) {
+    const center = { lat: lat , lng: lng };
     //TODO: center around user location ?
     this.map.setCenter(center.lat, center.lng);
     this.map.setZoom(13);
@@ -65,15 +135,23 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
   submit() {
     // creates the Object event and submits to the Event Service
     const event: Event = this.getEventFromForm();
+
+    if (this.isEditing) {
+      this.eventService.updateEvent(event).then(res => {
+        this.openSnackBar('Edited with success', '');
+        console.log (res);
+        this.router.navigate(['/events/' + event.id]);
+      }).catch(err => console.log({err}));
+    } else {
     this.eventService.addEvent(event)
     .then(res => {
-      console.log(res.path);
       this.openSnackBar('Added with success', '');
       this.router.navigate(['/' + res.path]);
-     
     })
     .catch(err => console.log({err}));
   }
+  }
+
 
   handleMarkerDrag(marker) {
     this.geo.getAddressFromCoordinates(marker.latLng).subscribe(addresses => {
@@ -81,9 +159,22 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // Centers the map and marker on a given address
+  mapGoToLocation(address: string) {
+    this.geo.getCoordinates(address).subscribe(coords => {
+      this.marker.setPosition(coords);
+      this.map.setCenter(coords.lat, coords.lng);
+    },
+      err => console.log(err)); // TODO: handle error
+  }
+
+
+  /**
+   * Returns an Event object based on the form data
+   */
   getEventFromForm(): Event {
-    console.log(this.images);
     var event: Event = {
+    
       description: this.description.value,
       location: this.location.value,
       date: new Date(this.date.value),
@@ -100,18 +191,19 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
         serialNo: this.bikeSerialNo.value,
         brand: this.bikeBrand.value,
         description: this.bikeDescription.value,
-        images: this.images ? this.images.map(img => img.path) : [],
+        images: this.images ? this.images.map(img => (
+          { id: img.id,
+            path: img.path,
+            name: img.name,
+            size: img.size,
+            downloadURL: img.downloadURL
+          } as Image)) : [],
       } as Bicycle),
     } as Event;
+    if (this.eventId){
+      event.id = this.eventId;
+    }
     return event;
-  }
-
-  // Centers the map and marker on a given address
-  mapGoToLocation(address: string) {
-    this.geo.getCoordinates(address).subscribe(coords => {
-      this.marker.setPosition(coords);
-    },
-      err => console.log(err)); // TODO: handle error
   }
 
   openSnackBar(message: string, action: string) {
@@ -139,4 +231,7 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
   get bikeBrand() { return this.newEventForm.get('bikeBrand'); }
   get bikeSerialNo() { return this.newEventForm.get('bikeSerialNo'); }
   get bikeDescription() { return this.newEventForm.get('bikeDescription'); }
+
+
+
 }

@@ -1,19 +1,20 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { UploadFileService } from '../upload-file.service';
+import { AuthService } from '../../core/auth.service';
 import { FileUpload } from '../fileupload';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 
-export interface Image {
+export interface UploadImage {
   id: string;
   path: string;
   name: string;
-  size: number;
-  ref: AngularFireStorageReference;
-  task: AngularFireUploadTask;
-  percentage: Observable<number>;
-  snapshot: Observable<any>;
+  size?: number;
+  ref?: AngularFireStorageReference;
+  task?: AngularFireUploadTask;
+  percentage?: Observable<number>;
+  snapshot?: Observable<any>;
   downloadURL: string;
   
 }
@@ -26,23 +27,31 @@ export interface Image {
 export class FormUploadComponent implements OnInit {
 
   @Input() get images() { return this._images; }
-  @Output() imagesChange = new EventEmitter();
-  _images: Image[];
+  @Output() imagesChange = new EventEmitter<UploadImage[]>();
+  _images: UploadImage[];
   isHovering: boolean; // State for dropzone CSS toggling
   private spinnersize = 30;
   private storagePath = 'images/'
   public static MAX_PHOTOS = 5;
   public static MAX_MB_PHOTO = 1;
   constructor(private afStorage: AngularFireStorage, 
-              private uploadService: UploadFileService) { }
+              private uploadService: UploadFileService,
+              private auth: AuthService) { 
+              
+    this._images = new Array();
+  }
 
   ngOnInit() {
-    this._images = new Array();
+  
   }
 
   set images(img) {
     this._images = img;
-    this.imagesChange.emit(this.images);
+   /* this._images = new Array();
+    img.forEach(i => this._images.push(i));
+*/
+    this.imagesChange.emit(this._images);
+
   }
 
   toggleHover(event: boolean) {
@@ -53,18 +62,19 @@ export class FormUploadComponent implements OnInit {
    * @param event 
    */
   startUpload(event: FileList) {
-    const image = {} as Image;
+    const image = {} as UploadImage;
     const file = event.item(0);
    
     if (this.fileIsAllowed(file)) {
       image.id = Math.random().toString(36).substring(2); // create a random id
-      image.path = `${this.storagePath}${image.id}`;  // path and ID
-      image.ref = this.afStorage.ref(`${this.storagePath}${image.id}`);  // reference to the storage location
+      image.path = `${this.storagePath}${this.auth.uid}/${image.id}`;  // path and ID
+      image.ref = this.afStorage.ref(image.path);  // reference to the storage location
       image.task = image.ref.put(file); // kick off the upload
       image.percentage = image.task.percentageChanges();
       image.snapshot   = image.task.snapshotChanges();
       image.size = file.size;
       image.name = file.name;
+      console.log(image);
 
       this._images.push(image);
       this.imagesChange.emit(this.images);
