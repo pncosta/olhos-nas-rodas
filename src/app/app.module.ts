@@ -43,6 +43,7 @@ import { UserAvatarComponent } from './user-avatar/user-avatar.component';
 import { NewEventComponent } from './events/new-event/new-event.component';
 import { NotLoggedInComponent } from './not-logged-in/not-logged-in.component';
 import { NewEventFormComponent } from './events/new-event-form/new-event-form.component';
+import { ConfirmationDialogComponent } from './events/new-event-form/confirmation-dialog.component';
 import { MyMapComponent } from './my-map/my-map.component';
 import { FormUploadComponent } from './fileUpload/form-upload/form-upload.component';
 import { DetailsUploadComponent } from './fileUpload/details-upload/details-upload.component';
@@ -74,6 +75,7 @@ import { EventEditComponent } from './events/event-edit/event-edit.component';
     NewEventComponent,
     NotLoggedInComponent,
     NewEventFormComponent,
+    ConfirmationDialogComponent,
     MyMapComponent,
     FormUploadComponent,
     DetailsUploadComponent,
@@ -89,6 +91,7 @@ import { EventEditComponent } from './events/event-edit/event-edit.component';
   ],
   entryComponents: [
     LoginDialog,
+    ConfirmationDialogComponent,
     SignupDialogComponent
   ],
   imports: [

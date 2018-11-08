@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ISubscription } from "rxjs/Subscription";
 import { Event } from './event';
 import { EventService } from './event.service';
 
@@ -7,8 +8,9 @@ import { EventService } from './event.service';
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent implements OnInit, OnDestroy {
   events: Event[];
+  private events$: ISubscription;
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
@@ -16,12 +18,16 @@ export class EventsComponent implements OnInit {
   }
 
   getEvents(): void {
-    this.eventService.getEvents()
+    this.events$ = this.eventService.getEvents()
     .subscribe(events => this.events = events);
   }
 
   onDelete(event: Event): void {
     this.events = this.events.filter(e => e !== event);
+  }
+
+  ngOnDestroy() {
+    this.events$.unsubscribe();
   }
 
 }

@@ -1,8 +1,11 @@
 import { Location } from '@angular/common';
 import { Router } from "@angular/router";
+import {MatDialog} from '@angular/material';
+import { ISubscription } from "rxjs/Subscription";
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AngularFireStorage } from 'angularfire2/storage'
+import { Observable, Subscription } from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
 import { Component, OnInit, ViewChild, AfterViewInit, Input, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import * as firebase from 'firebase/app';
@@ -14,6 +17,8 @@ import { Bicycle, Image } from '../../bicycle';
 import { MyMapComponent } from '../../my-map/my-map.component';
 import { GeoLocationService } from '../../geo-location.service';
 import { UploadImage } from '../../fileUpload/form-upload/form-upload.component';
+import { ConfirmationDialogComponent, DialogData } from './confirmation-dialog.component';
+
 
 @Component({
   selector: 'app-new-event-form',
@@ -22,7 +27,7 @@ import { UploadImage } from '../../fileUpload/form-upload/form-upload.component'
 })
 
 export class NewEventFormComponent implements OnInit, AfterViewInit {
-  //TODO: REFACTOR and simplify  
+  //TODO: REFACTOR and simplify    
   @ViewChildren('map') 
   public maps : QueryList<MyMapComponent>
   private map: MyMapComponent;
@@ -34,6 +39,7 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
   private newEventForm: FormGroup;
   private eventPosition = {lat: this._defaultLat, lng: this._defaultLng };
   private event: Event;
+  private event$: ISubscription;
   private locker: string;
   private color: string;
   private images: UploadImage[];
@@ -50,7 +56,9 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
     public auth: AuthService, 
     private router: Router, 
     public snackBar: MatSnackBar, 
+    private afStorage: AngularFireStorage, 
     private route: ActivatedRoute,
+    public dialog: MatDialog,
     private changeDetector: ChangeDetectorRef) {
       this.eventId = this.route.snapshot.paramMap.get('id');
       this.isEditing = this.eventId != null;
@@ -65,6 +73,12 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
       .filter(txt => txt.length >= 3)
       .debounceTime(500)
       .subscribe(address => this.mapGoToLocation(address));
+}
+
+ngOnDestroy() {
+  if (this.event$) {
+    this.event$.unsubscribe();
+  }
 }
 
   ngAfterViewInit() {
@@ -89,7 +103,9 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
   }
 
   initFilledForm(eventId: string) { // Inits form with data from the event with the given ID
-    this.eventService.getEvent(eventId).subscribe(e => {
+
+    
+    this.event$ = this.eventService.getEvent(eventId).subscribe(e => {
       this.event = e;
       this.isAuthorized = (e.author === this.auth.uid); // authorizes the user if is the author
       this.changeDetector.detectChanges();
@@ -112,7 +128,7 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
           size: img.size,
           downloadURL: img.downloadURL
         } as UploadImage)) : [];
-        this.location.setValue(this.event.location);
+       this.location.setValue(this.event.location);
   });
   }
 
@@ -130,6 +146,36 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
     this.marker = new google.maps.Marker({ position: center, map: this.map.map });
     this.marker.setDraggable(true);
     this.marker.addListener('dragend', r => this.handleMarkerDrag(r));
+  }
+
+  /**
+   * Deletes the current event and the associated images
+   */
+  delete() { 
+    console.log("deleting...");
+    this.event$.unsubscribe();
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '450px',
+      data: {title: "Tem a certeza que deseja apagar o registo?"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Delete associated images from storage
+      if (result === 'yes') {
+        //this.event.bicycle.images.forEach(img => {
+        //  this.afStorage.ref(`${img.path}`).delete();
+        //});
+    // Delete event
+        this.eventService.deleteEvent(this.eventId)
+          .then(res => {
+            this.openSnackBar('Deleted with success', '');
+            this.router.navigate(['/events/']);
+          })
+          .catch(err => {});
+      }
+    });
+
+  
   }
 
   submit() {

@@ -15,15 +15,26 @@ export class EventCardComponent implements OnInit {
   @Input() event: Event;
   @Output() deleted: EventEmitter<Event> = new EventEmitter();
   author: Observable<User>;
-  constructor(private eventService: EventService,  private users: UserService) { }
+  imageurl: string;
+  defaultImage: string = '/assets/bicycle-placeholder.jpg';
+  constructor(private eventService: EventService,  private users: UserService) {
+
+   
+   }
 
   ngOnInit() {
     this.getAuthor();
+    this.imageurl = this.event.bicycle.images && this.event.bicycle.images.length > 0 ?
+                    this.event.bicycle.images[0].downloadURL : this.defaultImage; 
   }
 
   delete(event: Event): void {
-    this.eventService.deleteEvent(event).subscribe();
-    this.deleted.emit(event);
+    this.eventService.deleteEvent(event)
+    .then(res => {
+      console.log(res); 
+      this.deleted.emit(event);})
+    .catch (err => console.error(err));
+    
   }
 
   getAuthor(){

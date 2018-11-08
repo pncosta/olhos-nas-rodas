@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
 import { Event } from '../events/event';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ISubscription } from 'rxjs/Subscription';
 import { AngularFireStorage } from 'angularfire2/storage'
 import { Location } from '@angular/common';
 import { UserService } from '../core/user.service';
@@ -15,7 +16,7 @@ import { MyMapComponent } from '../my-map/my-map.component';
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.scss']
 })
-export class EventDetailComponent implements OnInit, AfterViewInit {
+export class EventDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   event: Event;
 
 
@@ -26,7 +27,7 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
   private photoUrl: Observable<string | null>;
   private photos: Array<string>;
   private canEdit;
-
+  private event$: ISubscription;
   constructor(private route: ActivatedRoute,
     private auth: AuthService,
     private eventService: EventService,
@@ -38,6 +39,12 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
      }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    if (this.event$){
+      this.event$.unsubscribe();
+    }
   }
   
   ngAfterViewInit() {
@@ -51,7 +58,7 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
   }
 
   getEvent(): void {
-    const f = this.eventService.getEvent(this.route.snapshot.paramMap.get('id'))
+    this.event$ = this.eventService.getEvent(this.route.snapshot.paramMap.get('id'))
       .subscribe(event => {
         this.event = event; 
         this.canEdit = this.auth && this.event.author === this.auth.uid;
@@ -59,6 +66,7 @@ export class EventDetailComponent implements OnInit, AfterViewInit {
         console.log(this.event);
         this.getAuthor();
        });
+      
   }
   
   getAuthor(){

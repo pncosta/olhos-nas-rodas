@@ -1,10 +1,15 @@
 
 <header class="header">
     <div *ngIf="!eventId">
-      <h1 class="mat-h1"> Report theft {{isAuthorized}}</h1>
+      <h1 class="mat-h1"> Report theft</h1>
     </div>
-    <div *ngIf="eventId">
-      <h1 class="mat-h1"> Edit theft details  {{isAuthorized}}</h1>
+    <div *ngIf="eventId" class="title">
+        <div class="delete">
+          <button *ngIf="authorized" mat-raised-button color="warn" (click)="delete()">
+            <mat-icon>delete</mat-icon> APAGAR
+          </button> 
+        </div>
+      <h1 class="mat-h1"> Edit theft details</h1>
     </div>
   </header>
 

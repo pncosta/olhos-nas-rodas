@@ -57,15 +57,11 @@ export class EventService {
     return events.add(event);
   }
 
-  /** DELETE: delete the hero from the server */
-  deleteEvent(event: Event | number): Observable<Event> {
-    const id = typeof event === 'number' ? event : event.id;
-    const url = `${this.eventsURL}/${id}`;
+  /** DELETE: delete the event from the server */
+  deleteEvent(event: Event | string): Promise<any> {
+    const id = typeof event === 'string' ? event : event.id;
+    return this.db.doc<Event>('events/' + id).delete();
 
-    return this.http.delete<Event>(url, httpOptions).pipe(
-      tap(_ => this.log(`deleted event id=${id}`)),
-      catchError(this.handleError<Event>('deleteEvent'))
-    );
   }
 
   /** Log a EventService message with the MessageService */
