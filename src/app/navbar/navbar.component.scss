@@ -4,6 +4,11 @@
   align-items: center;
 }
 
+.logo {
+  height: 60px;
+  padding-right: 16px
+}
+
 .username {
   padding-right: 8px;
 }
@@ -29,12 +34,6 @@
   display: none;
 }
 
-.avatar {
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-  padding-left: 8px;
-}
 
 /**
   * Rules for when the device is detected to be a small screen.
@@ -49,10 +48,6 @@
       display: block;
     }
 
-    .title {
-      display: none;
-    }
-  
     .docs-navbar {
       display: flex;
     }

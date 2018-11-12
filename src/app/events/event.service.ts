@@ -28,6 +28,18 @@ export class EventService {
     });
   }
 
+    getPaginatedEvents(page: number, pageSize: number): Observable<Event[]> {
+// https://angularfirebase.com/lessons/simple-firebase-pagination-with-angularfire2/
+//https://angularfirebase.com/lessons/infinite-scroll-with-firebase-data-and-angular-animation/
+    return this.db.collection<Event>('/events', ref => ref
+      .orderBy('dateCreated', 'desc')
+      .startAt(pageSize * page)
+      .limit(pageSize)
+      ).stateChanges().map(events => events.map(e => {
+        return { id: e.payload.doc.id, ...e.payload.doc.data() } as Event;
+      }));
+  }
+
   /** GET event by id. Will 404 if id not found */
   getEvent(id: string): Observable<Event> {
 

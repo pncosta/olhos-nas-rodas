@@ -18,7 +18,8 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   getEvents(): void {
-    this.events$ = this.eventService.getEvents()
+
+    this.events$ = this.eventService.getPaginatedEvents(0,3)
     .subscribe(events => this.events = events);
   }
 
