@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
 import { Event } from '../events/event';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ISubscription } from 'rxjs/Subscription';
+import { Observable ,  SubscriptionLike as ISubscription } from 'rxjs';
 import { AngularFireStorage } from 'angularfire2/storage'
 import { Location } from '@angular/common';
 import { UserService } from '../core/user.service';

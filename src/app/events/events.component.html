@@ -1,5 +1,10 @@
 <header class="header">
     <div>
+      <a routerLink="/events/new">
+      <button mat-raised-button><mat-icon>add</mat-icon> ADD</button>
+    </a>
+  </div>
+    <div>
       <h1 class="mat-h1"> Last Reports</h1>
     </div>
     <div>
@@ -10,12 +15,8 @@
 
 <div class="container">
     <app-event-card *ngFor="let event of events" 
-                    [event]="event" 
-                    (deleted)="onDelete($event)">
+                    [event]="event" >
     </app-event-card>
 
 </div>
 
-<a routerLink="/events/new">
-  <button mat-raised-button color="primary"><mat-icon>add</mat-icon> ADD</button>
-</a>

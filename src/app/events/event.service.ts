@@ -1,9 +1,10 @@
+
+import {map,  catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firestore } from 'firebase/firestore';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 import { MessageService } from '../core/message.service';
 import { Event } from './event';
 import * as firebase from 'firebase/app';
@@ -21,11 +22,11 @@ export class EventService {
     private messageService: MessageService) { }
 
   getEvents(): Observable<Event[]> {
-    return this.db.collection<Event>('/events').snapshotChanges().map(events => {
+    return this.db.collection<Event>('/events').snapshotChanges().pipe(map(events => {
       return events.map(a => {
         return { id: a.payload.doc.id, ...a.payload.doc.data() } as Event;
       });
-    });
+    }));
   }
 
     getPaginatedEvents(page: number, pageSize: number): Observable<Event[]> {
@@ -35,18 +36,18 @@ export class EventService {
       .orderBy('dateCreated', 'desc')
       .startAt(pageSize * page)
       .limit(pageSize)
-      ).stateChanges().map(events => events.map(e => {
+      ).stateChanges().pipe(map(events => events.map(e => {
         return { id: e.payload.doc.id, ...e.payload.doc.data() } as Event;
-      }));
+      })));
   }
 
   /** GET event by id. Will 404 if id not found */
   getEvent(id: string): Observable<Event> {
 
     const itemDoc = this.db.doc<Event>('events/' + id);
-    return itemDoc.snapshotChanges().map(e => {
+    return itemDoc.snapshotChanges().pipe(map(e => {
       return { id: e.payload.id, ...e.payload.data() } as Event;
-    });
+    }));
   }
 
   incrementViewCounter(id: string) {

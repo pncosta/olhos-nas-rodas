@@ -1,8 +1,11 @@
+
+import {of as observableOf,  Observable } from 'rxjs';
+
+import {switchMap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 // https://itnext.io/part-2-complete-step-by-step-firebase-authentication-in-angular-2-25d284102632
 
@@ -25,13 +28,13 @@ export class AuthService {
               private router: Router) {
 
     //// Get auth data, then get firestore user document || null
-    this.user = this._firebaseAuth.authState
-      .switchMap(user => {
+    this.user = this._firebaseAuth.authState.pipe(
+      switchMap(user => {
         if (user) {
           return this._firebaseStore.doc<User>(`users/${user.uid}`).valueChanges();
         }
-        return Observable.of(null);
-      });
+        return observableOf(null);
+      }));
 
     this.user.subscribe(
       (user) => { this.userDetails = user ? user : null; }

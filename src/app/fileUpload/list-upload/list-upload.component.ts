@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
 import { FileUpload } from '../fileupload';
@@ -16,9 +18,9 @@ export class ListUploadComponent implements OnInit {
 
   ngOnInit() {
     // Use snapshotChanges().map() to store the key
-    this.uploadService.getFileUploads(6).snapshotChanges().map(changes => {
+    this.uploadService.getFileUploads(6).snapshotChanges().pipe(map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    }).subscribe(fileUploads => {
+    })).subscribe(fileUploads => {
       this.fileUploads = fileUploads;
     });
   }

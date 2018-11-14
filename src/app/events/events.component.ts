@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ISubscription } from "rxjs/Subscription";
+import { Observable } from "rxjs";
 import { Event } from './event';
 import { EventService } from './event.service';
 
@@ -8,27 +8,29 @@ import { EventService } from './event.service';
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
-export class EventsComponent implements OnInit, OnDestroy {
+export class EventsComponent implements OnInit {
+
   events: Event[];
-  private events$: ISubscription;
-  constructor(private eventService: EventService) { }
+  
+  constructor(private eventService: EventService,
+             
+  ) { }
 
   ngOnInit() {
-    this.getEvents();
-  }
 
-  getEvents(): void {
-
-    this.events$ = this.eventService.getPaginatedEvents(0,3)
+    
+    this.eventService.getEvents()
     .subscribe(events => this.events = events);
   }
 
-  onDelete(event: Event): void {
-    this.events = this.events.filter(e => e !== event);
+  scrollHandler(e) {
+    if (e === 'bottom') {
+      // this.eventService.getNextPage();;
+    }
+    // should log top or bottom
   }
 
-  ngOnDestroy() {
-    this.events$.unsubscribe();
-  }
+  
+
 
 }

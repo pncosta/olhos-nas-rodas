@@ -1,12 +1,13 @@
+
+import {debounceTime, filter} from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { Router } from "@angular/router";
 import {MatDialog} from '@angular/material';
-import { ISubscription } from "rxjs/Subscription";
+import { SubscriptionLike as ISubscription ,  Observable, Subscription } from "rxjs";
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AngularFireStorage } from 'angularfire2/storage'
-import { Observable, Subscription } from 'rxjs';
-import 'rxjs/add/operator/debounceTime';
+
 import { Component, OnInit, ViewChild, AfterViewInit, Input, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -69,9 +70,9 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
      // Listen to changes on the "address" field to update the google map
-    this.location.valueChanges
-      .filter(txt => txt.length >= 3)
-      .debounceTime(500)
+    this.location.valueChanges.pipe(
+      filter(txt => txt.length >= 3),
+      debounceTime(500),)
       .subscribe(address => this.mapGoToLocation(address));
 }
 

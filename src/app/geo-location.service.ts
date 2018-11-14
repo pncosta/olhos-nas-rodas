@@ -1,7 +1,9 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from "rxjs/Observable"
+import { Observable } from "rxjs"
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +17,8 @@ export class GeoLocationService {
    }
 
   getCoordinates (address: string) {
-    return this.http.get(this.geoLocationURL.concat(address))
-    .map(response => response['results'][0]['geometry']['location'] );
+    return this.http.get(this.geoLocationURL.concat(address)).pipe(
+    map(response => response['results'][0]['geometry']['location'] ));
   }
 
   getAddressFromCoordinates (position: google.maps.LatLng): Observable<any> {
