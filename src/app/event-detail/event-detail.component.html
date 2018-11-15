@@ -1,7 +1,7 @@
 <div *ngIf="event">
 
   <header class="header">
-      <div class="edit mat-h1">
+      <div class="edit">
           <a routerLink="/events/edit/{{event.id}}" >
             <button *ngIf="canEdit" mat-raised-button>
               <mat-icon>edit</mat-icon> EDITAR
@@ -12,7 +12,7 @@
       <h1 class="mat-h1"> {{event.bicycle.brand}}</h1>
     </div>
     <div>
-      <h2 class="mat-h2"> {{event.date | date:'fullDate' }} | {{event.location}} </h2>
+      <h2 class="mat-h2"> {{event.date.toDate() | date:'fullDate' }} | {{event.location}} </h2>
     </div>
   </header>
 
@@ -52,7 +52,7 @@
         <mat-card-content>
           <div class="details-labels">
             <span class="mat-body-strong">Date of ocurence</span>
-            <span class="mat-body">{{event.date | date:'fullDate' }}</span>
+            <span class="mat-body">{{event.date.toDate() | date:'fullDate' }}</span>
           </div>
 
           <div class="details-labels">

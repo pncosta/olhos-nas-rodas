@@ -20,3 +20,6 @@
 
 </div>
 
+<button mat-button (click)="prevPage()" [disabled]="!prevKeys?.length">Prev</button>
+<button mat-button  (click)="nextPage()" [disabled]="!nextKey">Next</button>
+
