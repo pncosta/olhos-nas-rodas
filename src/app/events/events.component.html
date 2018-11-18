@@ -20,7 +20,7 @@
 
 <cdk-virtual-scroll-viewport itemSize="350">
 
-  <app-event-card  *cdkVirtualFor="let event of filteredEvents" [event]="event" [bicycle]="event.bicycle">
+  <app-event-card  *cdkVirtualFor="let event of filteredEvents" [event]="event">
   </app-event-card>
 
   </cdk-virtual-scroll-viewport>
