@@ -9,12 +9,9 @@ import { Event } from '../event';
   styleUrls: ['./event-edit.component.scss']
 })
 export class EventEditComponent implements OnInit {
-    event: Event;
 
-  constructor(private route: ActivatedRoute,
-    private eventService: EventService,
-    private location: Location, 
-    private users: UserService) {
+
+  constructor() {
     }
 
 
@@ -22,14 +19,9 @@ export class EventEditComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.getEvent();
+
   }
 
-  getEvent(): void {
-    const f = this.eventService.getEvent(this.route.snapshot.paramMap.get('id'))
-      .subscribe(event => {
-        this.event = event; 
-       });
-  }
+  
 
 }

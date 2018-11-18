@@ -1,25 +1,40 @@
 <header class="header">
-    <div>
-      <a routerLink="/events/new">
-      <button mat-raised-button><mat-icon>add</mat-icon> ADD</button>
+
+    <div class="title-wrapper">
+      <div class="title">
+        <h1 class="mat-h1 title"> Last Reports</h1>
+      </div>
+  
+      <div class="textbox">
+          <!-- Default input -->
+          <label class="sr-only" for="inlineFormInput">Name</label>
+          <input mdbInputDirective type="text" class="form-control mb-2" id="inlineFormInput"
+          [(ngModel)]="searchText" (ngModelChange)="searchTextChange()"  
+          placeholder="Escreva um número de série para procurar bicicleta">
+        </div>
+    </div>
+
+</header>
+
+<div class="fab">
+    <a routerLink="/events/new">
+      <button mat-fab><mat-icon>add</mat-icon></button>
     </a>
   </div>
-    <div>
-      <h1 class="mat-h1"> Last Reports</h1>
-    </div>
-    <div>
-        <h2 class="mat-h2"></h2>
-      </div>
 
-  </header>
+<cdk-virtual-scroll-viewport itemSize="350">
 
+  <app-event-card  *cdkVirtualFor="let event of filteredEvents" [event]="event">
+  </app-event-card>
+
+  </cdk-virtual-scroll-viewport>
+
+<!-- 
 <div class="container">
-    <app-event-card *ngFor="let event of events" 
-                    [event]="event" >
-    </app-event-card>
+  <app-event-card *ngFor="let event of filteredEvents" [event]="event">
+  </app-event-card>
 
 </div>
-
+Legacy pagination  
 <button mat-button (click)="prevPage()" [disabled]="!prevKeys?.length">Prev</button>
-<button mat-button  (click)="nextPage()" [disabled]="!nextKey">Next</button>
-
+<button mat-button (click)="nextPage()" [disabled]="!nextKey">Next</button>-->

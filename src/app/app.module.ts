@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 /* 3rd party Components */
 import { AngularFireModule } from 'angularfire2';
@@ -109,6 +110,7 @@ import { EventEditComponent } from './events/event-edit/event-edit.component';
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     CoreModule,
+    ScrollingModule,
     WavesModule, ButtonsModule,
     MDBBootstrapModule.forRoot()
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests

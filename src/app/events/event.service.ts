@@ -1,7 +1,7 @@
 
-import {map,  catchError, tap } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { firestore } from 'firebase/firestore';
+import { firestore, WhereFilterOp } from 'firebase/firestore';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable, of } from 'rxjs';
@@ -13,8 +13,17 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+
+export interface Filter {
+  field: string;
+  operator: WhereFilterOp;
+  value: any;
+}
+
 @Injectable()
 export class EventService {
+
+
   private eventsURL = 'api/events';  // URL to web api
   constructor(
     private http: HttpClient,
@@ -29,28 +38,29 @@ export class EventService {
     }));
   }
 
+  
 
-  getFirstPage (pageSize: number,  filters?): Observable<Event[]> {
-          // https://angularfirebase.com/lessons/simple-firebase-pagination-with-angularfire2/
-          //https://angularfirebase.com/lessons/infinite-scroll-with-firebase-data-and-angular-animation/
-          return this.db.collection<Event>('/events', ref => ref
-            .orderBy('dateCreated', 'desc')
-            .limit(pageSize + 1)
-            ).stateChanges().pipe(map(events => events.map(e => {
-              return { id: e.payload.doc.id, ...e.payload.doc.data() } as Event;
-            })));
-      }
 
-    getPageAfter (pageSize: number, startKey?, filters?): Observable<Event[]> {
-      return this.db.collection<Event>('/events', ref => ref
-        .orderBy('dateCreated', 'desc')
-        .startAt(startKey)
+  getFirstPage(orderBy: string, pageSize: number, filters?: Filter[], startKey?): Observable<Event[]> {
+  
+
+    return this.db.collection<Event>('/events', ref => { 
+      var q = ref // Start building the query
+        .orderBy(orderBy, 'desc')
         .limit(pageSize + 1)
-        ).snapshotChanges().pipe(map(events => events.map(e => {
-          console.log (e.payload.doc.data());
-          return { id: e.payload.doc.id, ...e.payload.doc.data() } as Event;
-        })
-      ));
+
+      filters.forEach(filter => {   // Apply query filters
+        q = q.where(filter.field, filter.operator, filter.value);
+      });
+
+      if (startKey) { // Apply start key if present
+        q = q.startAt(startKey);
+      }
+      return q;
+    }
+    ).snapshotChanges().pipe(map(events => events.map(e => {
+      return { id: e.payload.doc.id, ...e.payload.doc.data() } as Event;
+    })));
   }
 
   /** GET event by id. Will 404 if id not found */
@@ -71,15 +81,22 @@ export class EventService {
   }
 
 
-  updateEvent(event: Event): Promise<any>{
+  updateEvent(event: Event): Promise<any> {
     const itemDoc = this.db.doc<Event>('events/' + event.id);
-    
+
     return itemDoc.update(event);
   }
 
   addEvent(event: Event): Promise<firebase.firestore.DocumentReference> {
     const events = this.db.collection<Event>('events');
-    return events.add(event);
+var i = 0;
+    for ( i = 0; i < 100; i ++) {
+      event.id = i+'';
+      event.bicycle.brand = "merida " + i;
+       events.add(event);
+    }
+   return events.add(event);
+  
   }
 
   /** DELETE: delete the event from the server */

@@ -1,9 +1,52 @@
+cdk-virtual-scroll-viewport {
+  height: calc(100vh - 200px);
+  width: 100vw;
+  border: 1px solid black;
+  app-event-card {
+    height: 350px;
+   
+
+  }
+}
 
 .header div {
   flex: 1;
 }
 
 
+.wrapper {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  padding: 8px;
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  width: 100%;
+ 
+}
+
+
+.textbox {
+  flex:2 !important;
+  width: 95%;
+}
+
+.title {
+  flex: 1 !important;
+  text-align: left;
+}
+
+.fab {
+    position: fixed;
+    bottom: 8px;
+    right: 8px;
+    z-index:99;
+}
 
 .cards-container {
   display: flex;
@@ -14,5 +57,16 @@
 
 app-event-card {
   flex:1
+}
+
+@media screen and (min-width: 720px) {
+  .wrapper {
+    width: 70vw;
+  }
+  .title-wrapper {
+    flex-direction: row;   
+  }
+
+  
 }
 
