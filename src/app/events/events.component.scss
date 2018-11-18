@@ -13,6 +13,10 @@ cdk-virtual-scroll-viewport {
   flex: 1;
 }
 
+.results-count{
+  color: white;
+  text-align: right;
+}
 
 .wrapper {
   display:flex;
@@ -38,6 +42,7 @@ cdk-virtual-scroll-viewport {
 
 .title {
   flex: 1 !important;
+  margin-top: 0 !important;
   text-align: left;
 }
 

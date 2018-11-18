@@ -1,5 +1,5 @@
 <header class="header">
-
+  <div>
     <div class="title-wrapper">
       <div class="title">
         <h1 class="mat-h1 title"> Last Reports</h1>
@@ -7,9 +7,13 @@
   
       <div class="textbox">
         <app-searchbox  [(searchText)]="searchText" (searchTextChange)="applyFilters()" ></app-searchbox>
-        </div>
+        <div class="results-count">
+            <span class="mat-small">{{filteredEvents.length}} resultados com os filtros atuais.</span>
+          </div>  
+      </div>
     </div>
-
+ 
+</div>
 </header>
 
 <div class="fab">
