@@ -33,7 +33,7 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
   public maps : QueryList<MyMapComponent>
   private map: MyMapComponent;
 
-  private isAuthorized: boolean;
+  public isAuthorized: boolean;
   private _defaultLat: number = 38.72529650480368;
   private _defaultLng: number = -9.14989477783206;
   
@@ -46,7 +46,7 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
   private images: UploadImage[];
   private hour: number;
   private marker: google.maps.Marker;
-  private eventId: string;
+  public eventId: string;
   private isEditing: boolean;
   private dateValue = new FormControl(new Date());
 

@@ -17,8 +17,8 @@
         <div> <img class="card-image" src="{{imageurl}}"><img></div>
         <div class="text">
           <div class="date-and-location">
-              <div class="date"><mat-icon>date_range</mat-icon>{{event.dateCreated.toDate() | date }}</div>
-            <div class="date"><mat-icon>date_range</mat-icon>{{event.date.toDate() | date }}</div>
+              <div class="date"><mat-icon>date_range</mat-icon>{{event.dateCreation }}</div>
+            <div class="date"><mat-icon>date_range</mat-icon>{{event.date }}</div>
             <div class="location"> <mat-icon>location_on</mat-icon>{{event.location}}</div>
           </div>
           <div class="description">{{ event.bicycle.description | truncate:[140, '...'] }}</div>

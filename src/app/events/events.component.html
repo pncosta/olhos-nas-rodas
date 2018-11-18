@@ -6,11 +6,7 @@
       </div>
   
       <div class="textbox">
-          <!-- Default input -->
-          <label class="sr-only" for="inlineFormInput">Name</label>
-          <input mdbInputDirective type="text" class="form-control mb-2" id="inlineFormInput"
-          [(ngModel)]="searchText" (ngModelChange)="searchTextChange()"  
-          placeholder="Escreva um número de série para procurar bicicleta">
+        <app-searchbox  [(searchText)]="searchText" (searchTextChange)="applyFilters()" ></app-searchbox>
         </div>
     </div>
 
@@ -24,7 +20,7 @@
 
 <cdk-virtual-scroll-viewport itemSize="350">
 
-  <app-event-card  *cdkVirtualFor="let event of filteredEvents" [event]="event">
+  <app-event-card  *cdkVirtualFor="let event of filteredEvents" [event]="event" [bicycle]="event.bicycle">
   </app-event-card>
 
   </cdk-virtual-scroll-viewport>

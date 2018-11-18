@@ -12,7 +12,7 @@
       <h1 class="mat-h1"> {{event.bicycle.brand}}</h1>
     </div>
     <div>
-      <h2 class="mat-h2"> {{event.date.toDate() | date:'fullDate' }} | {{event.location}} </h2>
+      <h2 class="mat-h2"> {{event.date  }} | {{event.location}} </h2>
     </div>
   </header>
 
@@ -52,7 +52,7 @@
         <mat-card-content>
           <div class="details-labels">
             <span class="mat-body-strong">Date of ocurence</span>
-            <span class="mat-body">{{event.date.toDate() | date:'fullDate' }}</span>
+            <span class="mat-body">{{event.date * 1000 | date:'fullDate' }}</span>
           </div>
 
           <div class="details-labels">

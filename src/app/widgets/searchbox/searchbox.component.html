@@ -1,0 +1,6 @@
+<div>
+  <label class="sr-only" for="inlineFormInput">Name</label>
+  <input mdbInputDirective type="text" class="form-control mb-2" id="inlineFormInput"
+  placeholder="Escreva um número de série para procurar bicicleta"
+  [(ngModel)]="searchText" (ngModelChange)="searchTextChanged()"  >
+</div>

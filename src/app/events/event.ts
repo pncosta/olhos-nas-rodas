@@ -18,23 +18,25 @@ export class Event {
     /** 
      * Checks if the current Event contains the given 'value' in any of its major properties
      * If ´value' has multiple words, checks if it contains all of them ( && ) 
+     * words with 2 or less chars are ignored
      * 
      */ 
     public static contains (e: Event, value: string): Boolean {
-      console.log ('checking..  ');
       var values: string[] = value && value.length > 2 ? value.split(' ') : [];
       var containsAllValues = true;
       var i = 0;
       while (containsAllValues && i < values.length) {
-          containsAllValues = e.description.includes(values[i]) 
-                            || e.location.includes(values[i])
-                            || e.bicycle 
-                              && (e.bicycle.brand.includes(values[i])
-                              || e.bicycle.description.includes(values[i]))
+        values[i] = values[i].toLowerCase();
+          containsAllValues = values[i].length > 2 
+                             ? e.description.toLowerCase().includes(values[i]) 
+                              || e.location.toLowerCase().includes(values[i])
+                              || e.bicycle 
+                                && (e.bicycle.brand.toLowerCase().includes(values[i])
+                                || e.bicycle.description.toLowerCase().includes(values[i]))
+                             :true;
           i++;
 
       }
-
       return containsAllValues;
 
 

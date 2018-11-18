@@ -5,7 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+// import {ScrollingModule as ExperimentalScrollingModule} from '@angular/cdk-experimental/scrolling';
 
 /* 3rd party Components */
 import { AngularFireModule } from 'angularfire2';
@@ -57,6 +58,7 @@ import { TimePickerComponent } from './widgets/time-picker/time-picker.component
 import { CarouselComponent } from './widgets/carousel/carousel.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { EventEditComponent } from './events/event-edit/event-edit.component';
+import { SearchboxComponent } from './widgets/searchbox/searchbox.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import { EventEditComponent } from './events/event-edit/event-edit.component';
     TimePickerComponent,
     CarouselComponent,
     TruncatePipe,
-    EventEditComponent
+    EventEditComponent,
+    SearchboxComponent
   ],
   entryComponents: [
     LoginDialog,
