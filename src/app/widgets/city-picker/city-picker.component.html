@@ -1,0 +1,17 @@
+
+<div *ngIf="district">
+<mat-form-field class="wrapper">
+  <mat-select placeholder="Cidade" [(value)]="city" [compareWith]="equals" >
+    <mat-option *ngFor="let c of filteredCities" [value]="c">
+      {{c.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+
+<div *ngIf="!district">
+  <mat-form-field class="wrapper">
+    <mat-select placeholder="Cidade" disabled>
+    </mat-select>
+  </mat-form-field>
+</div>

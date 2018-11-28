@@ -22,7 +22,7 @@
 }
 
 .half-width {
-    width: 50%;
+    width: 100%;
 }
 
 .container {
@@ -33,7 +33,12 @@
 
 .data-time-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+}
+
+.district-city-container {
+    display: flex;
+    flex-direction: column;
 }
 
 .wrapper {
@@ -44,3 +49,20 @@
     padding: 0 2px;
     
 }
+
+@media screen and (min-width: 720px) {
+    .data-time-container {
+        flex-direction: row;
+    }
+
+    .district-city-container {
+        flex-direction: row;
+    }
+
+    .half-width {
+        width: 50%;
+    }
+  
+    
+  }
+  

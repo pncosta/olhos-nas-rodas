@@ -1,4 +1,5 @@
 import { Bicycle } from '../bicycle';
+import { City, District } from '../districts/district';
 import * as firebase from 'firebase/app';
 
 export class Event {
@@ -7,6 +8,8 @@ export class Event {
     dateCreation?: Date;
     date?: Date;
     hour?: number;
+    district?: District;
+    city?: City;
     location?: string;
     bicycle?: Bicycle;
     coordinates?: firebase.firestore.GeoPoint;

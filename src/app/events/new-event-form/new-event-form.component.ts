@@ -1,9 +1,9 @@
 
-import {debounceTime, filter} from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { Router } from "@angular/router";
-import {MatDialog} from '@angular/material';
-import { SubscriptionLike as ISubscription ,  Observable, Subscription } from "rxjs";
+import { MatDialog } from '@angular/material';
+import { SubscriptionLike as ISubscription, Observable, Subscription } from "rxjs";
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AngularFireStorage } from 'angularfire2/storage'
@@ -11,6 +11,7 @@ import { AngularFireStorage } from 'angularfire2/storage'
 import { Component, OnInit, ViewChild, AfterViewInit, Input, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { District, City } from '../../districts/district';
 import { Event } from '../event';
 import { EventService } from '../event.service';
 import { AuthService } from '../../core/auth.service';
@@ -28,19 +29,21 @@ import { ConfirmationDialogComponent, DialogData } from './confirmation-dialog.c
 })
 
 export class NewEventFormComponent implements OnInit, AfterViewInit {
-  //TODO: REFACTOR and simplify    
-  @ViewChildren('map') 
-  public maps : QueryList<MyMapComponent>
+  //TODO: Needs REFACTOR    
+  @ViewChildren('map')
+  public maps: QueryList<MyMapComponent>
   private map: MyMapComponent;
 
   public isAuthorized: boolean;
   private _defaultLat: number = 38.72529650480368;
   private _defaultLng: number = -9.14989477783206;
-  
+
   private newEventForm: FormGroup;
-  private eventPosition = {lat: this._defaultLat, lng: this._defaultLng };
+  private eventPosition = { lat: this._defaultLat, lng: this._defaultLng };
   private event: Event;
   private event$: ISubscription;
+  private district: District;
+  private city: City;
   private locker: string;
   private color: string;
   private images: UploadImage[];
@@ -51,70 +54,66 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
   private dateValue = new FormControl(new Date());
 
   constructor(public fb: FormBuilder,
-    private eventService: EventService, 
+    private eventService: EventService,
     private geo: GeoLocationService,
     private storage: AngularFireStorage,
-    public auth: AuthService, 
-    private router: Router, 
-    public snackBar: MatSnackBar, 
-    private afStorage: AngularFireStorage, 
+    public auth: AuthService,
+    private router: Router,
+    public snackBar: MatSnackBar,
+    private afStorage: AngularFireStorage,
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private changeDetector: ChangeDetectorRef) {
-      this.eventId = this.route.snapshot.paramMap.get('id');
-      this.isEditing = this.eventId != null;
-      this.isAuthorized = false;
-      this.createForm();
-      this.images = new Array();
+    this.eventId = this.route.snapshot.paramMap.get('id');
+    this.isEditing = this.eventId != null;
+    this.isAuthorized = false;
+    this.createForm();
+    this.images = new Array();
   }
 
   ngOnInit() {
-     // Listen to changes on the "address" field to update the google map
+    // Listen to changes on the "address" field to update the google map
     this.location.valueChanges.pipe(
       filter(txt => txt.length >= 3),
-      debounceTime(500),)
+      debounceTime(500), )
       .subscribe(address => this.mapGoToLocation(address));
-}
-
-ngOnDestroy() {
-  if (this.event$) {
-    this.event$.unsubscribe();
   }
-}
+
+  ngOnDestroy() {
+    if (this.event$) {
+      this.event$.unsubscribe();
+    }
+  }
 
   ngAfterViewInit() {
-    this.maps.changes.subscribe((comps: QueryList <MyMapComponent>) => {
-      console.log ('map changed visibility');
+    this.maps.changes.subscribe((comps: QueryList<MyMapComponent>) => {
       if (comps.first) {
-      this.map = comps.first; // Listens when map is ready and inits it
-      this.initMap(this.eventPosition.lat, this.eventPosition.lng);
-    }
+        this.map = comps.first; // Listens when map is ready and inits it
+        this.initMap(this.eventPosition.lat, this.eventPosition.lng);
+      }
     });
 
     this.isAuthorized = this.eventId ? false : true; // if doing a new event, user is authorized
     this.changeDetector.detectChanges();
-    if (this.isEditing){
+    if (this.isEditing) {
       this.initFilledForm(this.eventId);
     }
     else {
 
-     this.initEmptyForm(); 
-    } 
-  
+      this.initEmptyForm();
+    }
   }
 
   initFilledForm(eventId: string) { // Inits form with data from the event with the given ID
-
-    
     this.event$ = this.eventService.getEvent(eventId).subscribe(e => {
       this.event = e;
+      this.district = this.event.district;
       this.isAuthorized = (e.author === this.auth.uid); // authorizes the user if is the author
       this.changeDetector.detectChanges();
-      console.log ( this.isAuthorized );
       this.eventPosition.lat = this.event.coordinates.latitude;
       this.eventPosition.lng = this.event.coordinates.longitude;
       this.description.setValue(this.event.description);
-      this.date.setValue(this.event.date); 
+      this.date.setValue(this.event.date);
       this.hour = this.event.hour;
       this.bikeBrand.setValue(this.event.bicycle.brand);
       this.bikeDescription.setValue(this.event.bicycle.description);
@@ -122,17 +121,19 @@ ngOnDestroy() {
       this.color = this.event.bicycle.color;
       this.locker = this.event.lockerType;
 
-      this.images =  this.event.bicycle.images ? this.event.bicycle.images.map(img => (
-        { id: img.id,
+      this.images = this.event.bicycle.images ? this.event.bicycle.images.map(img => (
+        {
+          id: img.id,
           path: img.path,
           name: img.name,
           size: img.size,
           downloadURL: img.downloadURL
         } as UploadImage)) : [];
-       this.location.setValue(this.event.location);
-  });
-  }
+      this.location.setValue(this.event.location);
 
+      this.city = this.event.city;
+    });
+  }
 
   initEmptyForm() {
     this.date.setValue(new Date()); //init date with today
@@ -140,43 +141,40 @@ ngOnDestroy() {
 
   // Inits the map on the given coordinates, adds a central marker
   initMap(lat, lng) {
-    const center = { lat: lat , lng: lng };
+    const center = { lat: lat, lng: lng };
     //TODO: center around user location ?
     this.map.setCenter(center.lat, center.lng);
     this.map.setZoom(13);
     this.marker = new google.maps.Marker({ position: center, map: this.map.map });
-    this.marker.setDraggable(true);
-    this.marker.addListener('dragend', r => this.handleMarkerDrag(r));
+    this.marker.setDraggable(false); // not draggable for now
+    // this.marker.addListener('dragend', r => this.handleMarkerDrag(r));
   }
 
   /**
    * Deletes the current event and the associated images
    */
-  delete() { 
-    console.log("deleting...");
+  delete() {
     this.event$.unsubscribe();
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '450px',
-      data: {title: "Tem a certeza que deseja apagar o registo?"}
+      width: '450px', //TODO: responsize dialog?
+      data: { title: "Tem a certeza que deseja apagar o registo?" }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // Delete associated images from storage
+      // TODO: Delete associated images from storage
       if (result === 'yes') {
         //this.event.bicycle.images.forEach(img => {
         //  this.afStorage.ref(`${img.path}`).delete();
         //});
-    // Delete event
+        // Delete event
         this.eventService.deleteEvent(this.eventId)
           .then(res => {
             this.openSnackBar('Deleted with success', '');
             this.router.navigate(['/events/']);
           })
-          .catch(err => {});
+          .catch(err => { });
       }
     });
-
-  
   }
 
   submit() {
@@ -186,19 +184,17 @@ ngOnDestroy() {
     if (this.isEditing) {
       this.eventService.updateEvent(event).then(res => {
         this.openSnackBar('Edited with success', '');
-        console.log (res);
         this.router.navigate(['/events/' + event.id]);
-      }).catch(err => console.log({err}));
+      }).catch(err => console.error({ err }));
     } else {
-    this.eventService.addEvent(event)
-    .then(res => {
-      this.openSnackBar('Added with success', '');
-      this.router.navigate(['/' + res.path]);
-    })
-    .catch(err => console.log({err}));
+      this.eventService.addEvent(event)
+        .then(res => {
+          this.openSnackBar('Added with success', '');
+          this.router.navigate(['/' + res.path]);
+        })
+        .catch(err => console.error({ err }));
+    }
   }
-  }
-
 
   handleMarkerDrag(marker) {
     this.geo.getAddressFromCoordinates(marker.latLng).subscribe(addresses => {
@@ -208,21 +204,28 @@ ngOnDestroy() {
 
   // Centers the map and marker on a given address
   mapGoToLocation(address: string) {
-    this.geo.getCoordinates(address).subscribe(coords => {
+    var searchAddress = this.location.value;
+    if (this.city && this.city.name)
+      searchAddress = searchAddress.concat(',' + this.city.name);
+
+    if (this.district && this.district.name)
+      searchAddress = searchAddress.concat(',' + this.district.name);
+
+    this.geo.getCoordinates(searchAddress).subscribe(coords => {
       this.marker.setPosition(coords);
       this.map.setCenter(coords.lat, coords.lng);
     },
       err => console.log(err)); // TODO: handle error
   }
 
-
   /**
    * Returns an Event object based on the form data
    */
   getEventFromForm(): Event {
     var event: Event = {
-    
       description: this.description.value,
+      district: this.district,
+      city: this.city,
       location: this.location.value,
       date: new Date(this.date.value),
       dateCreated: new Date(),
@@ -238,8 +241,8 @@ ngOnDestroy() {
         serialNo: this.bikeSerialNo.value,
         brand: this.bikeBrand.value,
         description: this.bikeDescription.value,
-        images: this.images ? this.images.map(img => (
-          { id: img.id,
+        images: this.images ? this.images.map(img => ({
+            id: img.id,
             path: img.path,
             name: img.name,
             size: img.size,
@@ -247,7 +250,7 @@ ngOnDestroy() {
           } as Image)) : [],
       } as Bicycle),
     } as Event;
-    if (this.eventId){
+    if (this.eventId) {
       event.id = this.eventId;
     }
     return event;
@@ -269,6 +272,17 @@ ngOnDestroy() {
       bikeSerialNo: '',
       bikeDescription: '',
     });
+  }
+
+  districtChanged(e) {
+    this.district = e;
+    this.city = undefined;
+    this.mapGoToLocation('');
+  }
+
+  cityChanged(e) {
+    this.city = e;
+    this.mapGoToLocation('');
   }
 
   // Form fields getters

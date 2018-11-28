@@ -1,0 +1,160 @@
+district,id,city,index,id
+Aveiro,av,Águeda,1,av-1
+Aveiro,av,Albergaria-a-Velha,2,av-2
+Aveiro,av,Anadia,3,av-3
+Aveiro,av,Aveiro,4,av-4
+Aveiro,av,Esmoriz,5,av-5
+Aveiro,av,Espinho,6,av-6
+Aveiro,av,Estarreja,7,av-7
+Aveiro,av,Fiães,8,av-8
+Aveiro,av,Gafanha da Nazaré,9,av-9
+Aveiro,av,Ílhavo,10,av-10
+Aveiro,av,Lourosa,11,av-11
+Aveiro,av,Mealhada,12,av-12
+Aveiro,av,Oliveira de Azeméis,13,av-13
+Aveiro,av,Oliveira do Bairro,14,av-14
+Aveiro,av,Ovar,15,av-15
+Aveiro,av,Santa Maria da Feira,16,av-16
+Aveiro,av,São João da Madeira,17,av-17
+Aveiro,av,Vale de Cambra,18,av-18
+Beira Interior Norte,bi,Guarda,19,bi-19
+Beira Interior Norte,bi,Mêda,20,bi-20
+Beira Interior Norte,bi,Pinhel,21,bi-21
+Beira Interior Norte,bi,Sabugal,22,bi-22
+Beira Interior Norte,bi,Trancoso,23,bi-23
+Beja,bj,Beja,24,bj-24
+Beja,bj,Moura,25,bj-25
+Beja,bj,Serpa,26,bj-26
+Braga,bg,Barcelos,27,bg-27
+Braga,bg,Braga,28,bg-28
+Braga,bg,Esposende,29,bg-29
+Braga,bg,Fafe,30,bg-30
+Braga,bg,Guimarães,31,bg-31
+Braga,bg,Vila Nova de Famalicão,32,bg-32
+Braga,bg,Vizela,33,bg-33
+Bragança,bn,Bragança,34,bn-34
+Bragança,bn,Macedo de Cavaleiros,35,bn-35
+Bragança,bn,Miranda do Douro / Miranda de l Douro,36,bn-36
+Bragança,bn,Mirandela,37,bn-37
+Castelo Branco,cb,Castelo Branco,38,cb-38
+Castelo Branco,cb,Covilhã,39,cb-39
+Castelo Branco,cb,Fundão,40,cb-40
+Coimbra,cm,Cantanhede,41,cm-41
+Coimbra,cm,Coimbra,42,cm-42
+Coimbra,cm,Figueira da Foz,43,cm-43
+Coimbra,cm,Oliveira do Hospital,44,cm-44
+Douro,do,Vila Nova de Foz Côa,45,do-45
+Évora,ev,Borba,46,ev-46
+Évora,ev,Estremoz,47,ev-47
+Évora,ev,Évora,48,ev-48
+Évora,ev,Montemor-o-Novo,49,ev-49
+Évora,ev,Reguengos de Monsaraz,50,ev-50
+Évora,ev,Vendas Novas,51,ev-51
+Faro,fr,Albufeira,52,fr-52
+Faro,fr,Faro,53,fr-53
+Faro,fr,Lagoa,54,fr-54
+Faro,fr,Lagos,55,fr-55
+Faro,fr,Loulé,56,fr-56
+Faro,fr,Olhão da Restauração,57,fr-57
+Faro,fr,Portimão,58,fr-58
+Faro,fr,Quarteira,59,fr-59
+Faro,fr,Silves,60,fr-60
+Faro,fr,Tavira,61,fr-61
+Faro,fr,Vila Real de Santo António,62,fr-62
+Grande Porto,pt,Alfena,63,pt-63
+Grande Porto,pt,Ermesinde,64,pt-64
+Grande Porto,pt,Gondomar,65,pt-65
+Grande Porto,pt,Maia,66,pt-66
+Grande Porto,pt,Matosinhos,67,pt-67
+Grande Porto,pt,Porto,68,pt-68
+Grande Porto,pt,Póvoa de Varzim,69,pt-69
+Grande Porto,pt,Rio Tinto,70,pt-70
+Grande Porto,pt,Santo Tirso,71,pt-71
+Grande Porto,pt,São Mamede de Infesta,72,pt-72
+Grande Porto,pt,Senhora da Hora,73,pt-73
+Grande Porto,pt,Trofa,74,pt-74
+Grande Porto,pt,Valbom,75,pt-75
+Grande Porto,pt,Valongo,76,pt-76
+Grande Porto,pt,Vila do Conde,77,pt-77
+Grande Porto,pt,Vila Nova de Gaia,78,pt-78
+Ilha de São Miguel,sm,Lagoa,79,sm-79
+Ilha de São Miguel,sm,Ponta Delgada,80,sm-80
+Ilha de São Miguel,sm,Ribeira Grande,81,sm-81
+Ilha do Faial,fa,Horta,82,fa-82
+Ilha do Porto Santo,ps,Vila Baleira,83,ps-83
+Ilha Terceira,te,Angra do Heroísmo,84,te-84
+Ilha Terceira,te,Praia da Vitória,85,te-85
+Leiria,le,Alcobaça,86,le-86
+Leiria,le,Caldas da Rainha,87,le-87
+Leiria,le,Leiria,88,le-88
+Leiria,le,Marinha Grande,89,le-89
+Leiria,le,Peniche,90,le-90
+Leiria,le,Pombal,91,le-91
+Lisboa,lx,Agualva-Cacém,92,lx-92
+Lisboa,lx,Alverca do Ribatejo,93,lx-93
+Lisboa,lx,Amadora,94,lx-94
+Lisboa,lx,Lisboa,95,lx-95
+Lisboa,lx,Loures,96,lx-96
+Lisboa,lx,Odivelas,97,lx-97
+Lisboa,lx,Póvoa de Santa Iria,98,lx-98
+Lisboa,lx,Queluz,99,lx-99
+Lisboa,lx,Sacavém,100,lx-100
+Lisboa,lx,Torres Vedras,101,lx-101
+Lisboa,lx,Vila Franca de Xira,102,lx-102
+Madeira,md,Câmara de Lobos,103,md-103
+Madeira,md,Caniço,104,md-104
+Madeira,md,Funchal,105,md-105
+Madeira,md,Machico,106,md-106
+Madeira,md,Santa Cruz,107,md-107
+Madeira,md,Santana,108,md-108
+Portalegre,pg,Elvas,109,pg-109
+Portalegre,pg,Ponte de Sor,110,pg-110
+Portalegre,pg,Portalegre,111,pg-111
+Santarém,st,Abrantes,112,st-112
+Santarém,st,Almeirim,113,st-113
+Santarém,st,Cartaxo,114,st-114
+Santarém,st,Entroncamento,115,st-115
+Santarém,st,Fátima,116,st-116
+Santarém,st,Ourém,117,st-117
+Santarém,st,Rio maior,118,st-118
+Santarém,st,Samora Correia,119,st-119
+Santarém,st,Santarém,120,st-120
+Santarém,st,Tomar,121,st-121
+Santarém,st,Torres Novas,122,st-122
+Serra da Estrela,se,Gouveia,123,se-123
+Serra da Estrela,se,Seia,124,se-124
+Setúbal,sb,Alcácer do Sal,125,sb-125
+Setúbal,sb,Almada,126,sb-126
+Setúbal,sb,Amora,127,sb-127
+Setúbal,sb,Barreiro,128,sb-128
+Setúbal,sb,Costa da Caparica,129,sb-129
+Setúbal,sb,Montijo,130,sb-130
+Setúbal,sb,Santiago do Cacém,131,sb-131
+Setúbal,sb,Seixal,132,sb-132
+Setúbal,sb,Setúbal,133,sb-133
+Setúbal,sb,Sines,134,sb-134
+Setúbal,sb,Vila Nova de Santo André,135,sb-135
+Tâmega,tg,Amarante,136,tg-136
+Tâmega,tg,Felgueiras,137,tg-137
+Tâmega,tg,Freamunde,138,tg-138
+Tâmega,tg,Gandra,139,tg-139
+Tâmega,tg,Lixa,140,tg-140
+Tâmega,tg,Marco de Canaveses,141,tg-141
+Tâmega,tg,Paços de Ferreira,142,tg-142
+Tâmega,tg,Paredes,143,tg-143
+Tâmega,tg,Penafiel,144,tg-144
+Tâmega,tg,Rebordosa,145,tg-145
+Tâmega,tg,São Salvador de Lordelo,146,tg-146
+Viana do Castelo,vc,Valença,147,vc-147
+Viana do Castelo,vc,Viana do Castelo,148,vc-148
+Vila Real,vr,Chaves,149,vr-149
+Vila Real,vr,Peso da Régua,150,vr-150
+Vila Real,vr,Valpaços,151,vr-151
+Vila Real,vr,Vila Real,152,vr-152
+Viseu,vs,Lamego,153,vs-153
+Viseu,vs,Mangualde,154,vs-154
+Viseu,vs,Santa Comba Dão,155,vs-155
+Viseu,vs,São Pedro do Sul,156,vs-156
+Viseu,vs,Tarouca,157,vs-157
+Viseu,vs,Tondela,158,vs-158
+Viseu,vs,Viseu,159,vs-159

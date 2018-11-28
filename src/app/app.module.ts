@@ -59,6 +59,8 @@ import { CarouselComponent } from './widgets/carousel/carousel.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { EventEditComponent } from './events/event-edit/event-edit.component';
 import { SearchboxComponent } from './widgets/searchbox/searchbox.component';
+import { DistrictPickerComponent } from './widgets/district-picker/district-picker.component';
+import { CityPickerComponent } from './widgets/city-picker/city-picker.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,9 @@ import { SearchboxComponent } from './widgets/searchbox/searchbox.component';
     CarouselComponent,
     TruncatePipe,
     EventEditComponent,
-    SearchboxComponent
+    SearchboxComponent,
+    DistrictPickerComponent,
+    CityPickerComponent
   ],
   entryComponents: [
     LoginDialog,

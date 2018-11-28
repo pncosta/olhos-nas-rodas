@@ -91,14 +91,7 @@ export class EventService {
 
   addEvent(event: Event): Promise<firebase.firestore.DocumentReference> {
     const events = this.db.collection<Event>('events');
-var i = 0;
-    for ( i = 0; i < 100; i ++) {
-      event.id = i+'';
-      event.bicycle.brand = "merida " + i;
-       events.add(event);
-    }
-   return events.add(event);
-  
+    return events.add(event);
   }
 
   /** DELETE: delete the event from the server */
