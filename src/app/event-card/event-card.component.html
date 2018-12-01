@@ -17,10 +17,12 @@
         <div> <img class="card-image" src="{{imageurl}}"><img></div>
         <div class="text">
           <div class="date-and-location">
-            <div class="date"><mat-icon>date_range</mat-icon>{{event.dateCreation }}</div>
-            <div class="date"><mat-icon>date_range</mat-icon>{{event.date }}</div>
+            <div class="date" *ngIf="event.dateCreation"><mat-icon>date_range</mat-icon>{{event.dateCreation.toDate() | date }}</div>
+            <div class="date" *ngIf="event.date"><mat-icon>date_range</mat-icon>{{event.date.toDate() | date }}</div>
             <div class="location"> <mat-icon>location_on</mat-icon>
-              {{event.location}}, {{event.city.name}}, {{event.district.name}} 
+              {{event.location}}, 
+              <span *ngIf="event.city">{{event.city.name}}, </span>
+              <span *ngIf="event.district"> {{event.district.name}} </span>
             </div>
 
           </div>
@@ -38,7 +40,7 @@
 
         <caption class="mat-small">
           <mat-icon>visibility</mat-icon> {{event.views}} views </caption>
-        <caption class="mat-small comments-count">
+        <caption *ngIf="event.comments" class="mat-small comments-count">
           <mat-icon>message</mat-icon> {{event.comments.length}} comments </caption>
       </div>
     </mat-card-footer>

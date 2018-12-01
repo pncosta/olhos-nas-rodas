@@ -8,7 +8,7 @@
       <div class="textbox">
         <app-searchbox  [(searchText)]="searchText" (searchTextChange)="applyFilters()" ></app-searchbox>
         <div class="results-count">
-            <span class="mat-small">{{filteredEvents.length}} resultados com os filtros atuais.</span>
+            <span class="mat-small" *ngIf="filteredEvents" >{{filteredEvents.length}} resultados com os filtros atuais.</span>
           </div>  
       </div>
     </div>
@@ -23,18 +23,6 @@
   </div>
 
 <cdk-virtual-scroll-viewport itemSize="350">
-
   <app-event-card  *cdkVirtualFor="let event of filteredEvents" [event]="event">
   </app-event-card>
-
-  </cdk-virtual-scroll-viewport>
-
-<!-- 
-<div class="container">
-  <app-event-card *ngFor="let event of filteredEvents" [event]="event">
-  </app-event-card>
-
-</div>
-Legacy pagination  
-<button mat-button (click)="prevPage()" [disabled]="!prevKeys?.length">Prev</button>
-<button mat-button (click)="nextPage()" [disabled]="!nextKey">Next</button>-->
+</cdk-virtual-scroll-viewport>

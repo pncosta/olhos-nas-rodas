@@ -19,7 +19,7 @@ export class Event {
     comments: Comment[];
 
     /** 
-     * Checks if the current Event contains the given 'value' in any of its major properties
+     * Checks if a given Event contains the given 'value' in any of its major properties
      * If ´value' has multiple words, checks if it contains all of them ( && ) 
      * words with 2 or less chars are ignored
      * 
@@ -33,17 +33,14 @@ export class Event {
           containsAllValues = values[i].length > 2 
                              ? e.description.toLowerCase().includes(values[i]) 
                               || e.location.toLowerCase().includes(values[i])
+                              || (e.district && e.district.name && e.district.name.toLowerCase().includes(values[i]))
+                              || (e.city && e.city.name && e.city.name.toLowerCase().includes(values[i]))
                               || e.bicycle 
                                 && (e.bicycle.brand.toLowerCase().includes(values[i])
                                 || e.bicycle.description.toLowerCase().includes(values[i]))
-                             :true;
+                             : true;
           i++;
-
       }
       return containsAllValues;
-
-
     }
-
-
-  }
+  } 
