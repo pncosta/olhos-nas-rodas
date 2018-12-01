@@ -17,7 +17,7 @@
         <div> <img class="card-image" src="{{imageurl}}"><img></div>
         <div class="text">
           <div class="date-and-location">
-            <div class="date" *ngIf="event.dateCreation"><mat-icon>date_range</mat-icon>{{event.dateCreation.toDate() | date }}</div>
+            <div class="date" *ngIf="event.dateCreated"><mat-icon>date_range</mat-icon>{{event.dateCreated.toDate() | date }}</div>
             <div class="date" *ngIf="event.date"><mat-icon>date_range</mat-icon>{{event.date.toDate() | date }}</div>
             <div class="location"> <mat-icon>location_on</mat-icon>
               {{event.location}}, 
@@ -28,7 +28,6 @@
           </div>
           <div class="description">{{ event.bicycle.description | truncate:[140, '...'] }}</div>
           <div class="description">{{ event.description | truncate:[140, '...'] }}</div>
-
         </div>
       </div>
 
