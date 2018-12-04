@@ -79,7 +79,7 @@
         <div mat-card-image>
         <app-carousel mat-card-image [items]="photos"></app-carousel>
         </div>
-        <div *ngIf="author | async as user">
+        <div *ngIf="author$ | async as user">
           <mat-card-header>
 
             <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
@@ -92,7 +92,7 @@
 
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="primary">
+          <button mat-raised-button color="primary" (click)="openMessageDialog()">
                     <mat-icon>message</mat-icon> SEND MESSAGE
                 </button>
         </mat-card-actions>

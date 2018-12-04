@@ -61,6 +61,7 @@ import { EventEditComponent } from './events/event-edit/event-edit.component';
 import { SearchboxComponent } from './widgets/searchbox/searchbox.component';
 import { DistrictPickerComponent } from './widgets/district-picker/district-picker.component';
 import { CityPickerComponent } from './widgets/city-picker/city-picker.component';
+import { SendMessageDialogComponent } from './messages/send-message-dialog/send-message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -95,12 +96,14 @@ import { CityPickerComponent } from './widgets/city-picker/city-picker.component
     EventEditComponent,
     SearchboxComponent,
     DistrictPickerComponent,
-    CityPickerComponent
+    CityPickerComponent,
+    SendMessageDialogComponent
   ],
   entryComponents: [
     LoginDialog,
     ConfirmationDialogComponent,
-    SignupDialogComponent
+    SignupDialogComponent,
+    SendMessageDialogComponent
   ],
   imports: [
     BrowserModule,

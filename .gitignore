@@ -40,3 +40,11 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Firebase 
+.firebase/
+.firebaserc
+	
+#Functions - dependencies 
+functions/node_modules/
+functions/package-lock.json

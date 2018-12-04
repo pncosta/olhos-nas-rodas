@@ -9,6 +9,8 @@ import { AuthService } from '../core/auth.service';
 import { EventService } from '../events/event.service';
 import { User } from '../core/auth.service';
 import { MyMapComponent } from '../my-map/my-map.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { SendMessageDialogComponent } from '../messages/send-message-dialog/send-message-dialog.component';
 
 @Component({
   selector: 'app-event-detail',
@@ -22,12 +24,14 @@ export class EventDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('map') 
   public maps : QueryList<MyMapComponent>
   private map: MyMapComponent;
-  private author: Observable<User>;
+  private author$: Observable<User>;
+  private author: User;
   private photoUrl: Observable<string | null>;
   private photos: Array<string>;
   private canEdit;
   private event$: ISubscription;
   constructor(private route: ActivatedRoute,
+    public dialog: MatDialog,
     private auth: AuthService,
     private eventService: EventService,
     private location: Location, 
@@ -62,14 +66,14 @@ export class EventDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         this.event = event; 
         this.canEdit = this.auth && this.event.author === this.auth.uid;
         this.photos = this.event.bicycle.images.map(img => img.downloadURL);
-        console.log(this.event);
         this.getAuthor();
        });
       
   }
   
   getAuthor(){
-    this.author = this.users.getUser(this.event.author);
+    this.author$ = this.users.getUser(this.event.author);
+    this.author$.subscribe(u => this.author = u);
   }
 
   initMap() {
@@ -91,4 +95,19 @@ export class EventDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     this.location.back();
   }
 
+  openMessageDialog(): void {
+    const dialogRef = this.dialog.open(SendMessageDialogComponent, {
+      width: '80vw',
+      data: { event: this.event,
+              author: this.author
+            }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
+  }
+
 }
+

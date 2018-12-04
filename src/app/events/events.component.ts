@@ -35,8 +35,9 @@ export class EventsComponent implements OnInit {
 
   applyFilters() {
     // client side filtering as firebase does not support proper queries on text
-    // TODO: a free solution that scales 
+    // TODO: look a solution that scales 
     // based on https://angularfirebase.com/lessons/multi-property-data-filtering-with-firebase-and-angular-4/
-    this.filteredEvents = this.events.filter((e: Event) => Event.contains(e, this.searchText));
+    this.filteredEvents = this.events.filter(
+      (e: Event) => Event.contains(e, this.searchText));
   }
 }

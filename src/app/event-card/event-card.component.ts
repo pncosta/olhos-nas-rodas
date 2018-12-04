@@ -15,6 +15,7 @@ export class EventCardComponent implements OnInit, OnChanges {
   @Input() event: Event;
   author: Observable<User>;
   imageurl: string;
+  createdDate;
   defaultImage: string = '/assets/bicycle-placeholder.jpg';
   constructor(private eventService: EventService,  private users: UserService) {
     
@@ -26,7 +27,6 @@ export class EventCardComponent implements OnInit, OnChanges {
     this.imageurl = this.event.bicycle.images && this.event.bicycle.images.length > 0 
       ? this.event.bicycle.images[0].downloadURL 
       : this.defaultImage; 
-
    }
 
   ngOnInit() {
