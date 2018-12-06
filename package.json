@@ -25,6 +25,8 @@
     "@angular/platform-browser": "^7.0.3",
     "@angular/platform-browser-dynamic": "^7.0.3",
     "@angular/router": "^7.0.3",
+    "@google/markerclusterer": "^1.0.3",
+    "@google/markerclustererplus": "^2.1.11",
     "@types/chart.js": "^2.7.40",
     "@types/googlemaps": "^3.30.16",
     "angular-bootstrap-md": "^6.3.0",

@@ -20,7 +20,6 @@ import { SendMessageDialogComponent } from '../messages/send-message-dialog/send
 export class EventDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   event: Event;
 
-
   @ViewChildren('map') 
   public maps : QueryList<MyMapComponent>
   private map: MyMapComponent;
@@ -30,7 +29,8 @@ export class EventDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   private photos: Array<string>;
   private canEdit;
   private event$: ISubscription;
-  constructor(private route: ActivatedRoute,
+
+  constructor( private route: ActivatedRoute,
     public dialog: MatDialog,
     private auth: AuthService,
     private eventService: EventService,
@@ -104,8 +104,8 @@ export class EventDetailComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
+
+
     });
   }
 

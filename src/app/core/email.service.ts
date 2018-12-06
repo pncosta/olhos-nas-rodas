@@ -24,14 +24,14 @@ export class EmailService {
                   fromEmail: String, fromUsername: String,
                   message: String): Observable<any> {
     const data = {
-      toEmail: toEmail,
-      toUsername: toUsername,
-      fromUsername: fromUsername,
-      fromEmail: fromEmail,
-      dateSent: new Date().toLocaleDateString(),
-      message: message
+      'toEmail': toEmail,
+      'toUsername': toUsername,
+      'fromUsername': fromUsername,
+      'fromEmail': fromEmail,
+      'dateSent': 'new Date().toLocaleDateString()',
+      'message': message
     }
-    return this.http.post(this.SEND_EMAIL_TO_USER_ENDPOINT, data);
+    return this.http.post(this.SEND_EMAIL_TO_USER_ENDPOINT, data)
   }
 
 

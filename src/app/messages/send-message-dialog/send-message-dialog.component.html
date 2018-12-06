@@ -5,6 +5,7 @@
       <mat-form-field>
           <textarea matInput 
             placeholder="Mensagem para o utilizador"
+            rows="4"
             formControlName="message">
           </textarea>
         <mat-error *ngIf="message.hasError('required') || message.hasError('minlength')">

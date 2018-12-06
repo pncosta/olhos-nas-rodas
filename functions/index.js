@@ -36,7 +36,7 @@ exports.httpEmail = functions.https.onRequest((req, res) => {
             }
         };  
         return sgMail.send(msg)     
-            .then(() => res.status(200).send('email sent!') )
+            .then(r => res.status(200).send(r) )
             .catch(err => res.status(400).send(err) )
         });
 });
