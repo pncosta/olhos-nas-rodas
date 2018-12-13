@@ -1,63 +1,80 @@
 <h2 mat-dialog-title>
-  Signup
+  Novo Registo
 </h2>
 <div mat-dialog-content>
-  <form [formGroup]="signupForm" (ngSubmit)="signup()">
-    <div class="wrapper">
-      <mat-form-field>
-        <input matInput placeholder="Username" formControlName="username">
-        <mat-error *ngIf="signupForm.controls.username.errors?.required">
-          Username is required
-        </mat-error>
-        <mat-error *ngIf="signupForm.controls.username.errors?.minlength">
-          Username must have at least 3 characters
-        </mat-error>
-      </mat-form-field>
+  <div *ngIf="signupStatus == 0">
+    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+      <div class="wrapper">
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username">
+          <mat-error *ngIf="signupForm.controls.username.errors?.required">
+            Username é obrigatório
+          </mat-error>
+          <mat-error *ngIf="signupForm.controls.username.errors?.minlength">
+            Username tem de ter pelo menos 3 caracteres
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field>
-        <input matInput placeholder="Email" formControlName="email">
-        <!-- <mat-error *ngIf="email.required">
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email">
+          <!-- <mat-error *ngIf="email.required">
           Email is required
         </mat-error> -->
-        <mat-error *ngIf="email.invalid">
-          Email format not valid
-        </mat-error>
-        <mat-hint *ngIf="error === 'auth/email-already-in-use'" class="error-hint">
-           E-mail já registado.
-        </mat-hint>
-      </mat-form-field>
-     
-      <mat-form-field>
-        <input matInput placeholder="Enter your password" [type]="'password'" formControlName="password">
-        <mat-error *ngIf="password.errors?.pattern || password.errors?.minlength">
-            Passwords must have at least 8 characters, one number and one letter
+          <mat-error *ngIf="email.invalid">
+            Email inválido
           </mat-error>
-      </mat-form-field>
+          <mat-hint *ngIf="error === 'auth/email-already-in-use'" class="error-hint">
+            E-mail já registado.
+          </mat-hint>
+        </mat-form-field>
 
-      <mat-form-field>
-        <input matInput placeholder="Confirm your password" [type]="'password'" formControlName="confirmPassword">
-        <mat-error *ngIf="signupForm.controls.confirmPassword.errors?.MatchPassword && signupForm.controls.confirmPassword.dirty">
-          Passwords do not match
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Enter your password" [type]="'password'" formControlName="password">
+          <mat-error *ngIf="password.errors?.pattern || password.errors?.minlength">
+            Password tem de ter pelo menos 8 characters, um número e uma letra
+          </mat-error>
+        </mat-form-field>
 
-      <mat-checkbox  formControlName="termsAndConditions"  class="mat-small">
+        <mat-form-field>
+          <input matInput placeholder="Confirm your password" [type]="'password'" formControlName="confirmPassword">
+          <mat-error *ngIf="signupForm.controls.confirmPassword.errors?.MatchPassword && signupForm.controls.confirmPassword.dirty">
+            Passwords têm de ser iguais
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="termsAndConditions" class="mat-small">
           Concordo com os <a href="/tc">Termos e Condições</a> e <a href="/tc">Politica de Privacidade</a>.
         </mat-checkbox>
-      <mat-error class="mat-small" *ngIf="termsAndConditionsError">Tem de aceitar os Termos e Condições e Politica de Privacidade
-      </mat-error>
+        <mat-error class="mat-small" *ngIf="termsAndConditionsError">Tem de aceitar os Termos e Condições e Politica de Privacidade
+        </mat-error>
 
-      <button mat-raised-button color="primary" type="submit"
-        [disabled]="!signupForm.valid">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!signupForm.valid">
         <span>Submit</span>
     </button>
+      </div>
+    </form>
+    <hr />
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
+      <google-login-button (onLoggedIn)="afterOAuthSignedUp($event)"></google-login-button>
+      <app-facebook-login-button (onLoggedIn)="afterOAuthSignedUp($event)"></app-facebook-login-button>
+
     </div>
-  </form>
-  <hr />
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
-    <google-login-button (onLoggedIn)="afterSignedUp($event)"></google-login-button>
-    <app-facebook-login-button (onLoggedIn)="loginSucessful($event)"></app-facebook-login-button>
- 
+  </div>
+
+  <div *ngIf="signupStatus == 1">
+    <p class="mat-small">Registo efetuado com sucesso!<br /></p>
+      <p class="mat-small">
+        Um email foi enviado para {{ email.value }} com as instruções para validar o seu email e finalizar o registo da sua conta.
+      </p>
+    <button mat-raised-button color="primary" (click)="close()">FECHAR</button>
+  </div>
+
+
+  <div *ngIf="signupStatus == 2">
+      <p class="mat-small">Login efetuado com sucesso!<br /></p>
+        <p class="mat-small">
+          Irá ser redirecionado para a pagina anterior...  
+        </p>
   </div>
 
 </div>
