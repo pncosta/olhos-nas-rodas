@@ -100,6 +100,29 @@ body {
     z-index:99;
 }
 
+.error-callout {
+    background-color: pink;
+    border: 1px red solid;
+    padding: 8px;
+}
+
+.info-callout {
+    background-color: lightblue;
+    border: 1px darkblue solid;
+    padding: 8px;
+}
+
+.warning-callout {
+    background-color: lightsalmon;
+    border: 1px orange solid;
+    padding: 8px;
+}
+
+.success-callout {
+    background-color: lightgreen;
+    border: 1px green solid;
+    padding: 8px;
+}
 
 @media screen and (min-width: 720px) {
     .header {

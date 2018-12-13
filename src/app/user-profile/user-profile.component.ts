@@ -13,10 +13,12 @@ export class UserProfileComponent {
   profileForm: FormGroup;
   passwordForm: FormGroup;
   passwordChangeStatus: number;
+  emailVerificationStatus: number;
   constructor(public fb: FormBuilder, public auth: AuthService) { }
 
   ngOnInit() {
     this.passwordChangeStatus = 0;
+    this.emailVerificationStatus = 0;
     const passwordControl = PasswordValidation.getPasswordControl();
     const confirmPasswordControl = PasswordValidation.getPasswordControl();
 
@@ -34,6 +36,12 @@ export class UserProfileComponent {
     // Step 2
     updateProfile() {
       return this.auth.updateUser( { photoURL:  this.avatar.value })
+    }
+
+    resendConfirmationEmail() {
+      this.auth.sendEmailVerification()
+      .then( r => this.emailVerificationStatus = 1) 
+      .catch( errr => this.emailVerificationStatus = -1) 
     }
 
         // Step 2

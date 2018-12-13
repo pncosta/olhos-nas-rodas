@@ -16,55 +16,67 @@
     <mat-card>
       <div class="vertical-center-container">
         <app-user-avatar width="192" height="192" [user]="user"></app-user-avatar>
-     
+
         <h3>{{ user.displayName }}</h3>
         <p>Email: {{ user.email }}</p>
 
+        <div *ngIf="!auth.emailVerified"class="vertical-center-container">
+          <p class="mat-small error-callout">
+            Email não verificado. <br>
+            Procure no seu email pelo email de validação ou clique para enviar um novo.
+          </p>
+          <p *ngIf="emailVerificationStatus == 1" class="mat-small success-callout">
+              Um email com as instruções para validar o seu email foram enviados para si. <br />
+              Verifique a caixa de SPAM.           
+          </p>
+          <button mat-raised-button color="primary" 
+          (click)="resendConfirmationEmail()">REENVIAR EMAIL DE VALIDAÇÂO</button>
+        </div>
+
         <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="vertical-center-container">
-                <div class="vertical-center-container">
-      
-                  <h3>Profile</h3>
-      
-                  <mat-form-field>
-                    <input matInput placeholder="Avatar URL" [type]="'url'" formControlName="avatar">
-                  </mat-form-field>
-                  <button mat-raised-button color="primary" type="submit">Update Profile</button>
-                </div>
-              </form>
+          <div class="vertical-center-container">
+
+            <h3>Profile</h3>
+
+            <mat-form-field>
+              <input matInput placeholder="Avatar URL" [type]="'url'" formControlName="avatar">
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit">Update Profile</button>
+          </div>
+        </form>
 
         <hr />
 
         <div>
-        <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="vertical-center-container">
-          <div class="vertical-center-container">
+          <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="vertical-center-container">
+            <div class="vertical-center-container">
 
-            <h3>Update Password</h3>
+              <h3>Update Password</h3>
 
-            <mat-form-field>
-              <input matInput placeholder="Enter new password" [type]="'password'" formControlName="password">
-              <mat-error *ngIf="password.errors?.pattern || password.errors?.minlength">
-                    Passwords must have at least 8 characters, one number and one letter
-                  </mat-error>
-            </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Enter new password" [type]="'password'" formControlName="password">
+                <mat-error *ngIf="password.errors?.pattern || password.errors?.minlength">
+                  Passwords must have at least 8 characters, one number and one letter
+                </mat-error>
+              </mat-form-field>
 
-            <mat-form-field>
-              <input matInput placeholder="Confirm new password" [type]="'password'" formControlName="confirmPassword">
-              <mat-error *ngIf="passwordForm.controls.confirmPassword.errors?.MatchPassword && passwordForm.controls.confirmPassword.dirty">
-                    Passwords do not match
-                  </mat-error>
-            </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Confirm new password" [type]="'password'" formControlName="confirmPassword">
+                <mat-error *ngIf="passwordForm.controls.confirmPassword.errors?.MatchPassword && passwordForm.controls.confirmPassword.dirty">
+                  Passwords do not match
+                </mat-error>
+              </mat-form-field>
 
-            <button mat-raised-button color="primary" 
-            type="submit" [disabled]="!passwordForm.valid">Update Password</button>
-          </div>
-        </form>
-      </div>
-      <div *ngIf="passwordChangeStatus == 1">
-        Password alterada com sucesso
-      </div>
-      <div *ngIf="passwordChangeStatus == -1">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!passwordForm.valid">Update Password</button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="passwordChangeStatus == 1">
+          Password alterada com sucesso
+        </div>
+        <div *ngIf="passwordChangeStatus == -1">
           Ocurreu um erro na alteração de password
-      </div>
+        </div>
 
       </div>
     </mat-card>

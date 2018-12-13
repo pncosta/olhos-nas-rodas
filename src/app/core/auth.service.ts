@@ -131,6 +131,11 @@ export class AuthService {
     return this.userDetails != null;
   }
 
+
+  get emailVerified() {
+    return this._firebaseAuth.auth.currentUser.emailVerified;
+  }
+
   get uid() {
     return this.userDetails ? this.userDetails.uid : null;
   }
