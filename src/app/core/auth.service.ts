@@ -1,7 +1,7 @@
 
-import {of as observableOf,  Observable } from 'rxjs';
-
-import {switchMap} from 'rxjs/operators';
+import { of as observableOf, Observable } from 'rxjs';
+import { auth } from 'firebase';
+import { switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -14,7 +14,11 @@ export interface User {
   email: string;
   photoURL?: string;
   displayName?: string;
-  favoriteColor?: string;
+}
+
+export class EmailPasswordCredentials {
+  email: string;
+  password: string;
 }
 
 @Injectable()
@@ -24,8 +28,8 @@ export class AuthService {
   private userDetails: User = null;
 
   constructor(private _firebaseAuth: AngularFireAuth,
-              private _firebaseStore: AngularFirestore,
-              private router: Router) {
+    private _firebaseStore: AngularFirestore,
+    private router: Router) {
 
     //// Get auth data, then get firestore user document || null
     this.user = this._firebaseAuth.authState.pipe(
@@ -41,91 +45,132 @@ export class AuthService {
     );
   }
 
-  signup(email: string, password: string) {
-    return this._firebaseAuth.auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(user => this.setUserDoc(user));
+  ////// OAuth Methods /////
 
-  }
+  private oAuthLogin(provider: any): Promise<any> {
+    var promise = new Promise ((resolve, reject) => {
+      this._firebaseAuth.auth
+        .signInWithPopup(provider)
+        .then(credential => {
+          this.updateUserData(credential.user);
+          resolve(credential.user);
+        })
+        .catch(error => {
+          this.handleError(error);
+          reject(error);
+        });
 
-  login(email: string, password: string) {
+    });
 
-    const promise = new Promise((resolve, reject) => {
-      this._firebaseAuth
-      .auth
-      .signInWithEmailAndPassword(email, password)
-      .then(value => { resolve(value); })
-      .catch(err => { reject(err); });
-     });
     return promise;
-    }
-
-  isLoggedIn() {
-    return this.userDetails != null;
-  }
-
-  get uid() {
-    return this.userDetails ? this.userDetails.uid : null ;
-  }
-
-  get UserDetails(): User { return this.userDetails }
-
-  logout() {
-    this._firebaseAuth.auth.signOut()
-    .then((res) => this.router.navigate(['/']));
+   
   }
 
   signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
+ 
+  signInWithFacebook() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    return this.oAuthLogin(provider);
+  }
 
-   // Update properties on the user document
-   updateUser(data: any) {
+  //// Email/Password Auth ////
+
+  emailSignUp(email: string, password: string): Promise<any> {
+    var promise = new Promise((resolve, reject) => {
+      this._firebaseAuth.auth
+        .createUserWithEmailAndPassword(email, password)
+        .then(credential => {
+          this.sendEmailVerification();
+          this.updateUserData(credential.user); // if using firestore
+          resolve(credential);
+        })
+        .catch(error => {
+          this.handleError(error);
+          reject(error);
+        });
+    });
+    return promise;
+  }
+
+  emailLogin(email: string, password: string): Promise<any> {
+    var promise = new Promise((resolve, reject) => {
+      this._firebaseAuth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(credential => {
+        this.updateUserData(credential.user);
+        resolve(credential);
+      })
+      .catch(error => {
+        this.handleError(error);
+        reject(error);
+      });
+    });
+
+    return promise;
+   
+  }
+
+  //// Other Methods ////
+
+  sendEmailVerification(): Promise<any> {
+    return this._firebaseAuth.auth.currentUser.sendEmailVerification();
+  }
+
+  // Sends email allowing user to reset password
+  resetPassword(email: string): Promise<any> {
+    const fbAuth = auth();
+    return fbAuth
+      .sendPasswordResetEmail(email);
+  }
+
+
+  isLoggedIn() {
+    return this.userDetails != null;
+  }
+
+  get uid() {
+    return this.userDetails ? this.userDetails.uid : null;
+  }
+
+  get UserDetails(): User { return this.userDetails }
+
+  logout() {
+    this._firebaseAuth.auth.signOut()
+      .then((res) => this.router.navigate(['/']));
+  }
+
+
+  // Update properties on the user document
+  updateUser(data: any): Promise<any> {
     return this._firebaseStore.doc(`users/${this.userDetails.uid}`).update(data);
   }
 
-  updatePassword (password: string) {
+  updatePassword(password: string): Promise<any> {
     const user = this._firebaseAuth.auth.currentUser;
-    user.updatePassword(password)
-      .then(function(r) {
-        console.log ('Success updating user pass! ');
-      }).catch(function(error) {
-        // TODO: handle error
-        console.log (error);
-      });
+    return user.updatePassword(password);
   }
 
-  logInWithPopup() {
-    // this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  }
 
-  private oAuthLogin(provider) {
-    return this._firebaseAuth.auth.signInWithPopup(provider)
-      .then((credential) => {
-        this.setUserDoc(credential.user);
-      });
-  }
-
-   // Sets user data to firestore after succesful login
-  private setUserDoc(user) {
-
-    const userRef: AngularFirestoreDocument<any> = this._firebaseStore.doc(`users/${user.uid}`);
+  // Sets user data to firestore after succesful login
+  private updateUserData(user: User) {
+    const userRef: AngularFirestoreDocument<User> = this._firebaseStore.doc(
+      `users/${user.uid}`
+    );
 
     const data: User = {
       uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
+      email: user.email || null,
+      displayName: user.displayName || user.email,
       photoURL: user.photoURL
     };
-
-    return userRef.set(data, { merge: true });
-
+    return userRef.set(data);
   }
-    // If error, console log and notify user
-    private handleError(error) {
-      console.error(error);
-    }
 
 
+  private handleError(error) {
+    console.error(error);
+  }
 }

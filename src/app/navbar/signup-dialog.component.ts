@@ -24,6 +24,9 @@ export class SignupDialogComponent implements OnInit {
 
   signupForm: FormGroup;
   error: String;
+  acceptedTermsAndConditions: boolean;
+  termsAndConditionsError: boolean;
+  isLoading: boolean;
 
   constructor(public fb: FormBuilder,
     public auth: AuthService,
@@ -36,29 +39,32 @@ export class SignupDialogComponent implements OnInit {
     const emailControl = PasswordValidation.getEmailControl();
     const passwordControl = PasswordValidation.getPasswordControl();
     const confirmPasswordControl = PasswordValidation.getPasswordControl();
-
+    const termsAndConditionsControl = PasswordValidation.getTermsAndConditionsControl();
+    this.isLoading = false;
     this.signupForm = this.fb.group({
       'username': usernameControl,
       'email': emailControl,
       'password': passwordControl,
       'confirmPassword': confirmPasswordControl,
+      'termsAndConditions': termsAndConditionsControl
     }, {
         validator: PasswordValidation.MatchPassword
       });
   }
 
-
   signup() {
-    if (this.signupForm.valid) {
-      this.auth.signup(this.email.value, this.password.value)
+    this.isLoading = true;
+    if (!this.termsAndConditions.value){
+      this.termsAndConditionsError = true;
+    } else if (this.signupForm.valid) {
+      this.auth.emailSignUp(this.email.value, this.password.value)
         .then((res) => {
-          console.log(this.username.value );
-
-          this.auth.updateUser({ displayName:  this.username.value });
+          this.isLoading = false;
           this.afterSignedUp(res);
          })
-        .catch((err) => {  console.log('sign up catch');
-        this.handleError(err); } );
+        .catch(err => {  
+          this.isLoading = false;
+          this.handleError(err); } );
     }
   }
 
@@ -76,5 +82,6 @@ export class SignupDialogComponent implements OnInit {
   get password() { return this.signupForm.get('password'); }
   get confirmPassword() { return this.signupForm.get('confirmPassword'); }
   get username() { return this.signupForm.get('username'); }
+  get termsAndConditions() { return this.signupForm.get('termsAndConditions'); }
 
 }

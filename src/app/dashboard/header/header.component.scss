@@ -1,0 +1,22 @@
+header {
+    height: 80vh;
+    color: white;
+    justify-content: space-around;
+}
+
+.actions {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.actions a {
+    margin: 16px;
+}
+
+@media screen and (min-width: 720px) {
+    .actions {
+        flex-direction: row;
+    }
+} 

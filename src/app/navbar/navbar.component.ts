@@ -32,10 +32,8 @@ export class NavbarComponent implements OnInit {
 
   openDialog(d) {
     return this.dialog.open(d, {
-      maxHeight: '80%',
       width: '500px',
       maxWidth: '90%'
-
     });
   }
 }

@@ -13,8 +13,13 @@ export class PasswordValidation {
     }
 
     static getPasswordControl() {
-        return new FormControl('', [Validators.required, Validators.minLength(8),
-            Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')]);
+        return new FormControl('', [Validators.required, Validators.minLength(8)
+           // Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')
+        ]);
+    }
+
+    static getTermsAndConditionsControl() {
+        return new FormControl(false, [Validators.required]);
     }
 
     static getUsernameControl() {

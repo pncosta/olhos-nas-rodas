@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatButtonModule, MatMenuModule } from '@angular/material';
-import { AuthService } from '../core/auth.service';
 import { Router } from "@angular/router";
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -12,55 +8,23 @@ import { MatDialog, MatDialogRef } from '@angular/material';
     styleUrls: ['login-dialog.component.scss']
 })
 
-export class LoginDialog implements OnInit{
+export class LoginDialog implements OnInit {
 
-    constructor(public fb: FormBuilder, public auth: AuthService, private router: Router,
+    constructor(private router: Router,
         public dialogRef: MatDialogRef<LoginDialog>) { }
-    loginForm: FormGroup;
+
+    recoverPassword: boolean;
 
     ngOnInit() {
-        this.loginForm = this.fb.group({
-            'email': ['', [
-                Validators.required,
-                Validators.email
-            ]
-            ],
-            'password': ['', [
-                // Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
-                // Validators.minLength(6),
-                // Validators.maxLength(25),
-                Validators.required
-            ]
-            ],
-            'region': ['', [
-            ]
-            ],
-        });
+        this.recoverPassword = false;
     }
 
-    loginWithGoogle() {
-        this.auth.signInWithGoogle()
-            .then((res) => {
-               this.afterLoggedIn(res);
-            })
-            .catch((err) => console.log(err)) ; //TODO: Handle Error 
+    switchMode() {
+        this.recoverPassword = !this.recoverPassword;
     }
 
-    afterLoggedIn(e) {
+    onLoggedIn() {
         this.dialogRef.close();
         this.router.navigate(['dashboard']);
     }
-
-    // TODO: login up stuff -  move to login component
-    login() {
-        return this.auth.login(this.email.value, this.password.value)
-            .then(
-            function () {
-                this.afterLoggedIn();
-            }.bind(this))
-    }
-    // Using getters will make your code look pretty
-    get email() { return this.loginForm.get('email'); }
-    get password() { return this.loginForm.get('password'); }
-
 }

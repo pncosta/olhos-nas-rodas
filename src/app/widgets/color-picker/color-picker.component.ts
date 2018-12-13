@@ -28,6 +28,8 @@ export class ColorPickerComponent implements OnInit {
     {value: 'red', viewValue: 'Red'},
     {value: 'blue', viewValue: 'Blue'},
     {value: 'green', viewValue: 'Green'},
+    {value: 'pink', viewValue: 'Pink'},
+    {value: 'gray', viewValue: 'Gray'},
     {value: 'other', viewValue: 'Other'},
    
   ];

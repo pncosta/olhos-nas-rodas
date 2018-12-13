@@ -12,6 +12,7 @@ import { User } from '../core/auth.service';
 })
 
 export class EventCardComponent implements OnInit, OnChanges {
+  @Input() small: boolean;
   @Input() event: Event;
   author: Observable<User>;
   imageurl: string;

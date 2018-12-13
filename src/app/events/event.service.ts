@@ -30,10 +30,14 @@ export class EventService {
     private db: AngularFirestore,
     private messageService: MessageService) { }
 
-  getEvents(orderBy?: string): Observable<Event[]> {
+  getEvents(orderBy?: string, limit?: number): Observable<Event[]> {
     orderBy = orderBy != undefined && orderBy.length > 0 ? orderBy : 'dateCreated';
+
     return this.db.collection<Event>('/events', ref => {
-      return ref.orderBy(orderBy, 'desc')
+      var q = ref.orderBy(orderBy, 'desc');
+      if (limit && limit > 0) q = q.limit(limit);
+      
+      return q
     }).snapshotChanges().pipe(map(events => {
       return events.map(a => {
         return { id: a.payload.doc.id, ...a.payload.doc.data() } as Event;

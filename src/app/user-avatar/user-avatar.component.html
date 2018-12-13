@@ -5,11 +5,12 @@
   </div>
 
   <div *ngIf="!user.photoURL">
-    <div id="container" [style.height.px]="height" 
+    <div id="container" 
+    [style.height.px]="height" 
     [style.width.px]="width" 
-    matTooltip="{{user.displayName}}"
     [style.background-color]="backgroundcolour" 
-    [style.color]="color">
+    [style.color]="color"
+    matTooltip="{{user.displayName}}">
       <span id="character" [style.font-size.px]="fontSize">
       {{ initials }}
     </span>

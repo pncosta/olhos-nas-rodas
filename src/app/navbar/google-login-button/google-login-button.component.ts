@@ -16,10 +16,7 @@ export class GoogleLoginButtonComponent implements OnInit {
 
   loginWithGoogle() {
     this.auth.signInWithGoogle()
-      .then((res) => {
-        this.onLoggedIn.emit(res);
-      })
-      .catch((err) => this.onLoggedIn.emit(err));
+      .then(res => this.onLoggedIn.emit(res))
+      .catch(err => console.error(err));
   }
-
 }

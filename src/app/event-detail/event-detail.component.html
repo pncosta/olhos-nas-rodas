@@ -1,13 +1,6 @@
 <div *ngIf="event">
 
   <header class="header">
-      <div class="edit">
-          <a routerLink="/events/edit/{{event.id}}" >
-            <button *ngIf="canEdit" mat-raised-button>
-              <mat-icon>edit</mat-icon> EDITAR
-            </button> 
-          </a>
-        </div>
     <div>
       <h1 class="mat-h1"> {{event.bicycle.brand}}</h1>
     </div>
@@ -15,6 +8,14 @@
       <h2 class="mat-h2"> {{event.date.toDate() | date  }} | {{event.location}} </h2>
     </div>
   </header>
+
+  <div class="fab">
+      <a routerLink="/events/edit/{{event.id}}" >
+        <button mat-fab *ngIf="canEdit" >
+            <mat-icon>edit</mat-icon>
+          </button> 
+      </a>
+    </div>
 
 
   <div class="main">

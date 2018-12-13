@@ -1,0 +1,33 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    background-color: #3ab580; /* TODO: Get primary color variable */
+    width: 100%;
+    color: white;
+}
+
+a {
+  color: white
+}
+
+.logo {
+    height: 60px;
+    padding-right: 16px
+    
+}
+
+.social {
+    margin-right: 96px;
+}
+
+  .links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex: 1;
+  }
+  
+  .column {
+    display: flex;
+    flex-direction: column;
+  }

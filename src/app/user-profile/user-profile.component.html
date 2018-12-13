@@ -34,6 +34,7 @@
 
         <hr />
 
+        <div>
         <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="vertical-center-container">
           <div class="vertical-center-container">
 
@@ -53,9 +54,17 @@
                   </mat-error>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" type="submit">Update Password</button>
+            <button mat-raised-button color="primary" 
+            type="submit" [disabled]="!passwordForm.valid">Update Password</button>
           </div>
         </form>
+      </div>
+      <div *ngIf="passwordChangeStatus == 1">
+        Password alterada com sucesso
+      </div>
+      <div *ngIf="passwordChangeStatus == -1">
+          Ocurreu um erro na alteração de password
+      </div>
 
       </div>
     </mat-card>

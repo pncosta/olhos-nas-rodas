@@ -3,14 +3,15 @@
     <h1 class="mat-h1"> Report theft</h1>
   </div>
   <div *ngIf="eventId" class="title">
-    <div class="delete">
-      <button *ngIf="authorized" mat-raised-button color="warn" (click)="delete()">
-            <mat-icon>delete</mat-icon> APAGAR
-          </button>
-    </div>
     <h1 class="mat-h1"> Edit theft details</h1>
   </div>
 </header>
+
+<div class="fab" *ngIf="eventId">
+    <button mat-fab  *ngIf="authorized" color="warn" (click)="delete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+  </div>
 
 
 <div *ngIf="isAuthorized; then authorized else guest">

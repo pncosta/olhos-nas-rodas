@@ -1,0 +1,10 @@
+<div>
+<h1>Ultimos Roubos Reportados</h1>
+</div>
+
+<div class="events-container">
+  <div class="event-wrapper" *ngFor="let event of events" >
+    <app-event-card [event]="event" small="true">
+    </app-event-card>
+  </div>
+</div>

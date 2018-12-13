@@ -54,7 +54,7 @@ a {
     text-decoration: none;
 }
 
-@media screen and (min-width: 720px) {
+@media (min-width: 720px) {
     .header {
         padding:60px;
         flex-direction: row;

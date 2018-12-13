@@ -3,8 +3,7 @@
 </h2>
 <div mat-dialog-content>
   <form [formGroup]="signupForm" (ngSubmit)="signup()">
-
-    <div class="container">
+    <div class="wrapper">
       <mat-form-field>
         <input matInput placeholder="Username" formControlName="username">
         <mat-error *ngIf="signupForm.controls.username.errors?.required">
@@ -24,7 +23,7 @@
           Email format not valid
         </mat-error>
         <mat-hint *ngIf="error === 'auth/email-already-in-use'" class="error-hint">
-            Email already registered. Try another.
+           E-mail já registado.
         </mat-hint>
       </mat-form-field>
      
@@ -42,13 +41,23 @@
         </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <mat-checkbox  formControlName="termsAndConditions"  class="mat-small">
+          Concordo com os <a href="/tc">Termos e Condições</a> e <a href="/tc">Politica de Privacidade</a>.
+        </mat-checkbox>
+      <mat-error class="mat-small" *ngIf="termsAndConditionsError">Tem de aceitar os Termos e Condições e Politica de Privacidade
+      </mat-error>
+
+      <button mat-raised-button color="primary" type="submit"
+        [disabled]="!signupForm.valid">
+        <span>Submit</span>
+    </button>
     </div>
   </form>
   <hr />
   <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
-   <!-- TODO: <button mat-button color="primary">Login instead</button> -->
     <google-login-button (onLoggedIn)="afterSignedUp($event)"></google-login-button>
+    <app-facebook-login-button (onLoggedIn)="loginSucessful($event)"></app-facebook-login-button>
+ 
   </div>
 
 </div>

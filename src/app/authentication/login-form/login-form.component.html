@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>
+    Login</h2>
+  <div mat-dialog-content>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <div fxLayout="column">
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Enter your password" [type]="'password'" formControlName="password">
+        </mat-form-field>
+        <span *ngIf="wrongPasswordError" class="error mat-small">Username ou password errados. Tente novamente.</span>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+      </div>
+    </form>
+    <hr />
+
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
+    <google-login-button (onLoggedIn)="loginSucessful($event)"></google-login-button>
+    <app-facebook-login-button (onLoggedIn)="loginSucessful($event)"></app-facebook-login-button>
+    </div>
+  </div>

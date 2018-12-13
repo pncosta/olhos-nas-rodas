@@ -1,0 +1,7 @@
+<div *ngIf="!imageURL">
+  <app-bicycle-image-placeholder color="bicycle.color"></app-bicycle-image-placeholder>
+</div>
+
+<div *ngIf="imageURL">
+    <img src="{{imageURL}}" />
+</div>

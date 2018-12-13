@@ -1,3 +1,4 @@
+{{small}}
 <a routerLink="/events/{{event.id}}">
   <mat-card>
     <div *ngIf="author | async as user">
@@ -14,10 +15,12 @@
     <mat-card-content>
 
       <div class="card-content">
-        <div> <img class="card-image" src="{{imageurl}}"><img></div>
+        <div> 
+          <img class="card-image" src="{{imageurl}}">
+        </div>
         <div class="text">
           <div class="date-and-location">
-            <div class="date" *ngIf="event.dateCreated"><mat-icon>date_range</mat-icon>{{event.dateCreated.toDate() | date }}</div>
+            <div class="date" *ngIf="event.dateCreation"><mat-icon>date_range</mat-icon>{{event.dateCreated.toDate() | date }}</div>
             <div class="date" *ngIf="event.date"><mat-icon>date_range</mat-icon>{{event.date.toDate() | date }}</div>
             <div class="location"> <mat-icon>location_on</mat-icon>
               {{event.location}}, 

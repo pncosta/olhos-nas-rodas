@@ -1,7 +1,6 @@
 cdk-virtual-scroll-viewport {
   height: calc(100vh - 200px);
   width: 100vw;
-  border: 1px solid black;
   app-event-card {
     height: 400px;
    
@@ -46,12 +45,7 @@ cdk-virtual-scroll-viewport {
   text-align: left;
 }
 
-.fab {
-    position: fixed;
-    bottom: 8px;
-    right: 8px;
-    z-index:99;
-}
+
 
 .cards-container {
   display: flex;

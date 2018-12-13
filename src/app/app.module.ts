@@ -62,6 +62,19 @@ import { SearchboxComponent } from './widgets/searchbox/searchbox.component';
 import { DistrictPickerComponent } from './widgets/district-picker/district-picker.component';
 import { CityPickerComponent } from './widgets/city-picker/city-picker.component';
 import { SendMessageDialogComponent } from './messages/send-message-dialog/send-message-dialog.component';
+import { EventsMapComponent } from './events/events-map/events-map.component';
+import { HeaderComponent } from './dashboard/header/header.component';
+import { LastEventsComponent } from './events/last-events/last-events.component';
+import { FooterComponent } from './page/footer/footer.component';
+import { PasswordResetComponent } from './authentication/password-reset/password-reset.component';
+import { LoginFormComponent } from './authentication/login-form/login-form.component';
+import { FacebookLoginButtonComponent } from './navbar/facebook-login-button/facebook-login-button.component';
+import { PoliciesComponent } from './page/policies/policies.component';
+import { TermsAndConditionsComponent } from './page/policies/terms-and-conditions/terms-and-conditions.component';
+import { PrivacyPolicyComponent } from './page/policies/privacy-policy/privacy-policy.component';
+import { LoadingSpinnerComponent } from './widgets/loading-spinner/loading-spinner.component';
+import { BicycleImagePlaceholderComponent } from './widgets/bicycle-image-placeholder/bicycle-image-placeholder.component';
+import { BicycleImageComponent } from './widgets/bicycle-image/bicycle-image.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +110,20 @@ import { SendMessageDialogComponent } from './messages/send-message-dialog/send-
     SearchboxComponent,
     DistrictPickerComponent,
     CityPickerComponent,
-    SendMessageDialogComponent
+    SendMessageDialogComponent,
+    EventsMapComponent,
+    HeaderComponent,
+    LastEventsComponent,
+    FooterComponent,
+    PasswordResetComponent,
+    LoginFormComponent,
+    FacebookLoginButtonComponent,
+    PoliciesComponent,
+    TermsAndConditionsComponent,
+    PrivacyPolicyComponent,
+    LoadingSpinnerComponent,
+    BicycleImagePlaceholderComponent,
+    BicycleImageComponent
   ],
   entryComponents: [
     LoginDialog,
