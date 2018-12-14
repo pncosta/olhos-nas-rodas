@@ -18,6 +18,7 @@ hr {
 .card-content {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .description{
@@ -37,7 +38,8 @@ hr {
 
 .date-and-location {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .statistics {
@@ -105,5 +107,8 @@ a {
 
     .card-image {
         width: 256px;
+    }
+    .date-and-location {
+        flex-direction: row;
     }
   }
