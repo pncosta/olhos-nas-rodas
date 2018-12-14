@@ -12,7 +12,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, Input, ViewChildren, Query
 import * as firebase from 'firebase/app';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { District, City } from '../../districts/district';
-import { Event } from '../event';
+import { Event, EventStatus } from '../event';
 import { EventService } from '../event.service';
 import { AuthService } from '../../core/auth.service';
 import { Bicycle, Image } from '../../bicycle';

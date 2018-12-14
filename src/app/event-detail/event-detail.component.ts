@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, ViewChildren, AfterViewInit, QueryList } from '@angular/core';
-import { Event } from '../events/event';
+import { Event, EventStatus } from '../events/event';
 import { ActivatedRoute } from '@angular/router';
 import { Observable ,  SubscriptionLike as ISubscription } from 'rxjs';
 import { AngularFireStorage } from 'angularfire2/storage'
@@ -58,6 +58,20 @@ export class EventDetailComponent implements OnInit, AfterViewInit, OnDestroy {
         this.initMap()
       }
     );
+  }
+
+  markAsFound() {
+    this.event.status = EventStatus.FOUND;
+    this.eventService.updateEvent(this.event)
+    .then()
+    .catch();
+  }
+
+  markAsStolen() {
+    this.event.status = EventStatus.STOLEN;
+    this.eventService.updateEvent(this.event)
+    .then()
+    .catch();
   }
 
   getEvent(): void {

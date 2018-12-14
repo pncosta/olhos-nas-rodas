@@ -14,6 +14,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 
 
@@ -21,11 +23,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   imports: [CommonModule, MatButtonModule, MatCheckboxModule,
      MatInputModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule,
      MatDividerModule, MatDatepickerModule, MatNativeDateModule, MatStepperModule, MatSelectModule,
-     MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule],
+     MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatChipsModule],
 
   exports: [MatButtonModule, MatCheckboxModule, MatInputModule,
     MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule, MatDividerModule, MatDatepickerModule, 
-    MatStepperModule, MatSelectModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule],
+    MatStepperModule, MatSelectModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatChipsModule],
   declarations: []
 })
 export class AngularMaterialModule { }

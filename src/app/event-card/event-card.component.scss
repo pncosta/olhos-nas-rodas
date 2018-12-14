@@ -54,6 +54,31 @@ a {
     text-decoration: none;
 }
 
+.image {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  
+
+  .bottom-center {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    width:100%;
+    padding: 4px 0;
+    transform: translate(-50%, -50%);
+  }
+
+  .found {
+    background-color: #ffad28;
+  }
+
+  .stolen {
+    background-color: #BF360C;
+  }
+
+ 
 @media (min-width: 720px) {
     .header {
         padding:60px;

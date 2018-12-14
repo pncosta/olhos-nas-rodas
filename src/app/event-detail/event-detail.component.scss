@@ -7,15 +7,45 @@
     flex: 0;
 }
 
+.main-title {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
 .main {
     display: flex;
     flex-direction: column;
 }
 
+.found {
+    background-color: #ffad28;
+    color: white;
+  }
+
+.stolen {
+    background-color: #BF360C;
+    color: white;
+  }
+
+.status-chip {
+      margin-left: 16px;
+  }
+
 .main div {
     flex: 1;
 }
 
+.actions {
+    display: flex;
+    flex-direction: column;
+}
+.actions button {
+    margin: 4px;
+}
 .details {
     display: flex;
     flex-direction: column;

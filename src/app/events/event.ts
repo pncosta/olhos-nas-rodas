@@ -2,6 +2,11 @@ import { Bicycle } from '../bicycle';
 import { City, District } from '../districts/district';
 import * as firebase from 'firebase/app';
 
+export enum EventStatus {
+  STOLEN,
+  FOUND
+}
+
 export class Event {
     id?: string;
     description?: string;
@@ -17,6 +22,7 @@ export class Event {
     lockerType: string;
     views: number;
     comments: Comment[];
+    status?: EventStatus;
 
     /** 
      * Checks if a given Event contains the given 'value' in any of its major properties

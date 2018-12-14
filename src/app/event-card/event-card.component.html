@@ -16,7 +16,13 @@
 
       <div class="card-content">
         <div> 
-          <img class="card-image" src="{{imageurl}}">
+            <div class="image">
+                <img class="card-image" src="{{imageurl}}">
+                <div class="body-1 bottom-center found" *ngIf="event.status == 1">ENCONTRADA</div>
+                <div class="body-2 bottom-center stolen" *ngIf="!event.status || event.status == 0">ROUBADA</div>
+              </div>
+      
+          
         </div>
         <div class="text">
           <div class="date-and-location">

@@ -2,20 +2,25 @@
 
   <header class="header">
     <div>
-      <h1 class="mat-h1"> {{event.bicycle.brand}}</h1>
+      <h1 class="mat-h1 main-title"> {{event.bicycle.brand}}
+        <mat-chip-list class="status-chip">
+          <mat-chip class="found" *ngIf="event.status == 1">ENCONTRADA</mat-chip>
+          <mat-chip class="stolen" *ngIf="!event.status || event.status == 0">ROUBADA</mat-chip>
+        </mat-chip-list> 
+      </h1>
     </div>
     <div>
-      <h2 class="mat-h2"> {{event.date.toDate() | date  }} | {{event.location}} </h2>
+      <h2 class="mat-h2"> {{event.date.toDate() | date }} | {{event.location}} </h2>
     </div>
   </header>
 
   <div class="fab">
-      <a routerLink="/events/edit/{{event.id}}" >
+    <a routerLink="/events/edit/{{event.id}}">
         <button mat-fab *ngIf="canEdit" >
             <mat-icon>edit</mat-icon>
           </button> 
       </a>
-    </div>
+  </div>
 
 
   <div class="main">
@@ -78,7 +83,7 @@
     <div class="images">
       <mat-card class="image-card">
         <div mat-card-image>
-        <app-carousel mat-card-image [items]="photos"></app-carousel>
+          <app-carousel mat-card-image [items]="photos"></app-carousel>
         </div>
         <div *ngIf="author$ | async as user">
           <mat-card-header>
@@ -92,11 +97,17 @@
         <mat-card-content>
 
         </mat-card-content>
-        <mat-card-actions>
+        <div class="actions">
           <button mat-raised-button color="primary" (click)="openMessageDialog()">
-                    <mat-icon>message</mat-icon> SEND MESSAGE
+                    <mat-icon>message</mat-icon> CONTACTAR
                 </button>
-        </mat-card-actions>
+          <button *ngIf="canEdit && (!event.status || event.status == 0)" mat-raised-button color="accent" (click)="markAsFound()">
+              <mat-icon>check_circle</mat-icon> MARCAR COMO ENCONTRADA 
+           </button>
+           <button *ngIf="canEdit &&  event.status == 1" mat-raised-button color="warn" (click)="markAsStolen()">
+              <mat-icon>error</mat-icon> MARCAR COMO ROUBADA 
+           </button>
+          </div>
       </mat-card>
     </div>
   </div>
