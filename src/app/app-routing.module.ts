@@ -9,6 +9,8 @@ import { EventEditComponent } from './events/event-edit/event-edit.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PoliciesComponent } from './page/policies/policies.component';
+import { ContactsComponent } from './page/contacts/contacts.component';
+import { AboutComponent } from './page/about/about.component';
 import { SignupDialogComponent } from './navbar/signup-dialog.component';
 
 const routes: Routes = [
@@ -19,7 +21,9 @@ const routes: Routes = [
   { path: 'events/new', component: NewEventComponent, canActivate: [AuthGuard] },
   { path: 'events/edit/:id', component: NewEventComponent, canActivate: [AuthGuard]}, 
   { path: 'events/:id', component: EventDetailComponent},
-  { path: 'tc', component: PoliciesComponent}
+  { path: 'tc', component: PoliciesComponent},
+  { path: 'contacts', component: ContactsComponent},
+  { path: 'about', component: AboutComponent}
   // { path: 'signup', component: SignupDialogComponent},
 ];
 

@@ -11,19 +11,28 @@ a {
 }
 
 .logo {
-    height: 60px;
-    padding-right: 16px
+    height: 32px;
+    padding-right: 8px
     
 }
 
+.title {
+  margin-left: 72px;
+  display: flex;
+  align-items: center;
+}
+
 .social {
-    margin-right: 96px;
+    margin-right: 72px;
+    display: flex;
+    align-items: center;
 }
 
   .links {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    margin-left: 72px;
+   // justify-content: space-around;
     flex: 1;
   }
   

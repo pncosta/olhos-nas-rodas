@@ -1,0 +1,36 @@
+.wrapper {
+   display: flex;
+   flex-direction: column;
+}
+
+
+.social-entry {
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    margin: 8px;
+}
+
+.social-entry a, 
+#email {
+    margin-left: 8px;
+    color: white;
+}
+
+
+.contacts {
+    padding: 16px 32px;
+    flex: 1;
+    background-color: #ff8201;
+    color: white;
+}
+
+.form {
+    flex: 1;
+}
+
+@media screen and (min-width: 720px) {
+    .wrapper {
+        flex-direction: row;
+    }
+}

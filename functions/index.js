@@ -21,7 +21,7 @@ exports.httpEmail = functions.https.onRequest((req, res) => {
         sgMail.setSubstitutionWrappers('{{', '}}');
         const msg = {
             to: toEmail,
-            from: { email: 'olhosnasrodas@gmail.com', name: 'Olhos nas Rodas'},
+            from: { email: 'geral@olhosnasrodas.pt', name: 'Olhos nas Rodas'},
             reply_to: { email: fromEmail, name: fromUsername},
             message: message,
             templateId: 'd-a1801417fe22451299ee067c92920928',

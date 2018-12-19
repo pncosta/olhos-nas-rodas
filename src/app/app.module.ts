@@ -75,6 +75,13 @@ import { PrivacyPolicyComponent } from './page/policies/privacy-policy/privacy-p
 import { LoadingSpinnerComponent } from './widgets/loading-spinner/loading-spinner.component';
 import { BicycleImagePlaceholderComponent } from './widgets/bicycle-image-placeholder/bicycle-image-placeholder.component';
 import { BicycleImageComponent } from './widgets/bicycle-image/bicycle-image.component';
+import { ContactsComponent } from './page/contacts/contacts.component';
+import { AboutComponent } from './page/about/about.component';
+import { PaypalDonationButtonComponent } from './widgets/paypal-donation-button/paypal-donation-button.component';
+import { FacebookButtonComponent } from './widgets/facebook-button/facebook-button.component';
+import { InstagramButtonComponent } from './widgets/instagram-button/instagram-button.component';
+import { TwitterButtonComponent } from './widgets/twitter-button/twitter-button.component';
+import { GithubButtonComponent } from './widgets/github-button/github-button.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +130,14 @@ import { BicycleImageComponent } from './widgets/bicycle-image/bicycle-image.com
     PrivacyPolicyComponent,
     LoadingSpinnerComponent,
     BicycleImagePlaceholderComponent,
-    BicycleImageComponent
+    BicycleImageComponent,
+    ContactsComponent,
+    AboutComponent,
+    PaypalDonationButtonComponent,
+    FacebookButtonComponent,
+    InstagramButtonComponent,
+    TwitterButtonComponent,
+    GithubButtonComponent
   ],
   entryComponents: [
     LoginDialog,

@@ -3,7 +3,7 @@
 </h2>
 <div mat-dialog-content>
   <div *ngIf="signupStatus == 0">
-    <form [formGroup]="signupForm" (ngSubmit)="signup()">
+    <form [formGroup]="signupForm" (ngSubmit)="signup()" class="form">
       <div class="wrapper">
         <mat-form-field>
           <input matInput placeholder="Username" formControlName="username">
