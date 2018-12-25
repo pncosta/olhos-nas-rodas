@@ -3,6 +3,11 @@
 </h2>
 <div mat-dialog-content>
   <div *ngIf="signupStatus == 0">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
+      <google-login-button (onLoggedIn)="afterOAuthSignedUp($event)"></google-login-button>
+      <app-facebook-login-button (onLoggedIn)="afterOAuthSignedUp($event)"></app-facebook-login-button>
+    </div>
+    <hr>
     <form [formGroup]="signupForm" (ngSubmit)="signup()" class="form">
       <div class="wrapper">
         <mat-form-field>
@@ -18,8 +23,8 @@
         <mat-form-field>
           <input matInput placeholder="Email" formControlName="email">
           <!-- <mat-error *ngIf="email.required">
-          Email is required
-        </mat-error> -->
+                Email is required
+              </mat-error> -->
           <mat-error *ngIf="email.invalid">
             Email inválido
           </mat-error>
@@ -48,33 +53,34 @@
         <mat-error class="mat-small" *ngIf="termsAndConditionsError">Tem de aceitar os Termos e Condições e Politica de Privacidade
         </mat-error>
 
+        <!-- <app-date-picker [placeholder]="'Data de Nascimento'"></app-date-picker> 
+        
+        <app-genre-picker [(genre)]="genre"></app-genre-picker>
+
+        <app-district-picker [(district)]="district"></app-district-picker>-->
+
         <button mat-raised-button color="primary" type="submit" [disabled]="!signupForm.valid">
         <span>Submit</span>
     </button>
       </div>
     </form>
-    <hr />
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
-      <google-login-button (onLoggedIn)="afterOAuthSignedUp($event)"></google-login-button>
-      <app-facebook-login-button (onLoggedIn)="afterOAuthSignedUp($event)"></app-facebook-login-button>
 
-    </div>
   </div>
 
   <div *ngIf="signupStatus == 1">
     <p class="mat-small">Registo efetuado com sucesso!<br /></p>
-      <p class="mat-small">
-        Um email foi enviado para {{ email.value }} com as instruções para validar o seu email e finalizar o registo da sua conta.
-      </p>
+    <p class="mat-small">
+      Um email foi enviado para {{ email.value }} com as instruções para validar o seu email e finalizar o registo da sua conta.
+    </p>
     <button mat-raised-button color="primary" (click)="close()">FECHAR</button>
   </div>
 
 
   <div *ngIf="signupStatus == 2">
-      <p class="mat-small">Login efetuado com sucesso!<br /></p>
-        <p class="mat-small">
-          Irá ser redirecionado para a pagina anterior...  
-        </p>
+    <p class="mat-small">Login efetuado com sucesso!<br /></p>
+    <p class="mat-small">
+      Irá ser redirecionado para a pagina anterior...
+    </p>
   </div>
 
 </div>

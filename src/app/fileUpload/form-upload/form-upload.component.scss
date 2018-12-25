@@ -3,16 +3,26 @@
     align-items: center;
     justify-content: center;
     flex-direction: column; 
-    height: 150px;
+    padding: 16px;
     border: 2px dashed black;
     border-radius: 5px;
     background: white;
-    margin: 10px 0;
+    margin: 16px 0;
 
     &.hovering {
         border: 2px solid lightgray;
         color: lightgray !important;
     }
+}
+
+.error-message {
+    margin: 4px;
+    color: gray;
+}
+
+.error {
+    margin: 4px;
+    color: red !important;
 }
 
 .thumbnail-container {
@@ -49,4 +59,9 @@
 
 img {
     object-fit: contain;
+}
+
+
+@media screen and (min-width: 720px) {
+    
 }

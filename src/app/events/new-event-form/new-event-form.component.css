@@ -16,9 +16,19 @@
     height: 256px;
     margin: 4px 0;
 }
+
 .card {
     max-width: 768px;
     min-width: 50%;
+}
+
+
+.continue {
+    margin-top: 8px;
+}
+
+.upload-zone {
+    margin-top: 8px;
 }
 
 .half-width {
@@ -29,6 +39,12 @@
     padding: 4px;
     display: flex;
     flex-direction: column;
+}
+
+.error {
+    position: relative;
+    bottom: 20px;
+    margin-bottom: -10px;
 }
 
 .data-time-container {
@@ -48,6 +64,10 @@
     align-items: center; 
     padding: 0 2px;
     
+}
+
+form {
+    width: 100%;
 }
 
 @media screen and (min-width: 720px) {

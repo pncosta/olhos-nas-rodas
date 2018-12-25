@@ -5,6 +5,7 @@ import { AuthService } from '../../core/auth.service';
 import { FileUpload } from '../fileupload';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 export interface UploadImage {
   id: string;
@@ -25,18 +26,23 @@ export interface UploadImage {
   styleUrls: ['./form-upload.component.scss']
 })
 export class FormUploadComponent implements OnInit {
+  public MAX_MB_PHOTO = 1;
+  public MAX_PHOTOS = 3;
+  public storagePath = 'images/'
 
   @Input() get images() { return this._images; }
   @Output() imagesChange = new EventEmitter<UploadImage[]>();
+  
   _images: UploadImage[];
   isHovering: boolean; // State for dropzone CSS toggling
   private spinnersize = 30;
-  private storagePath = 'images/'
-  public static MAX_PHOTOS = 5;
-  public static MAX_MB_PHOTO = 1;
+  highlightErrorMessage;
+  
+
   constructor(private afStorage: AngularFireStorage, 
               private uploadService: UploadFileService,
-              private auth: AuthService) { 
+              private auth: AuthService,
+              public snackBar: MatSnackBar) { 
               
     this._images = new Array();
   }
@@ -74,8 +80,6 @@ export class FormUploadComponent implements OnInit {
       image.snapshot   = image.task.snapshotChanges();
       image.size = file.size;
       image.name = file.name;
-      console.log(image);
-
       this._images.push(image);
       this.imagesChange.emit(this.images);
 
@@ -86,15 +90,35 @@ export class FormUploadComponent implements OnInit {
       ).subscribe()
     }
     else {
-      console.error('file not allowed!');
+      this.highlightErrorMessage = true;
+      this.openSnackBar("Erro: Imagem não aceite", '');
     }
   }
 
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+
+  public validPhotoSize(f: File) {
+    return  f.size <= this.MAX_MB_PHOTO * 1024 * 1024 ;
+  }
+
+
+  public validPhotoFormat(f: File) {
+    return  (f.type === 'image/jpeg' || f.type === 'image/png');
+  }
+
+  public validNumberOfPhotos() {
+    return  this._images.length < this.MAX_PHOTOS;
+  }
+
   public fileIsAllowed(f: File) {    
-    console.log (f);
-    return this._images.length < FormUploadComponent.MAX_PHOTOS && 
-           f.size <= FormUploadComponent.MAX_MB_PHOTO * 1024 * 1024 &&
-           (f.type === 'image/jpeg' || f.type === 'image/png') ;
+    return this.validNumberOfPhotos() && 
+           this.validPhotoSize(f) &&
+           this.validPhotoFormat(f);
   }
     // Determines if the upload task is active
     isActive(snapshot) {

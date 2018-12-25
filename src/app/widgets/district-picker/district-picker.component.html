@@ -1,7 +1,9 @@
 <mat-form-field class="wrapper">
-  <mat-select placeholder="Distrito" [compareWith]="equals" [(ngModel)]="district">
+  <mat-select placeholder="Distrito" [compareWith]="equals" 
+              [(value)]="district" >
     <mat-option *ngFor="let d of districts" [value]="d">
       {{d.name}}
     </mat-option>
   </mat-select>
 </mat-form-field>
+<ng-content></ng-content>

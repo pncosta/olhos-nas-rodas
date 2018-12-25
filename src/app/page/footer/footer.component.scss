@@ -1,9 +1,10 @@
 .footer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     background-color: #3ab580; /* TODO: Get primary color variable */
     width: 100%;
     color: white;
+    align-items: center;
 }
 
 a {
@@ -12,18 +13,16 @@ a {
 
 .logo {
     height: 32px;
-    padding-right: 8px
+    margin-right: 8px
     
 }
 
 .title {
-  margin-left: 72px;
   display: flex;
   align-items: center;
 }
 
 .social {
-    margin-right: 72px;
     display: flex;
     align-items: center;
 }
@@ -31,7 +30,7 @@ a {
   .links {
     display: flex;
     flex-direction: row;
-    margin-left: 72px;
+
    // justify-content: space-around;
     flex: 1;
   }
@@ -39,4 +38,23 @@ a {
   .column {
     display: flex;
     flex-direction: column;
+  }
+
+  @media screen and (min-width: 720px) { 
+
+    .footer {
+      flex-direction: row;
+    }
+    
+    .social {
+      margin-right: 72px;
+    }
+
+    .links {
+      margin-left: 72px;
+    }
+    
+    .title {
+      margin-left: 72px;
+    }
   }

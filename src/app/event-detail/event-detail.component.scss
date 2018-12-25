@@ -16,6 +16,12 @@
     width: 100%;
 }
 
+.vertical-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .main {
     display: flex;
     flex-direction: column;
@@ -39,6 +45,7 @@
     flex: 1;
 }
 
+
 .actions {
     display: flex;
     flex-direction: column;
@@ -55,6 +62,16 @@
   
 .details mat-card {
     flex: 1
+}
+
+.images-actions {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.images-container {
+    flex-grow: 3 !important;
 }
 
 .images mat-card {

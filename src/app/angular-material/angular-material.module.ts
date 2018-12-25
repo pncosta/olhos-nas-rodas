@@ -15,6 +15,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatRippleModule} from '@angular/material/core';
 
 
 
@@ -23,11 +24,13 @@ import {MatChipsModule} from '@angular/material/chips';
   imports: [CommonModule, MatButtonModule, MatCheckboxModule,
      MatInputModule, MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule,
      MatDividerModule, MatDatepickerModule, MatNativeDateModule, MatStepperModule, MatSelectModule,
-     MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatChipsModule],
+     MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatChipsModule,
+     MatRippleModule],
 
   exports: [MatButtonModule, MatCheckboxModule, MatInputModule,
     MatToolbarModule, MatSidenavModule, MatCardModule, MatDialogModule, MatDividerModule, MatDatepickerModule, 
-    MatStepperModule, MatSelectModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatChipsModule],
+    MatStepperModule, MatSelectModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatChipsModule,
+    MatRippleModule],
   declarations: []
 })
 export class AngularMaterialModule { }

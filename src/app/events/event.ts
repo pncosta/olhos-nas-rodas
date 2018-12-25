@@ -1,6 +1,7 @@
 import { Bicycle } from '../bicycle';
 import { City, District } from '../districts/district';
 import * as firebase from 'firebase/app';
+import { Timestamp }  from 'firebase/firestore';
 
 export enum EventStatus {
   STOLEN,
@@ -10,9 +11,9 @@ export enum EventStatus {
 export class Event {
     id?: string;
     description?: string;
-    dateCreation?: Date;
-    date?: Date;
-    hour?: number;
+    dateCreated?: Timestamp;
+    date?: Timestamp;
+    hour?: string;
     district?: District;
     city?: City;
     location?: string;

@@ -1,17 +1,17 @@
 <header class="header">
   <div *ngIf="!eventId">
-    <h1 class="mat-h1"> Report theft</h1>
+    <h1 class="mat-h1"> Reportar Roubo</h1>
   </div>
   <div *ngIf="eventId" class="title">
-    <h1 class="mat-h1"> Edit theft details</h1>
+    <h1 class="mat-h1"> Editar detalhes do roubo</h1>
   </div>
 </header>
 
 <div class="fab" *ngIf="eventId">
-    <button mat-fab  *ngIf="authorized" color="warn" (click)="delete()">
+  <button mat-fab *ngIf="authorized" color="warn" (click)="delete()">
         <mat-icon>delete</mat-icon>
       </button>
-  </div>
+</div>
 
 
 <div *ngIf="isAuthorized; then authorized else guest">
@@ -23,42 +23,62 @@
   <app-not-logged-in></app-not-logged-in>
 </ng-template>
 
-
 <ng-template #authorized>
-
-
   <div class="wrapper">
-
-    <form [formGroup]="newEventForm">
+    <form [formGroup]="newEventForm" (ngSubmit)="submit()">
 
       <mat-vertical-stepper linear>
         <!-- Step 1 Event Details -->
         <mat-step>
-          <ng-template matStepLabel>Theft Details</ng-template>
+          <ng-template matStepLabel>Detalhes do Roubo</ng-template>
 
           <div class="full-width">
 
             <div class="data-time-container">
               <mat-form-field class="half-width">
-                <input (focus)="picker.open()" and (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="Choose a date" [value]="dateValue.value" formControlName="date">
+                <input (focus)="picker.open()" and (click)="picker.open()" matInput [matDatepicker]="picker" placeholder="Data do Roubo"
+                  [value]="dateValue.value" formControlName="date">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
+                <mat-error class="mat-caption error " *ngIf="showErrorsMessage && newEventForm.controls.date.errors?.required">
+                  Data do roubo é obrigatória
+                </mat-error>
               </mat-form-field>
 
               <div class="half-width">
-                <app-time-picker [(hour)]="hour"></app-time-picker>
+                <app-time-picker formControlName="hour"></app-time-picker>
+                <mat-error class="mat-caption error" *ngIf="showErrorsMessage && newEventForm.controls.hour.errors?.required">
+                    Hora do roubo é obrigatória
+                  </mat-error>
               </div>
             </div>
 
             <div class="full-width district-city-container">
-                <app-district-picker [district]="district" (districtChange)="districtChanged($event)" class="half-width"></app-district-picker>
-               
-                 <app-city-picker [district]="district" [(city)]="city" (cityChange)="cityChanged($event)" class="half-width"></app-city-picker>
+              <div class="half-width">
+                <app-district-picker formControlName="district" (districtChange)="districtChanged($event)" class="half-width">
+                  <mat-error class="mat-caption error" *ngIf="showErrorsMessage && newEventForm.controls.district.errors?.required">
+                    Distrito é obrigatório
+                  </mat-error>
+                </app-district-picker>
+
+              </div>
+              <div class="half-width">
+                <app-city-picker [district]="district.value" formControlName="city" 
+                  (cityChange)="cityChanged($event)" class="half-width"
+                  matTooltip="Escolha o distrito e depois a cidade onde ocurreu o roubo"></app-city-picker>
+                <mat-error class="mat-caption" *ngIf="showErrorsMessage && newEventForm.controls.city.errors?.required">
+                  Cidade é obrigatória
+                </mat-error>
+              </div>
             </div>
 
             <mat-form-field class="full-width">
-              <input matInput placeholder="Morada/rua" formControlName="location" />
-             <!-- <mat-hint>Type the address or Drag and Drop the marker on the map</mat-hint> -->
+              <input matInput placeholder="Morada/rua" maxLength="64" formControlName="location" />
+              <mat-hint align="start"><strong>Exemplo: Avenida da Liberade, 1 </strong>| Confirme no mapa que a localização é correta </mat-hint>
+              <!-- <mat-hint>Type the address or Drag and Drop the marker on the map</mat-hint> -->
+              <mat-error class="mat-caption" *ngIf="showErrorsMessage && newEventForm.controls.location.errors?.required">
+                Morada é obrigatória
+              </mat-error>
             </mat-form-field>
 
             <div class="map-container">
@@ -66,45 +86,69 @@
             </div>
 
             <mat-form-field class="full-width">
-              <textarea matInput placeholder="Additional Details" formControlName="description"></textarea>
+              <textarea matInput maxLength="256" placeholder="Detalhes adicionais (Opcional)" 
+              matTooltip="Detalhes sobre o local do roubo"
+              formControlName="description" rows="3"></textarea>
+              <mat-hint align="start">Exemplo: Bicicleta agarrada ao poste de transito em frente à loja X. </mat-hint>
+              <mat-hint align="end">{{description.value.length}} / 256</mat-hint>
             </mat-form-field>
-
-
           </div>
 
-          <div>
-            <button mat-button matStepperNext type="button">Next</button>
+          <div class="continue">
+            <button mat-raised-button matStepperNext type="button">Continuar</button>
           </div>
         </mat-step>
+        
         <!-- Step 2 Bicycle-->
         <mat-step>
-          <ng-template matStepLabel>Bicycle Details</ng-template>
+          <ng-template matStepLabel>Detalhes da Bicicleta</ng-template>
 
           <mat-form-field class="full-width">
-            <input matInput placeholder="Bike Brand and Model" formControlName="bikeBrand">
+            <input matInput placeholder="Marca e Modelo" maxLength="32" formControlName="bikeBrand">
+            <mat-hint align="start">Exemplo: XPTO 123 </mat-hint>
+            <mat-error *ngIf="newEventForm.controls.bikeBrand.errors?.required">
+              Marca da bicicleta é obrigatório
+            </mat-error>
+            <mat-error *ngIf="newEventForm.controls.bikeBrand.errors?.minLength">
+              Marca da bicicleta demasiado curto. Minimo 3 caracteres.
+            </mat-error>
+          </mat-form-field>
+
+          <app-color-picker class="full-width" formControlName="color"></app-color-picker>
+          <mat-error class="mat-caption error" *ngIf="showErrorsMessage && newEventForm.controls.color.errors?.required">
+              Cor da bicicleta é obrigatória
+            </mat-error>
+
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Número de Série (Opcional)" maxLength="32"
+            formControlName="bikeSerialNo">
+            <mat-hint align="start">Exemplo: AZ12345 </mat-hint>
+          </mat-form-field>
+
+          <app-locker-type class="full-width" formControlName="locker"></app-locker-type>
+          <mat-error class="mat-caption error" *ngIf="showErrorsMessage && newEventForm.controls.locker.errors?.required">
+            Tipo de cadeado usado é obrigatório
+          </mat-error>
+
+          <mat-form-field class="full-width">
+            <textarea matInput rows="3" maxlength="256"
+            placeholder="Descrição da bicicleta, em especial detalhes que a tornam única (Opcional)" formControlName="bikeDescription"></textarea>
+            <mat-hint align="start">Exemplo: Autocolantes, riscos, cor, selim, acessórios, etc.  </mat-hint>
+            <mat-hint align="end">{{bikeDescription.value.length}} / 256</mat-hint>
           </mat-form-field>
 
 
-          <app-color-picker class="full-width" [(color)]="color"></app-color-picker>
-          <!--  <input matInput placeholder="Bike Color" formControlName="bikeColor"> -->
+          <div class="upload-zone">
+            <div class="mat-title">Fotos da Bicicleta</div>
 
-
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Bike Serial Number" formControlName="bikeSerialNo">
-          </mat-form-field>
-
-
-          <app-locker-type class="full-width" [(locker)]="locker"></app-locker-type>
-
-
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="Description of the bike with the most detail possible" formControlName="bikeDescription"></textarea>
-          </mat-form-field>
-
-          <app-form-upload [(images)]="images"></app-form-upload>
+            <app-form-upload [(images)]="images"></app-form-upload>
+          </div>
 
           <div>
-            <button mat-button type="button" (click)="submit()">SUBMIT</button>
+            <mat-error *ngIf="showErrorsMessage" class="mat-caption">
+              Existem erros no formulário. Corrija-os antes de submeter
+            </mat-error>
+            <button mat-raised-button color="primary" type="button" type="submit">SUBMETER</button>
 
           </div>
         </mat-step>

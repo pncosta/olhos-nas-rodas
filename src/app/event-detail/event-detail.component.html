@@ -6,7 +6,7 @@
         <mat-chip-list class="status-chip">
           <mat-chip class="found" *ngIf="event.status == 1">ENCONTRADA</mat-chip>
           <mat-chip class="stolen" *ngIf="!event.status || event.status == 0">ROUBADA</mat-chip>
-        </mat-chip-list> 
+        </mat-chip-list>
       </h1>
     </div>
     <div>
@@ -27,23 +27,25 @@
     <div class="details">
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Bicycle Details</mat-card-title>
+          <mat-card-title class="vertical-center">
+            <mat-icon>motorcycle</mat-icon>&nbsp;Detalhes da Bicicleta
+          </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div class="details-labels">
-            <span class="mat-body-strong">Bicycle Brand</span>
+            <span class="mat-body-strong">Marca</span>
             <span class="mat-body">{{event.bicycle.brand}}}</span>
           </div>
           <div class="details-labels">
-            <span class="mat-body-strong">Serial Number</span>
+            <span class="mat-body-strong">Número de Série</span>
             <span class="mat-body">{{event.bicycle.serialNo}}</span>
           </div>
           <div class="details-labels">
-            <span class="mat-body-strong">Color</span>
-            <span class="mat-body">{{event.bicycle.color}}</span>
+            <span class="mat-body-strong">Cor</span>
+            <span class="mat-body">{{event.bicycle.color | color}}</span>
           </div>
           <div class="details-labels">
-            <span class="mat-body-strong">Description</span>
+            <span class="mat-body-strong">Descrição</span>
             <span class="mat-body">{{event.bicycle.description}}</span>
           </div>
 
@@ -53,26 +55,30 @@
 
       <mat-card>
         <mat-card-header>
-          <mat-card-title>Theft Details</mat-card-title>
+          <mat-card-title class="">
+            <mat-icon>description</mat-icon>&nbsp;Detalhes do roubo
+          </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <div class="details-labels">
-            <span class="mat-body-strong">Date of ocurence</span>
-            <span class="mat-body">{{event.date * 1000 | date:'fullDate' }}</span>
+            <span class="mat-body-strong">Data do roubo</span>
+            <span class="mat-body">{{event.date.toDate() | date }}</span>
           </div>
 
           <div class="details-labels">
-            <span class="mat-body-strong">Locker used</span>
-            <span class="mat-body">{{event.lockerType}}</span>
+            <span class="mat-body-strong">Tipo de cadeado usado</span>
+            <span class="mat-body">{{event.lockerType | locker}}</span>
           </div>
           <div class="details-labels">
-            <span class="mat-body-strong">Location</span>
-            <span class="mat-body">{{event.location}}</span>
-            <span class="mat-body">{{event.district.name}}</span>
-            <span class="mat-body">{{event.city.name}}</span>
+            <span class="mat-body-strong">Localização</span>
+            <span class="vertical-center">
+                <span class="mat-body">{{event.location}}</span>
+            <span class="mat-body">,&nbsp;{{event.city.name}}</span>
+            <span class="mat-body" *ngIf="event.district">,&nbsp;{{event.district.name}}</span>
+            </span>
           </div>
           <div class="details-labels">
-            <span class="mat-body-strong">Description</span>
+            <span class="mat-body-strong">Detalhes</span>
             <span class="mat-body">{{event.description}}</span>
           </div>
 
@@ -82,32 +88,36 @@
 
     <div class="images">
       <mat-card class="image-card">
-        <div mat-card-image>
-          <app-carousel mat-card-image [items]="photos"></app-carousel>
-        </div>
-        <div *ngIf="author$ | async as user">
-          <mat-card-header>
+        <div class="images-actions">
+          <div mat-card-image class="images-container">
+            <app-carousel mat-card-image [items]="photos"></app-carousel>
+          </div>
 
-            <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
-            <mat-card-title> {{user.displayName}} </mat-card-title>
-            <mat-card-subtitle></mat-card-subtitle>
+          <div class="author-actions">
 
-          </mat-card-header>
-        </div>
-        <mat-card-content>
+            <div *ngIf="author$ | async as user">
+              <mat-card-header>
+                <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
+                <mat-card-title> {{user.displayName}} </mat-card-title>
+                <mat-card-subtitle></mat-card-subtitle>
 
-        </mat-card-content>
-        <div class="actions">
-          <button mat-raised-button color="primary" (click)="openMessageDialog()">
+              </mat-card-header>
+            </div>
+
+            <div class="actions">
+              <button mat-raised-button color="primary" (click)="openMessageDialog()">
                     <mat-icon>message</mat-icon> CONTACTAR
                 </button>
-          <button *ngIf="canEdit && (!event.status || event.status == 0)" mat-raised-button color="accent" (click)="markAsFound()">
+              <button *ngIf="canEdit && (!event.status || event.status == 0)" mat-raised-button color="accent" (click)="markAsFound()">
               <mat-icon>check_circle</mat-icon> MARCAR COMO ENCONTRADA 
            </button>
-           <button *ngIf="canEdit &&  event.status == 1" mat-raised-button color="warn" (click)="markAsStolen()">
+              <button *ngIf="canEdit &&  event.status == 1" mat-raised-button color="warn" (click)="markAsStolen()">
               <mat-icon>error</mat-icon> MARCAR COMO ROUBADA 
            </button>
+            </div>
           </div>
+
+        </div>
       </mat-card>
     </div>
   </div>

@@ -19,11 +19,12 @@ hr {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    
 }
 
 .description{
     flex: 1;
-    padding: 8px;
+  
 }
 
 .comments-count {
@@ -33,9 +34,17 @@ hr {
 .text {
     display: flex;
     flex-direction: column;
-    padding-left: 8px;
+    padding-left: 16px;
+    padding-top: 8px;
 }
 
+.date, .location {
+    margin-right: 8px;
+}
+
+mat-icon {
+    margin-right: 4px;
+}
 .date-and-location {
     display: flex;
     flex-direction: column;
@@ -78,6 +87,12 @@ a {
 
   .stolen {
     background-color: #BF360C;
+  }
+
+  .vertical-center {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
   }
 
  

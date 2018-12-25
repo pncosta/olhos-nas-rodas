@@ -3,8 +3,8 @@
     padding: 16px;
 }
 .event-wrapper {
-    max-width: 30%;
-    min-width: 384px;
+    max-width: 100%;
+   
 }
 
 .events-container {
@@ -12,3 +12,12 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+
+
+@media screen and (min-width: 720px) {
+    .event-wrapper {
+        max-width: 33%;
+        min-width: 360px;
+    } 
+  }

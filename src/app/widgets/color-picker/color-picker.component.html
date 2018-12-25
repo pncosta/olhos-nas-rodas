@@ -1,7 +1,7 @@
 <mat-form-field class="wrapper">
-  <mat-select placeholder="Bicycle Color" [(value)]="color">
+  <mat-select placeholder="Cor da bicicleta" [(value)]="color">
     <mat-option *ngFor="let color of colors" [value]="color.value">
-      {{color.viewValue}}
+      {{color.viewValuePt}}
     </mat-option>
   </mat-select>
 </mat-form-field>

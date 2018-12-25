@@ -16,7 +16,7 @@ export class EventCardComponent implements OnInit, OnChanges {
   author: Observable<User>;
   imageurl: string;
   createdDate;
-  defaultImage: string = '/assets/bicycle-placeholder.jpg';
+  defaultImage: string = '/assets/bicycle placeholder.png';
   constructor(private eventService: EventService,  private users: UserService) {
     
    

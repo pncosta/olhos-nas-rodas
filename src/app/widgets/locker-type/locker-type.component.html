@@ -1,7 +1,7 @@
 <mat-form-field class="wrapper">
-  <mat-select placeholder="Type of lock used" [(value)]="locker">
+  <mat-select placeholder="Tipo de cadeado usado" [(value)]="locker">
     <mat-option *ngFor="let locker of lockers" [value]="locker.value">
-      {{locker.viewValue}}
+      {{locker.viewValuePt}}
     </mat-option>
   </mat-select>
 </mat-form-field>

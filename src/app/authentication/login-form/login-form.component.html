@@ -1,7 +1,11 @@
 <h2 mat-dialog-title>
     Login</h2>
   <div mat-dialog-content>
-
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
+      <google-login-button (onLoggedIn)="loginSucessful($event)"></google-login-button>
+      <app-facebook-login-button (onLoggedIn)="loginSucessful($event)"></app-facebook-login-button>
+    </div>
+    <hr />
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <div fxLayout="column">
         <mat-form-field>
@@ -14,11 +18,4 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button>
       </div>
     </form>
-    <hr />
-
-
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutAlign.xs="">
-    <google-login-button (onLoggedIn)="loginSucessful($event)"></google-login-button>
-    <app-facebook-login-button (onLoggedIn)="loginSucessful($event)"></app-facebook-login-button>
-    </div>
   </div>

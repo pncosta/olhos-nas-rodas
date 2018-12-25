@@ -82,6 +82,10 @@ import { FacebookButtonComponent } from './widgets/facebook-button/facebook-butt
 import { InstagramButtonComponent } from './widgets/instagram-button/instagram-button.component';
 import { TwitterButtonComponent } from './widgets/twitter-button/twitter-button.component';
 import { GithubButtonComponent } from './widgets/github-button/github-button.component';
+import { ColorPipe } from './widgets/color-picker/color.pipe';
+import { LockerPipe } from './widgets/locker-type/locker.pipe';
+import { GenrePickerComponent } from './widgets/genre-picker/genre-picker.component';
+import { DatePickerComponent } from './widgets/date-picker/date-picker.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +141,11 @@ import { GithubButtonComponent } from './widgets/github-button/github-button.com
     FacebookButtonComponent,
     InstagramButtonComponent,
     TwitterButtonComponent,
-    GithubButtonComponent
+    GithubButtonComponent,
+    ColorPipe,
+    LockerPipe,
+    GenrePickerComponent,
+    DatePickerComponent
   ],
   entryComponents: [
     LoginDialog,

@@ -1,0 +1,7 @@
+<mat-form-field class="half-width">
+    <input (focus)="picker.open()" and (click)="picker.open()" matInput [matDatepicker]="picker" 
+      placeholder={{placeholder}} [value]="_date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <!-- TODO -->

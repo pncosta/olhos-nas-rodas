@@ -1,5 +1,5 @@
 <a routerLink="/events/{{event.id}}">
-  <mat-card>
+  <mat-card matRipple>
     <div *ngIf="author | async as user">
       <mat-card-header>
         <app-user-avatar mat-card-avatar [user]="user"></app-user-avatar>
@@ -14,40 +14,49 @@
     <mat-card-content>
 
       <div class="card-content">
-        <div> 
-            <div class="image">
-                <img class="card-image" src="{{imageurl}}">
-                <div class="body-1 bottom-center found" *ngIf="event.status == 1">ENCONTRADA</div>
-                <div class="body-2 bottom-center stolen" *ngIf="!event.status || event.status == 0">ROUBADA</div>
-              </div>
-      
-          
-        </div>
+
+          <div class="image">
+            <img class="card-image" src="{{imageurl}}">
+            <div class="body-1 bottom-center found" *ngIf="event.status == 1">ENCONTRADA</div>
+            <div class="body-2 bottom-center stolen" *ngIf="!event.status || event.status == 0">ROUBADA</div>
+          </div>
+
+
+
         <div class="text">
           <div class="date-and-location">
-            <div class="date" *ngIf="event.dateCreation"><mat-icon>date_range</mat-icon>{{event.dateCreated.toDate() | date }}</div>
-            <div class="date" *ngIf="event.date"><mat-icon>date_range</mat-icon>{{event.date.toDate() | date }}</div>
-            <div class="location"> <mat-icon>location_on</mat-icon>
-              {{event.location}}, 
-              <span *ngIf="event.city">{{event.city.name}}, </span>
-              <span *ngIf="event.district"> {{event.district.name}} </span>
+            <div class="date vertical-center" 
+                *ngIf="event.dateCreated" matTooltip="Data de criação">
+              <mat-icon>date_range</mat-icon>&nbsp;{{event.dateCreated.toDate() | date }}</div>
+          
+              <div class="date vertical-center" matTooltip="Data de ocorrencia do roubo">
+              <mat-icon>date_range</mat-icon>&nbsp;{{event.date.toDate() | date }}</div>
+           
+              <div class="location vertical-center">
+              <mat-icon>location_on</mat-icon>
+              <span>{{event.location}}</span>
+              <span *ngIf="event.city">,&nbsp;{{event.city.name}}</span>
+              <span *ngIf="event.district">,&nbsp;{{event.district.name}}</span>
             </div>
 
           </div>
-          <div class="description">{{ event.bicycle.description | truncate:[140, '...'] }}</div>
-          <div class="description">{{ event.description | truncate:[140, '...'] }}</div>
+          <div class="description vertical-center">
+            <mat-icon>motorcycle</mat-icon>
+            {{ event.bicycle.description | truncate:[140, '...'] }}</div>
+          <div class="description vertical-center">
+            <mat-icon>description</mat-icon>
+            {{ event.description | truncate:[140, '...'] }}</div>
         </div>
       </div>
-
 
     </mat-card-content>
     <mat-card-footer>
       <hr>
       <div class="statistics">
 
-        <caption class="mat-small">
+        <caption class="mat-small vertical-center">
           <mat-icon>visibility</mat-icon> {{event.views}} views </caption>
-        <caption *ngIf="event.comments" class="mat-small comments-count">
+        <caption *ngIf="event.comments" class="mat-small comments-count vertical-center">
           <mat-icon>message</mat-icon> {{event.comments.length}} comments </caption>
       </div>
     </mat-card-footer>

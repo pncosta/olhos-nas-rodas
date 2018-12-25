@@ -6,15 +6,21 @@
 
 
 
-     <h3>Drop an image here</h3>
-
+     <h3 class="drag-message">Arraste uma imagem para aqui</h3>
+     <div class="mat-body">ou</div>
+     
      <div class="file">
           <button mat-raised-button type="button" onclick="document.getElementById('fileToUpload').click()">
-            <label for="fileToUpload"></label> Or click to choose a file...  
+            <label for="fileToUpload"></label> Clique para escolher  
           </button>
           <input id="fileToUpload"  class="file-input" type="file" 
           style="display:none;" (change)="startUpload($event.target.files)" accept=".png,.jpg">
           
+      </div>
+      <div class="mat-caption error-message" [ngClass]="{'error': highlightErrorMessage}">
+        Pode adicionar até {{ MAX_PHOTOS }} fotos. 
+        Tamanho máximo por foto {{ MAX_MB_PHOTO }} MB. 
+        Formatos aceites: .jpg e .png.
       </div>
 </div>
 

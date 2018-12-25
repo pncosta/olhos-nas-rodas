@@ -90,12 +90,19 @@ export class EventService {
 
   updateEvent(event: Event): Promise<any> {
     const itemDoc = this.db.doc<Event>('events/' + event.id);
-
+    // Remove undefined fields TODO: where to put this?
+    Object.keys(event).forEach(key => event[key] === undefined ? delete event[key] : '');
+    Object.keys(event.bicycle).forEach(key => event.bicycle[key] === undefined 
+                                             ? delete event.bicycle[key] : '');
     return itemDoc.update(event);
   }
 
   addEvent(event: Event): Promise<firebase.firestore.DocumentReference> {
     const events = this.db.collection<Event>('events');
+    // Remove any 'undefined' values from object as they are not accepted by firebase
+    Object.keys(event).forEach(key => event[key] === undefined ? delete event[key] : '');
+    Object.keys(event.bicycle).forEach(key => event.bicycle[key] === undefined 
+      ? delete event.bicycle[key] : '');
     return events.add(event);
   }
 

@@ -14,6 +14,10 @@ export interface User {
   email: string;
   photoURL?: string;
   displayName?: string;
+  fullName?: string,
+  genre?: string;
+  age?: number;
+  district?: string;
 }
 
 export class EmailPasswordCredentials {
@@ -68,11 +72,19 @@ export class AuthService {
 
   signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/plus.login');
+    provider.addScope('https://www.googleapis.com/auth/plus.me');
+    provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+
     return this.oAuthLogin(provider);
   }
  
   signInWithFacebook() {
     const provider = new firebase.auth.FacebookAuthProvider();
+    provider.addScope('user_birthday');
+    provider.addScope('user_gender');
+    provider.addScope('user_age_range');
+    provider.addScope('user_location');
     return this.oAuthLogin(provider);
   }
 
@@ -169,7 +181,7 @@ export class AuthService {
       uid: user.uid,
       email: user.email || null,
       displayName: user.displayName || user.email,
-      photoURL: user.photoURL
+      photoURL: user.photoURL,
     };
     return userRef.set(data);
   }
