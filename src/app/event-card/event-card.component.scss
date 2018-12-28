@@ -46,6 +46,9 @@ hr {
 }
 
 .user {
+    display: flex;
+    flex-direction: row;
+    min-width: 300px;
     flex:1;
 }
 
@@ -63,7 +66,7 @@ mat-icon {
     display: flex;
     flex-direction: column;
     margin: 0 16px;
-    
+    flex-wrap: wrap;
 }
 
 mat-card-footer{
@@ -73,6 +76,7 @@ mat-card-footer{
 .footer {
     display: flex;
     flex-direction: column;
+    flex-wrap:wrap;
 }
 
 a {
@@ -143,11 +147,13 @@ a {
 
         flex-direction: row;
     }
+
     .statistics {
         flex-direction: row;
+        justify-content: flex-end;
     }
 
-    .views {
+    .views, .date-created {
         margin: 0 8px;
     }
     
