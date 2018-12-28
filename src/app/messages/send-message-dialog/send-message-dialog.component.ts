@@ -31,7 +31,7 @@ export class SendMessageDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<SendMessageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private emailService: EmailService,
-    private authService: AuthService,
+    public authService: AuthService,
     private formBuilder: FormBuilder,
     private conversationService: ConversationService) {
 

@@ -25,6 +25,5 @@ export class LoginDialog implements OnInit {
 
     onLoggedIn() {
         this.dialogRef.close();
-        this.router.navigate(['dashboard']);
     }
 }

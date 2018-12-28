@@ -7,20 +7,21 @@
   </div>
 </header>
 
-<div class="fab" *ngIf="eventId">
-  <button mat-fab *ngIf="authorized" color="warn" (click)="delete()">
+<div class="fab" *ngIf="eventId && isAuthorized">
+  <button mat-fab *ngIf="isAuthorized" color="warn" (click)="delete()" 
+          matTooltip="Apagar" >
         <mat-icon>delete</mat-icon>
       </button>
 </div>
 
 
 <div *ngIf="isAuthorized; then authorized else guest">
-  <!-- template will replace this div -->
+  <div></div>
 </div>
 
 <!-- User NOT logged in -->
 <ng-template #guest>
-  <app-not-logged-in></app-not-logged-in>
+  <h3>Oops! Acesso Negado!</h3>
 </ng-template>
 
 <ng-template #authorized>
@@ -98,7 +99,7 @@
             <button mat-raised-button matStepperNext type="button">Continuar</button>
           </div>
         </mat-step>
-        
+
         <!-- Step 2 Bicycle-->
         <mat-step>
           <ng-template matStepLabel>Detalhes da Bicicleta</ng-template>
@@ -148,7 +149,8 @@
             <mat-error *ngIf="showErrorsMessage" class="mat-caption">
               Existem erros no formulário. Corrija-os antes de submeter
             </mat-error>
-            <button mat-raised-button color="primary" type="button" type="submit">SUBMETER</button>
+            <button mat-raised-button color="primary" type="button" type="submit">
+              <mat-icon>send</mat-icon>&nbsp;SUBMETER</button>
 
           </div>
         </mat-step>

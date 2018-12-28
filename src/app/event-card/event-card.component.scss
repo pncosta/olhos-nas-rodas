@@ -2,24 +2,31 @@ mat-card {
     margin: 15px;
 }
 
-
 mat-card:hover {
     box-shadow: 3px 3px 16px -2px rgba(0, 0, 0, .5);
 }   
 
+app-user-avatar {
+    margin: 0 16px;
+}
+
 .card-image {
     width: 100%;
+    object-fit: contain;
 }
 
 hr {
-    margin:0;
+    margin: 0;
 }
+
+.entry {
+    padding: 4px 0;
+} 
 
 .card-content {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    
+    flex-wrap: wrap;  
 }
 
 .description{
@@ -38,26 +45,34 @@ hr {
     padding-top: 8px;
 }
 
+.user {
+    flex:1;
+}
+
 .date, .location {
     margin-right: 8px;
+    flex: 1
 }
 
 mat-icon {
     margin-right: 4px;
 }
-.date-and-location {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-}
+
 
 .statistics {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin: 0 16px;
+    
 }
 
 mat-card-footer{
     padding: 0 16px;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
 }
 
 a {
@@ -95,8 +110,7 @@ a {
       align-items: center;
   }
 
- 
-@media (min-width: 720px) {
+@media screen and (min-width: 720px) {
     .header {
         padding:60px;
         flex-direction: row;
@@ -121,9 +135,20 @@ a {
     }
 
     .card-image {
-        width: 256px;
+        max-width: 384px;
+        max-height: 192px;
     }
-    .date-and-location {
+
+    .footer {
+
         flex-direction: row;
     }
+    .statistics {
+        flex-direction: row;
+    }
+
+    .views {
+        margin: 0 8px;
+    }
+    
   }

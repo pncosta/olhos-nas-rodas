@@ -1,2 +1,21 @@
-<h3>Not logged in</h3>
-<p>Please login or signup to access the page</p>
+<header class="header">
+        <div class="title">
+            <h1 class="mat-h1 title">Autenticação</h1>
+          </div>
+    </header>
+
+<div class="wrapper">
+    <p class="mat-body">
+        Tem de estar autenticado para aceder a esta página. 
+        Por favor registe-se ou faça login para aceder à página
+    </p>
+
+    <button mat-raised-button color="primary" class="docs-button" (click)="openSignupDialog()">
+        <span>Registar</span>
+    </button>
+
+    <button mat-raised-button class="docs-button" (click)="openLoginDialog()">
+      <span>Login</span>
+    </button>
+
+</div>

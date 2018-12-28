@@ -11,7 +11,7 @@
      
      <div class="file">
           <button mat-raised-button type="button" onclick="document.getElementById('fileToUpload').click()">
-            <label for="fileToUpload"></label> Clique para escolher  
+            <mat-icon>add_a_photo</mat-icon> Clique para escolher  
           </button>
           <input id="fileToUpload"  class="file-input" type="file" 
           style="display:none;" (change)="startUpload($event.target.files)" accept=".png,.jpg">

@@ -37,8 +37,6 @@ export class LockerTypeComponent implements OnInit, ControlValueAccessor {
   onTouched: any = () => { };
 
   writeValue(value: any): void {
-    console.log ("setting value");
-    console.log (value);
     this._locker = value;
   }
 

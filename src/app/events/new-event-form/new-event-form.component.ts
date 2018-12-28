@@ -140,9 +140,11 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
     //TODO: center around user location ?
     this.map.setCenter(center.lat, center.lng);
     this.map.setZoom(13);
-    this.marker = new google.maps.Marker({ position: center, map: this.map.map });
-    this.marker.setDraggable(false); // not draggable for now
-    // this.marker.addListener('dragend', r => this.handleMarkerDrag(r));
+    if ( !this.marker ) {
+      this.marker = new google.maps.Marker({ position: center, map: this.map.map });
+      this.marker.setDraggable(false); // not draggable for now
+      // this.marker.addListener('dragend', r => this.handleMarkerDrag(r));
+    }
   }
 
   /**
@@ -177,7 +179,7 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
     const event: Event = this.getEventFromForm();
     if (!this.newEventForm.valid) {
       this.showErrorsMessage = true;
-    } else { 
+    } else {
       if (this.isEditing) {
         this.eventService.updateEvent(event).then(res => {
           this.openSnackBar('Edited with success', '');
@@ -210,12 +212,13 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
 
     if (this.district && this.district.value && this.district.value.name)
       searchAddress = searchAddress.concat(',' + this.district.value.name);
-    
-    this.geo.getCoordinates(searchAddress).subscribe(coords => {
-      this.marker.setPosition(coords);
-      this.map.setCenter(coords.lat, coords.lng);
-    },
-      err => console.log(err)); // TODO: handle error
+    if (searchAddress.length > 3) {
+      this.geo.getCoordinates(searchAddress).subscribe(coords => {
+        this.marker.setPosition(coords);
+        this.map.setCenter(coords.lat, coords.lng);
+      },
+        err => console.log(err)); // TODO: handle error
+    }
   }
 
   /**
@@ -267,16 +270,16 @@ export class NewEventFormComponent implements OnInit, AfterViewInit {
 
     this.newEventForm = this.fb.group({
       description: new FormControl('', []),
-      location: new FormControl('', [ Validators.required ]),
-      date: new FormControl('', [ Validators.required ]),
-      bikeBrand: new FormControl('', [ Validators.required, Validators.minLength(3)]),
+      location: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
+      bikeBrand: new FormControl('', [Validators.required, Validators.minLength(3)]),
       bikeSerialNo: new FormControl('', []),
       bikeDescription: new FormControl('', []),
-      district: new FormControl(undefined, [ Validators.required ]),
-      city: new FormControl(undefined, [ Validators.required ]),
-      locker: new FormControl(undefined, [ Validators.required ]),
-      color: new FormControl(undefined, [ Validators.required ]),
-      hour: new FormControl(undefined, [ Validators.required ]),
+      district: new FormControl(undefined, [Validators.required]),
+      city: new FormControl(undefined, [Validators.required]),
+      locker: new FormControl(undefined, [Validators.required]),
+      color: new FormControl(undefined, [Validators.required]),
+      hour: new FormControl(undefined, [Validators.required]),
     });
   }
 

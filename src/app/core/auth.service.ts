@@ -72,19 +72,19 @@ export class AuthService {
 
   signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope('https://www.googleapis.com/auth/plus.login');
-    provider.addScope('https://www.googleapis.com/auth/plus.me');
-    provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+    // provider.addScope('https://www.googleapis.com/auth/plus.login');
+    // provider.addScope('https://www.googleapis.com/auth/plus.me');
+    // provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
 
     return this.oAuthLogin(provider);
   }
  
   signInWithFacebook() {
     const provider = new firebase.auth.FacebookAuthProvider();
-    provider.addScope('user_birthday');
-    provider.addScope('user_gender');
-    provider.addScope('user_age_range');
-    provider.addScope('user_location');
+    // provider.addScope('user_birthday');
+    // provider.addScope('user_gender');
+    // provider.addScope('user_age_range');
+    // provider.addScope('user_location');
     return this.oAuthLogin(provider);
   }
 
@@ -145,7 +145,9 @@ export class AuthService {
 
 
   get emailVerified() {
-    return this._firebaseAuth.auth.currentUser.emailVerified;
+    return this._firebaseAuth.auth.currentUser.emailVerified
+    || this._firebaseAuth.auth.currentUser.providerData[0].providerId === 'facebook.com'; 
+    // Firebase considers accounts from facebook not verified. Lets ignored him :)
   }
 
   get uid() {
