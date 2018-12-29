@@ -24,16 +24,14 @@ export interface DialogData {
 export class SendMessageDialogComponent implements OnInit {
 
   messageForm: FormGroup;
-  public snackBar: MatSnackBar;
-
-
 
   constructor(public dialogRef: MatDialogRef<SendMessageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private emailService: EmailService,
     public authService: AuthService,
     private formBuilder: FormBuilder,
-    private conversationService: ConversationService) {
+    private conversationService: ConversationService,
+    public snackBar: MatSnackBar) {
 
     // Create a form
     this.messageForm = this.formBuilder.group({
@@ -64,7 +62,7 @@ export class SendMessageDialogComponent implements OnInit {
         ).subscribe(r => {
           if (r[0].statusCode >= 200 && r[0].statusCode < 300) { // Request was OK
             this.dialogRef.close('success')
-            this.openSnackBar("Enviada com sucesso", '')
+            this.openSnackBar("Mensagem enviada com sucesso", '')
           }
           else
             this.openSnackBar("Ocurreu um erro no envio da mensagem", '')
@@ -81,7 +79,7 @@ export class SendMessageDialogComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 4000,
     });
   }
 

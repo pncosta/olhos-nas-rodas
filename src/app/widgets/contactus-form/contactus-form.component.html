@@ -1,0 +1,48 @@
+<div class="container">
+    <h3 class="mat-title">Contacte-nos</h3>
+    <div class="mat-body">Envie-nos uma mensagem através do seguinte formulário</div>
+    <form [formGroup]="messageForm" *ngIf="messageStatus == 0">
+        <div class="wrapper">
+            <mat-form-field>
+                <input matInput placeholder="Nome" formControlName="name">
+                <mat-error *ngIf="message.hasError('required')">
+                    Nome é obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="message.hasError('required') || email.hasError('email')">
+                    Email invalido
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput placeholder="Assunto" formControlName="subject">
+                <mat-error *ngIf="message.hasError('required')">
+                    Assunto é obrigatório
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <textarea matInput placeholder="Mensagem" rows="4" formControlName="message">
+            </textarea>
+                <mat-error *ngIf="message.hasError('required') || message.hasError('minlength')">
+                    Mensagem é obrigatória
+                </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" (click)="submit()" cdkFocusInitial>
+                <mat-icon>send</mat-icon> ENVIAR
+            </button>
+        </div>
+    </form>
+
+    <div *ngIf="messageStatus == 1" class="sucess">
+        <div class="mat-body">Enviado com sucesso!</div>
+    </div>
+
+    <div *ngIf="messageStatus == -1" class="error">
+        <div class="mat-body">Ocurreu um erro no envio da mensagem</div>
+    </div>
+</div>

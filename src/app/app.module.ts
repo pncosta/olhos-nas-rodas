@@ -86,6 +86,7 @@ import { ColorPipe } from './widgets/color-picker/color.pipe';
 import { LockerPipe } from './widgets/locker-type/locker.pipe';
 import { GenrePickerComponent } from './widgets/genre-picker/genre-picker.component';
 import { DatePickerComponent } from './widgets/date-picker/date-picker.component';
+import { ContactusFormComponent } from './widgets/contactus-form/contactus-form.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { DatePickerComponent } from './widgets/date-picker/date-picker.component
     ColorPipe,
     LockerPipe,
     GenrePickerComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    ContactusFormComponent
   ],
   entryComponents: [
     LoginDialog,
