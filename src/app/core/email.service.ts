@@ -41,7 +41,7 @@ export class EmailService {
     subject: String,
     message: String): Observable<any> {
     const data = {
-    
+      'fromName': fromName,
       'fromEmail': fromEmail,
       'dateSent': new Date().toLocaleDateString(),
       'subject': subject,
