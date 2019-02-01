@@ -4,20 +4,25 @@
         <img src="../../assets/logo_text_right_white.png" class="logo" />
       </a>
   <a mat-button class="docs-navbar-hide-small docs-button" routerLink="/dashboard">
-        <span>Inicio</span>
+        <span>Início</span>
       </a>
-  <a mat-button class="docs-navbar-hide-small docs-button" routerLink="/events">
-        <span>Roubos</span>
+   
+      <a mat-button class="docs-navbar-hide-small docs-button" routerLink="/events">
+        <span>Ver Roubos</span>
+      </a>
+
+      <a mat-button class="docs-navbar-hide-small docs-button" routerLink="/events/new">
+        <span>Reportar Roubo</span>
       </a>
   <div class="flex-spacer"></div>
 
-  <div *ngIf="!auth.isLoggedIn()" class="docs-navbar-header">
+  <div *ngIf="!auth.isLoggedIn()" class="docs-navbar-header docs-navbar-hide-small">
 
    <button mat-button class="docs-button" (click)="openSignupDialog()">
         <span>Registar</span>
     </button>
 
-    <button mat-button class="docs-button" (click)="openLoginDialog()">
+    <button mat-button class="docs-button docs-navbar-hide-small" (click)="openLoginDialog()">
       <span>Login</span>
     </button>
   </div>
@@ -35,10 +40,37 @@
 </mat-toolbar>
 
 <mat-toolbar color="primary" class="docs-navbar docs-navbar-show-small">
+    <div *ngIf="!auth.isLoggedIn()" class="docs-navbar-header">
+        
+           <button mat-button class="docs-button" (click)="openSignupDialog()">
+                <span>Registar</span>
+            </button>
+        
+            <button mat-button class="docs-button" (click)="openLoginDialog()">
+              <span>Login</span>
+            </button>
+          </div>
+          <div *ngIf="auth.user | async as user">
+              <a mat-button href="" (click)="auth.logout()">Logout</a>
+              <a mat-button href="/profile"> 
+                <div class="user">
+                <span class="username docs-navbar-hide-small">{{ user.displayName }}</span>
+                <app-user-avatar [user]="user"></app-user-avatar>
+                </div>
+              </a>
+      
+          </div>
+  </mat-toolbar>
+
+<mat-toolbar color="primary" class="docs-navbar docs-navbar-show-small">
   <a mat-button class="docs-button" routerLink="/dashboard">
-      <span>Dashboard</span>
+      <span>Início</span>
     </a>
   <a mat-button class="docs-button" routerLink="/events">
-      <span>Roubos</span>
+      <span>Ver Roubos</span>
+    </a>
+
+    <a mat-button class="docs-button" routerLink="/events/new">
+      <span>Reportar Roubo</span>
     </a>
 </mat-toolbar>
