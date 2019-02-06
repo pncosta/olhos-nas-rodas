@@ -59,12 +59,9 @@ export class SignupDialogComponent implements OnInit {
       this.termsAndConditionsError = true;
     } else if (this.signupForm.valid) {
       this.auth.emailSignUp(this.email.value, this.password.value)
-        .then((res) => {
-          this.afterSignedUp(res);
-        })
-        .catch(err => {
-          this.handleError(err);
-        });
+        .then(res => { return this.auth.updateUser({ displayName:  this.username.value })})
+        .then (res => this.afterSignedUp(res))
+        .catch(err => this.handleError(err));
     }
   }
 

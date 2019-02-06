@@ -94,9 +94,11 @@ export class AuthService {
     var promise = new Promise((resolve, reject) => {
       this._firebaseAuth.auth
         .createUserWithEmailAndPassword(email, password)
+        .then(credential => {  
+          return this.updateUserData(credential.user)})
+        .then (res => {
+          return this.sendEmailVerification})
         .then(credential => {
-          this.sendEmailVerification();
-          this.updateUserData(credential.user); // if using firestore
           resolve(credential);
         })
         .catch(error => {
@@ -174,7 +176,7 @@ export class AuthService {
 
 
   // Sets user data to firestore after succesful login
-  private updateUserData(user: User) {
+  private updateUserData(user: User): Promise<any> {
     const userRef: AngularFirestoreDocument<User> = this._firebaseStore.doc(
       `users/${user.uid}`
     );
@@ -182,7 +184,7 @@ export class AuthService {
     const data: User = {
       uid: user.uid,
       email: user.email || null,
-      displayName: user.displayName || user.email,
+      displayName: user.displayName || user.email.split("@")[0],
       photoURL: user.photoURL,
     };
     return userRef.set(data);
